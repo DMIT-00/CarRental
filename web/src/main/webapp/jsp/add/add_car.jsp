@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <form:form method="POST" action="/CarRental/add-car" modelAttribute="car">
-    <div class="container">
+    <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col-sm">
                 <form:label path="brandId" class="form-label">Brand name</form:label>
