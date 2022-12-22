@@ -1,0 +1,22 @@
+package com.dmit.controller.api;
+
+import com.dmit.dto.CarDto;
+import com.dmit.dto.CarDtoMapper;
+import com.dmit.service.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+public class CarListRestController {
+    @Autowired
+    CarService carService;
+
+    @GetMapping("/api/v1/get_all_cars")
+    public List<CarDto> getAllCars() {
+        return carService.getAllCars().stream().map(CarDtoMapper::toDto).collect(Collectors.toList());
+    }
+}
