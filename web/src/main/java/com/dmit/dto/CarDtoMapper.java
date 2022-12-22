@@ -1,9 +1,8 @@
 package com.dmit.dto;
 
-import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.Car;
+import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
-import com.dmit.entity.user.User;
 
 import java.util.ArrayList;
 

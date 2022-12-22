@@ -31,9 +31,6 @@ public class CarModel {
     @JoinColumn(name = "brand_id", nullable = false)
     private CarBrand carBrand;
 
-//    @OneToMany(mappedBy = "model")
-//    private List<Car> cars;
-
 //    @Override
 //    public String toString() {
 //        final StringBuffer sb = new StringBuffer("CarModel{");

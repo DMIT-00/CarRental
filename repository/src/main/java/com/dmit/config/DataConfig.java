@@ -1,9 +1,9 @@
 package com.dmit.config;
 
-import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.Car;
-import com.dmit.entity.car.Image;
+import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
+import com.dmit.entity.car.Image;
 import com.dmit.entity.user.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;

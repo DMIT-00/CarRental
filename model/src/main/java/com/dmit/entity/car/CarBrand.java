@@ -31,9 +31,6 @@ public class CarBrand {
     @OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<CarModel> carModels;
 
-//    @OneToMany(mappedBy = "brand")
-//    private List<Car> cars;
-
     // TODO: Fix proxy
 //    @Override
 //    public String toString() {

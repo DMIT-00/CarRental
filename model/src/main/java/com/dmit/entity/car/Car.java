@@ -1,6 +1,5 @@
 package com.dmit.entity.car;
 
-import com.dmit.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

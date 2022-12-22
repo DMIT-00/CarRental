@@ -48,15 +48,15 @@
         <div class="row">
             <div class="col-sm">
                 <form:label path="color" class="form-label">Color</form:label>
-                <form:input path="color" class="form-control"/>
+                <form:input path="color" value="BLACK" class="form-control"/>
             </div>
             <div class="col-sm">
                 <form:label path="year" class="form-label">Year of manufacture</form:label>
-                <form:input path="year" type="number" min="1800" max="2800" class="form-control"/>
+                <form:input path="year" type="number" min="1800" max="2800" value="2000" class="form-control"/>
             </div>
             <div class="col-sm">
                 <form:label path="numberOfSeats" class="form-label">Number of seats</form:label>
-                <form:input path="numberOfSeats" type="number" min="0" max="400" class="form-control"/>
+                <form:input path="numberOfSeats" type="number" min="0" max="400" value="5" class="form-control"/>
             </div>
         </div>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="col-sm">
                 <form:label path="price" class="form-label">Price</form:label>
-                <form:input path="price" type="number" step="any" class="form-control"/>
+                <form:input path="price" type="number" step="any" value="100" class="form-control"/>
             </div>
         </div>
     </div>
