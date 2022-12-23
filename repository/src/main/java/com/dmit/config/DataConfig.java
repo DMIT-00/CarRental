@@ -7,6 +7,7 @@ import com.dmit.entity.car.Image;
 import com.dmit.entity.user.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,49 +32,43 @@ public class DataConfig {
 
     @Bean
     public Properties hibernateProperties(
-            @Value("${hibernate.show_sql}") String showSql,
-            @Value("${hibernate.debug_mode}") String debug,
             @Value("${hibernate.dialect}") String dialect,
-            @Value("${hibernate.format_sql}") String format,
-            @Value("${hibernate.hbm2ddl.auto}") String hbm2ddl,
-            @Value("${hibernate.enable_lazy_load_no_trans}") String lazyNoTrans
-    ) {
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.show_sql", showSql);
-        hibernateProperties.put("debug", debug); // TODO: check name
-        hibernateProperties.put("hibernate.dialect", dialect);
-        hibernateProperties.put("hibernate.format_sql", format);
-        hibernateProperties.put("hibernate.hbm2ddl.auto", hbm2ddl);
-        hibernateProperties.put("hibernate.enable_lazy_load_no_trans", lazyNoTrans);
-
-        return hibernateProperties;
+            @Value("${hibernate.show_sql:false}") String showSql,
+            @Value("${hibernate.format_sql:false}") String formatSql,
+            @Value("${hibernate.hbm2ddl.auto:validate}") String hbm2ddl,
+            @Value("${hibernate.enable_lazy_load_no_trans:false}") String lazyNoTrans) {
+        Properties properties = new Properties();
+        properties.put(Environment.DIALECT, dialect);
+        properties.put(Environment.SHOW_SQL, showSql);
+        properties.put(Environment.FORMAT_SQL, formatSql);
+        properties.put(Environment.HBM2DDL_AUTO, hbm2ddl);
+        properties.put(Environment.ENABLE_LAZY_LOAD_NO_TRANS, lazyNoTrans);
+        return properties;
     }
 
     @Bean
     public DataSource dataSource(
-            @Value("${connection.url}") String url,
-            @Value("${connection.driver_class}") String driverClassName,
-            @Value("${connection.username}") String userName,
-            @Value("${connection.password}") String password,
-            @Value("true") boolean removeAbandonedOnBorrow,
-            @Value("50") int initialSize,
-            @Value("100") int maxTotal) {
+            @Value("${database.url}") String url,
+            @Value("${database.user}") String user,
+            @Value("${database.password}") String password,
+            @Value("${database.driver_class}") String driver,
+            @Value("${connection.remove_abandoned:true}") boolean removeAbandoned,
+            @Value("${connection.initial_size:50}") int initialSize,
+            @Value("${connection.max_total:100}") int maxTotal) {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl(url);
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUsername(userName);
+        dataSource.setDriverClassName(driver);
+        dataSource.setUsername(user);
         dataSource.setPassword(password);
-        dataSource.setRemoveAbandonedOnBorrow(removeAbandonedOnBorrow);
+        dataSource.setRemoveAbandonedOnBorrow(removeAbandoned);
         dataSource.setInitialSize(initialSize);
         dataSource.setMaxTotal(maxTotal);
         return dataSource;
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource,
-                                                  Properties hibernateProperties) {
-        LocalSessionFactoryBean sessionFactory =
-                new LocalSessionFactoryBean();
+    public LocalSessionFactoryBean sessionFactory(DataSource dataSource, Properties hibernateProperties) {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setAnnotatedClasses(
                 Car.class,
