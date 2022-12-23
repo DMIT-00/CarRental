@@ -50,6 +50,6 @@ public class AddImagesController {
 
         carService.updateCarImages((UUID) model.getAttribute("carId"), images);
 
-        return "add/add_images";
+        return "redirect:/car-list";
     }
 }
