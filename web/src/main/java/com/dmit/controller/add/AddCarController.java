@@ -33,10 +33,29 @@ public class AddCarController {
 
     @GetMapping("add-car")
     public String addCarForm(Model model) {
-        model.addAttribute("car", new CarDto());
-        model.addAttribute("models", new HashMap<>()); // FIXME
-        model.addAttribute("brands", brandService.getAllBrands().stream()
-                .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
+        CarDto carDto = new CarDto();
+        Map<Long, String> modelsMap;
+
+        Map<Long, String> brandsMap = brandService.getAllBrands().stream()
+                .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName));
+
+        // Set the first brand as current, if exists
+        if (brandsMap.size() > 0) {
+
+            Map.Entry<Long, String> firstBrand = brandsMap.entrySet().iterator().next();
+
+            carDto.setBrandId(firstBrand.getKey());
+            carDto.setBrandName(firstBrand.getValue());
+
+            modelsMap = modelService.getAllBrandModels(carDto.getBrandId()).stream()
+                    .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
+        } else {
+            modelsMap = new HashMap<>();
+        }
+
+        model.addAttribute("car", carDto);
+        model.addAttribute("models", modelsMap);
+        model.addAttribute("brands", brandsMap);
 
         return "add/add_car";
     }
