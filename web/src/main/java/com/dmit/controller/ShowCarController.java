@@ -7,6 +7,7 @@ import com.dmit.entity.car.Image;
 import com.dmit.service.CarImageService;
 import com.dmit.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,7 @@ public class ShowCarController {
     }
 
     @ResponseBody
-    @GetMapping("/car-image/{imageId}")
+    @GetMapping(value = "/car-image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImage(@PathVariable UUID imageId) {
         Image image = carImageService.getImage(imageId);
         return image.getImage();

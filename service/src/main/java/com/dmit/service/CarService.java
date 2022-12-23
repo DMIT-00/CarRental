@@ -38,6 +38,7 @@ public class CarService {
         carDao.update(car);
     }
 
+    @Transactional
     public Car getCar(UUID carId) {
         Car car = carDao.findById(carId);
         if (car == null)
