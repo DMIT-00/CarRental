@@ -73,8 +73,24 @@ public class DataConfig {
         return dataSource;
     }
 
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory(DataSource dataSource,
+//                                                  Properties hibernateProperties) {
+//        LocalSessionFactoryBean sessionFactory =
+//                new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource);
+//        sessionFactory.setAnnotatedClasses(
+//                Car.class,
+//                CarBrand.class,
+//                CarModel.class,
+//                Image.class,
+//                User.class
+//        );
+//        sessionFactory.setHibernateProperties(hibernateProperties);
+//        return sessionFactory;
+//    }
     @Bean
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
+    public EntityManagerFactory entityManagerFactory(DataSource dataSource, Properties hibernateProperties) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
 
@@ -82,11 +98,12 @@ public class DataConfig {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.dmit.entity");
         factory.setDataSource(dataSource);
-        factory.setJpaProperties(hibernateProperties());
+        factory.setJpaProperties(hibernateProperties);
         factory.afterPropertiesSet();
 
         return factory.getObject();
     }
+
 
     @Bean
     public PlatformTransactionManager transactionManager(SessionFactory sessionFactory) {
