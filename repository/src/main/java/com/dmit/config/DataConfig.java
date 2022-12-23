@@ -35,7 +35,8 @@ public class DataConfig {
             @Value("${hibernate.debug_mode}") String debug,
             @Value("${hibernate.dialect}") String dialect,
             @Value("${hibernate.format_sql}") String format,
-            @Value("${hibernate.hbm2ddl.auto}") String hbm2ddl
+            @Value("${hibernate.hbm2ddl.auto}") String hbm2ddl,
+            @Value("${hibernate.enable_lazy_load_no_trans}") String lazyNoTrans
     ) {
         Properties hibernateProperties = new Properties();
         hibernateProperties.put("hibernate.show_sql", showSql);
@@ -43,6 +44,7 @@ public class DataConfig {
         hibernateProperties.put("hibernate.dialect", dialect);
         hibernateProperties.put("hibernate.format_sql", format);
         hibernateProperties.put("hibernate.hbm2ddl.auto", hbm2ddl);
+        hibernateProperties.put("hibernate.enable_lazy_load_no_trans", lazyNoTrans);
 
         return hibernateProperties;
     }
