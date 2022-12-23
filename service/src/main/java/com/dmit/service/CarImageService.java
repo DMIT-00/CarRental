@@ -15,6 +15,6 @@ public class CarImageService {
 
     @Transactional
     public Image getImage(UUID imageId) {
-        return carImageDao.findById(imageId);
+        return carImageDao.findById(imageId).orElse(null); // TODO: Exception?
     }
 }

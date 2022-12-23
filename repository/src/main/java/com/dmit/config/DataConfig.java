@@ -13,11 +13,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -28,6 +33,8 @@ import java.util.Properties;
         "classpath:/database.properties",
         "classpath:/hibernate.properties"
 })
+@EnableJpaRepositories(basePackages = "com.dmit.dao")
+
 public class DataConfig {
 
     @Bean
@@ -67,18 +74,18 @@ public class DataConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource, Properties hibernateProperties) {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-        sessionFactory.setAnnotatedClasses(
-                Car.class,
-                CarBrand.class,
-                CarModel.class,
-                Image.class,
-                User.class
-        );
-        sessionFactory.setHibernateProperties(hibernateProperties);
-        return sessionFactory;
+    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.dmit.entity");
+        factory.setDataSource(dataSource);
+        factory.setJpaProperties(hibernateProperties());
+        factory.afterPropertiesSet();
+
+        return factory.getObject();
     }
 
     @Bean

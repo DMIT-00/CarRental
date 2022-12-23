@@ -22,6 +22,6 @@ public class BrandService {
     public void addNewBrand(CarBrand carBrand) {
         //TODO: checks
         carBrand.setId(null);
-        carBrandDao.create(carBrand);
+        carBrandDao.save(carBrand);
     }
 }
