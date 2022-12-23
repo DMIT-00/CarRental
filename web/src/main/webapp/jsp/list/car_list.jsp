@@ -23,38 +23,37 @@
     <th>Body type</th>
     <th>Price</th>
   </tr>
-  <tbody>
 
-  <c:forEach items="${cars}" var="car">
-  <tr class='table-row' data-href='show-car/${car.id}'>
-    <td><c:out value="${car.brandName}"/></td>
-    <td><c:out value="${car.modelName}"/></td>
-    <td><c:out value="${car.transmission}"/></td>
-    <td><c:out value="${car.numberOfSeats}"/></td>
-    <td><c:out value="${car.fuelType}"/></td>
-    <td><c:out value="${car.fuelConsumption}"/></td>
-    <td><c:out value="${car.enginePower}"/></td>
-    <td><c:out value="${car.color}"/></td>
-    <td><c:out value="${car.year}"/></td>
-    <td><c:out value="${car.abs}"/></td>
-    <td><c:out value="${car.cruiseControl}"/></td>
-    <td><c:out value="${car.heatedSeats}"/></td>
-    <td><c:out value="${car.climateControl}"/></td>
-    <td><c:out value="${car.airBags}"/></td>
-    <td><c:out value="${car.bodyType}"/></td>
-    <td><c:out value="${car.price}"/></td>
-  </tr>
-  </c:forEach>
-
+  <tbody class="clickable">
+    <c:forEach items="${cars}" var="car">
+      <tr class='table-row' data-href='show-car/${car.id}'>
+        <td><c:out value="${car.brandName}"/></td>
+        <td><c:out value="${car.modelName}"/></td>
+        <td><c:out value="${car.transmission}"/></td>
+        <td><c:out value="${car.numberOfSeats}"/></td>
+        <td><c:out value="${car.fuelType}"/></td>
+        <td><c:out value="${car.fuelConsumption}"/></td>
+        <td><c:out value="${car.enginePower}"/></td>
+        <td><c:out value="${car.color}"/></td>
+        <td><c:out value="${car.year}"/></td>
+        <td><c:out value="${car.abs}"/></td>
+        <td><c:out value="${car.cruiseControl}"/></td>
+        <td><c:out value="${car.heatedSeats}"/></td>
+        <td><c:out value="${car.climateControl}"/></td>
+        <td><c:out value="${car.airBags}"/></td>
+        <td><c:out value="${car.bodyType}"/></td>
+        <td><c:out value="${car.price}"/></td>
+      </tr>
+    </c:forEach>
   </tbody>
 
-    <script type="text/javascript">
+  <script type="text/javascript">
         $(document).ready(function($) {
             $(".table-row").click(function() {
                 window.document.location = $(this).data("href");
             });
         });
-    </script>
+  </script>
 
 </table>
 

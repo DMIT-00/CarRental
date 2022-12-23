@@ -1,3 +1,4 @@
+/* Make footer stay on the bottom */
 html{ height:100%; }
 body { min-height:100%;  margin:0; }
 
@@ -13,8 +14,6 @@ footer {
   height: 50px;
 }
 
-/**** Trick: ****/
-
 body {
   display: table;
   width: 100%;
@@ -22,4 +21,10 @@ body {
 
 body > footer {
    display: table-row;
+}
+
+/* Select hovered clickable tables */
+.clickable tr:hover{
+  cursor: pointer;
+  background-color: #ccc;
 }
