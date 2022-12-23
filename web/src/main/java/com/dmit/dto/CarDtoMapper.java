@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 public class CarDtoMapper {
     static public CarDto toDto(Car car) {
+        if (car == null)
+            return null;
+
         return new CarDto(
                 car.getId(), car.getYear(), car.getColor(),
                 car.getEnginePower(), car.getFuelType(), car.getFuelConsumption(),
@@ -19,6 +22,9 @@ public class CarDtoMapper {
     }
 
     static public Car fromDto(CarDto carDto) {
+        if (carDto == null)
+            return null;
+
         CarBrand carBrand = new CarBrand(carDto.getBrandId(), carDto.getBrandName(), new ArrayList<>());
         return new Car(
                 carDto.getId(), carDto.getYear(), carDto.getColor(), carDto.getEnginePower(),
