@@ -6,11 +6,13 @@
   <tr>
     <th>Name</th>
   </tr>
-  <c:forEach items="${brands}" var="carBrand">
-  <tr>
-    <td><c:out value="${carBrand.brandName}"/></td>
-  </tr>
-  </c:forEach>
+  <tbody>
+    <c:forEach items="${brands}" var="carBrand">
+      <tr class='table-row' data-href='${carBrand.id}'>
+        <td><c:out value="${carBrand.brandName}"/></td>
+      </tr>
+    </c:forEach>
+  </tbody>
 </table>
 
 <%@ include file="../templates/footer.jsp" %>
