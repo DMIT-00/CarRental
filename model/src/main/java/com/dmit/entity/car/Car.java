@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,9 +20,10 @@ import java.util.UUID;
 @Table(name = "t_car")
 public class Car {
     @Id
-    @Column(name = "car_id")
+    @Column(name = "car_id", columnDefinition = "CHAR(36)")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Type(type = "uuid-char")
     private UUID id;
 
     @Column(name = "year", nullable = false)
@@ -74,8 +76,8 @@ public class Car {
     @JoinColumn(name = "model_id", nullable = false)
     private CarModel carModel;
 
-    // TODO: fetchtype fix
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="car_id", nullable=false)
     private List<Image> images;
 
     @Override

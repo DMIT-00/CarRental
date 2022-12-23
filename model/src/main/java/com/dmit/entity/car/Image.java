@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -14,15 +15,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "t_photo")
+@Table(name = "t_image")
 public class Image {
     @Id
-    @Column(name = "user_id")
+    @Column(name = "image_id", columnDefinition = "CHAR(36)")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Type(type = "uuid-char")
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
+    @Lob
+    @Column(name = "car_image", columnDefinition = "MEDIUMBLOB NOT NULL")
+    private byte[] photo;
 }

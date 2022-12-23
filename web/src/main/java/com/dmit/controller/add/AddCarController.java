@@ -2,6 +2,7 @@ package com.dmit.controller.add;
 
 import com.dmit.dto.CarDto;
 import com.dmit.dto.CarDtoMapper;
+import com.dmit.entity.car.Car;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
 import com.dmit.service.BrandService;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,11 +58,14 @@ public class AddCarController {
 
     @PostMapping(value = "add-car", params = "submit-car")
     public String addCar(@ModelAttribute("car") CarDto carDto, BindingResult bindingResult,
-                         Model model) {
+                               Model model, RedirectAttributes redirectAttrs) {
         carDto.setId(null); // TODO: service level?
-        carService.addNewCar(CarDtoMapper.fromDto(carDto));
 
+        Car car = CarDtoMapper.fromDto(carDto);
+        carService.addNewCar(car);
 
-        return "redirect:/car-list"; // TODO: redirect somewhere else on success
+        redirectAttrs.addFlashAttribute("carId", car.getId());
+
+        return "redirect:/add-images";
     }
 }
