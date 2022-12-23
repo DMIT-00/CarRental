@@ -1,10 +1,5 @@
 package com.dmit.config;
 
-import com.dmit.entity.car.Car;
-import com.dmit.entity.car.CarBrand;
-import com.dmit.entity.car.CarModel;
-import com.dmit.entity.car.Image;
-import com.dmit.entity.user.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -15,13 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -73,22 +66,6 @@ public class DataConfig {
         return dataSource;
     }
 
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory(DataSource dataSource,
-//                                                  Properties hibernateProperties) {
-//        LocalSessionFactoryBean sessionFactory =
-//                new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource);
-//        sessionFactory.setAnnotatedClasses(
-//                Car.class,
-//                CarBrand.class,
-//                CarModel.class,
-//                Image.class,
-//                User.class
-//        );
-//        sessionFactory.setHibernateProperties(hibernateProperties);
-//        return sessionFactory;
-//    }
     @Bean
     public EntityManagerFactory entityManagerFactory(DataSource dataSource, Properties hibernateProperties) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -103,7 +80,6 @@ public class DataConfig {
 
         return factory.getObject();
     }
-
 
     @Bean
     public PlatformTransactionManager transactionManager(SessionFactory sessionFactory) {
