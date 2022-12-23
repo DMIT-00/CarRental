@@ -37,4 +37,12 @@ public class CarService {
         car.setImages(images);
         carDao.update(car);
     }
+
+    public Car getCar(UUID carId) {
+        Car car = carDao.findById(carId);
+        if (car == null)
+            throw new IllegalArgumentException("Car doesn't exist"); // TODO: custom exception
+
+        return car;
+    }
 }
