@@ -32,7 +32,7 @@ public class ShowCarController {
     @GetMapping("/show-car/{carId}")
     String showCar(@PathVariable(required = true) UUID carId, Model model) {
         Car car = carService.getCar(carId);
-        List<Image> images = car.getImages();
+        List<UUID> images = carImageService.getImageIdsByCarId(carId);
 
         CarDto carDto = modelMapper.map(car, CarDto.class);
 

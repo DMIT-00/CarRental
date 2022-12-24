@@ -49,7 +49,7 @@
     <div class="row">
         <c:forEach items="${images}" var="image">
             <div class="col-sm">
-                <td><img src="/CarRental/car-image/${image.id}" alt="${image.id}" style="width:420px;"></td>
+                <td><img src="/CarRental/car-image/${image}" alt="${image}" style="width:420px;"></td>
             </div>
         </c:forEach>
     </div>
