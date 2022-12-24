@@ -10,8 +10,8 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "t_model", uniqueConstraints = { @UniqueConstraint(name = "unique_model_name", columnNames = { "model_name", "brand_id" }) })
 public class CarModel {
