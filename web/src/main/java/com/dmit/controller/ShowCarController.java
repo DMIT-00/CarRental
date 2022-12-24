@@ -31,7 +31,7 @@ public class ShowCarController {
         Car car = carService.getCar(carId);
         List<Image> images = car.getImages();
 
-        CarDto carDto = CarDtoMapper.toDto(carService.getCar(carId));
+        CarDto carDto = CarDtoMapper.toDto(car);
 
         model.addAttribute("carDto", carDto);
         model.addAttribute("images", images);
