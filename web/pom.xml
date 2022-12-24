@@ -73,6 +73,13 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.14.0</version>
         </dependency>
+
+        <!-- Used for DTO mapping -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

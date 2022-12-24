@@ -1,11 +1,11 @@
 package com.dmit.controller.list;
 
-import com.dmit.dto.BrandDto;
-import com.dmit.dto.ModelDto;
-import com.dmit.dto.ModelDtoMapper;
+import com.dmit.dto.CarBrandDto;
+import com.dmit.dto.CarModelDto;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.service.BrandService;
 import com.dmit.service.ModelService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +22,9 @@ import java.util.stream.Collectors;
 @Controller
 public class ModelListController {
     @Autowired
+    ModelMapper modelMapper;
+    @Autowired
     ModelService modelService;
-
     @Autowired
     BrandService brandService;
 
@@ -32,8 +33,8 @@ public class ModelListController {
         Map<Long, String> brands = brandService.getAllBrands().stream()
                 .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName));
 
-        BrandDto currentBrand = new BrandDto();
-        List<ModelDto> modelsDto;
+        CarBrandDto currentBrand = new CarBrandDto();
+        List<CarModelDto> modelsDto;
 
         if (brands.size() > 0) {
             Map.Entry<Long, String> firstBrand = brands.entrySet().iterator().next();
@@ -42,7 +43,8 @@ public class ModelListController {
             currentBrand.setBrandName(firstBrand.getValue());
 
             modelsDto = modelService.getAllBrandModels(currentBrand.getId()).stream()
-                    .map(ModelDtoMapper::toDto).collect(Collectors.toList());
+                    .map(carModel -> modelMapper.map(carModel, CarModelDto.class))
+                    .collect(Collectors.toList());
         } else {
             modelsDto = new ArrayList<>();
         }
@@ -54,7 +56,7 @@ public class ModelListController {
     }
 
     @PostMapping("model-list")
-    public String modelList(@ModelAttribute("brand") BrandDto currentBrand,
+    public String modelList(@ModelAttribute("brand") CarBrandDto currentBrand,
                             BindingResult bindingResult, Model model) {
 //        if (currentBrand == null || bindingResult.hasErrors())
 //            return "list/model_list";
@@ -62,11 +64,12 @@ public class ModelListController {
         Map<Long, String> brands = brandService.getAllBrands().stream()
                 .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName));
 
-        List<ModelDto> modelsDto;
+        List<CarModelDto> modelsDto;
 
         if (brands.size() > 0) {
             modelsDto = modelService.getAllBrandModels(currentBrand.getId()).stream()
-                    .map(ModelDtoMapper::toDto).collect(Collectors.toList());
+                    .map(carModel -> modelMapper.map(carModel, CarModelDto.class))
+                    .collect(Collectors.toList());
         } else {
             modelsDto = new ArrayList<>();
         }

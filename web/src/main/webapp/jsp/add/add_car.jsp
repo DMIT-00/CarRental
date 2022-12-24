@@ -7,14 +7,14 @@
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col-sm">
-                <form:label path="brandId" class="form-label">Brand name</form:label>
-                <form:select path="brandId" class="form-select" onchange="this.form.submit();">
+                <form:label path="carBrand.id" class="form-label">Brand name</form:label>
+                <form:select path="carBrand.id" class="form-select" onchange="this.form.submit();">
                     <form:options items="${brands}" />
                 </form:select>
             </div>
             <div class="col-sm">
-                <form:label path="modelId" class="form-label">Model name</form:label>
-                <form:select path="modelId" class="form-select">
+                <form:label path="carModel.id" class="form-label">Model name</form:label>
+                <form:select path="carModel.id" class="form-select">
                     <form:options items="${models}" />
                 </form:select>
             </div>

@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BrandDto {
+public class CarModelDto {
     private Long id;
-
-    private String brandName;
+    private String modelName;
+    private CarBrandDto carBrand;
 }
