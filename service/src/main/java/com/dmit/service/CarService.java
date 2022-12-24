@@ -24,21 +24,25 @@ public class CarService {
     public void addNewCar(Car car) {
         //TODO: checks
         car.setId(null);
-        carDao.save(car);
+        carDao.create(car);
     }
 
     // TODO: security check
     @Transactional
     public void updateCarImages(UUID carId, List<Image> images) {
-        Car car = carDao.findById(carId).orElseThrow(); // TODO: custom exception
+        Car car = carDao.findById(carId);
+        if (car == null)
+            throw new IllegalArgumentException("Car doesn't exist"); // TODO: custom exception
 
         car.setImages(images);
-        carDao.save(car);
+        carDao.update(car);
     }
 
     @Transactional
     public Car getCar(UUID carId) {
-        Car car = carDao.findById(carId).orElseThrow(); // TODO: custom exception
+        Car car = carDao.findById(carId);
+        if (car == null)
+            throw new IllegalArgumentException("Car doesn't exist"); // TODO: custom exception
 
         return car;
     }

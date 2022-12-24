@@ -27,7 +27,7 @@ public class ModelService {
     public void addNewModel(CarModel carModel) {
         //TODO: checks
         carModel.setId(null);
-        carModelDao.save(carModel);
+        carModelDao.create(carModel);
     }
 
 }
