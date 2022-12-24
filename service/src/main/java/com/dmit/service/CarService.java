@@ -30,7 +30,7 @@ public class CarService {
     // TODO: security check
     @Transactional
     public void updateCarImages(UUID carId, List<Image> images) {
-        Car car = carDao.findById(carId).orElseThrow();
+        Car car = carDao.findById(carId).orElseThrow(); // TODO: custom exception
 
         car.setImages(images);
         carDao.save(car);
@@ -38,7 +38,7 @@ public class CarService {
 
     @Transactional
     public Car getCar(UUID carId) {
-        Car car = carDao.findById(carId).orElseThrow();
+        Car car = carDao.findById(carId).orElseThrow(); // TODO: custom exception
 
         return car;
     }
