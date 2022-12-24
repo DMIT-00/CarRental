@@ -1,13 +1,11 @@
 package com.dmit.controller;
 
-import com.dmit.dto.CarBrandDto;
 import com.dmit.dto.CarDto;
-import com.dmit.dto.CarModelDto;
+import com.dmit.dto.CarDtoMapper;
 import com.dmit.entity.car.Car;
 import com.dmit.entity.car.Image;
 import com.dmit.service.CarImageService;
 import com.dmit.service.CarService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,9 +20,8 @@ import java.util.UUID;
 @Controller
 public class ShowCarController {
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
     CarService carService;
+
     @Autowired
     CarImageService carImageService;
 
@@ -34,7 +31,7 @@ public class ShowCarController {
         Car car = carService.getCar(carId);
         List<Image> images = car.getImages();
 
-        CarDto carDto = modelMapper.map(car, CarDto.class);
+        CarDto carDto = CarDtoMapper.toDto(car);
 
         model.addAttribute("carDto", carDto);
         model.addAttribute("images", images);

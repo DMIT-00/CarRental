@@ -2,6 +2,8 @@
 
 <%@ include file="templates/header.jsp" %>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <table style="width:100%" class="table">
     <tr>
         <th>Brand</th>
@@ -24,8 +26,8 @@
 
     <tbody>
         <tr class='table-row'>
-            <td><c:out value="${carDto.carBrand.brandName}"/></td>
-            <td><c:out value="${carDto.carModel.modelName}"/></td>
+            <td><c:out value="${carDto.brandName}"/></td>
+            <td><c:out value="${carDto.modelName}"/></td>
             <td><c:out value="${carDto.transmission}"/></td>
             <td><c:out value="${carDto.numberOfSeats}"/></td>
             <td><c:out value="${carDto.fuelType}"/></td>

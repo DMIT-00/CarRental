@@ -31,6 +31,8 @@ public class CarDto {
     private boolean airBags;
     private BigDecimal price;
     private BodyType bodyType;
-    private CarBrandDto carBrand;
-    private CarModelDto carModel;
+    private Long brandId;
+    private String brandName;
+    private Long modelId;
+    private String modelName;
 }

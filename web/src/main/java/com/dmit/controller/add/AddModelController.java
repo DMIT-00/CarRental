@@ -1,11 +1,10 @@
 package com.dmit.controller.add;
 
-import com.dmit.dto.CarModelDto;
+import com.dmit.dto.ModelDto;
+import com.dmit.dto.ModelDtoMapper;
 import com.dmit.entity.car.CarBrand;
-import com.dmit.entity.car.CarModel;
 import com.dmit.service.BrandService;
 import com.dmit.service.ModelService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +18,13 @@ import java.util.stream.Collectors;
 @Controller
 public class AddModelController {
     @Autowired
-    ModelMapper modelMapper;
+    ModelService modelService;
     @Autowired
     BrandService brandService;
-    @Autowired
-    ModelService modelService;
 
     @GetMapping("add-model")
     public String addModelForm(Model model) {
-        model.addAttribute("model", new CarModelDto());
+        model.addAttribute("model", new ModelDto());
         model.addAttribute("brands", brandService.getAllBrands().stream()
                 .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
 
@@ -35,15 +32,13 @@ public class AddModelController {
     }
 
     @PostMapping("add-model")
-    public String addModel(@ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult) {
+    public String addModel(@ModelAttribute("model") ModelDto modelDto, BindingResult bindingResult) {
         //        if (bindingResult.hasErrors())
 //            return "redirect:/add-brand";
 
-        carModelDto.setId(null); // TODO: service level?
+        modelDto.setId(null); // TODO: service level?
 
-        CarModel carModel = modelMapper.map(carModelDto, CarModel.class);
-
-        modelService.addNewModel(carModel);
+        modelService.addNewModel(ModelDtoMapper.fromDto(modelDto));
 
         return "redirect:/model-list";
     }

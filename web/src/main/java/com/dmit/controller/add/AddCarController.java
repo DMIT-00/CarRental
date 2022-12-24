@@ -1,14 +1,13 @@
 package com.dmit.controller.add;
 
-import com.dmit.dto.CarBrandDto;
 import com.dmit.dto.CarDto;
+import com.dmit.dto.CarDtoMapper;
 import com.dmit.entity.car.Car;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
 import com.dmit.service.BrandService;
 import com.dmit.service.CarService;
 import com.dmit.service.ModelService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +23,7 @@ import java.util.stream.Collectors;
 
 @Controller
 public class AddCarController {
-    @Autowired
-    ModelMapper modelMapper;
+
     @Autowired
     CarService carService;
     @Autowired
@@ -46,9 +44,10 @@ public class AddCarController {
 
             Map.Entry<Long, String> firstBrand = brandsMap.entrySet().iterator().next();
 
-            carDto.setCarBrand(new CarBrandDto(firstBrand.getKey(), firstBrand.getValue()));
+            carDto.setBrandId(firstBrand.getKey());
+            carDto.setBrandName(firstBrand.getValue());
 
-            modelsMap = modelService.getAllBrandModels(carDto.getCarBrand().getId()).stream()
+            modelsMap = modelService.getAllBrandModels(carDto.getBrandId()).stream()
                     .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
         } else {
             modelsMap = new HashMap<>();
@@ -65,7 +64,7 @@ public class AddCarController {
     @PostMapping(value = "add-car")
     public String addCarRefresh(@ModelAttribute("car") CarDto carDto, BindingResult bindingResult,
                          Model model) {
-        Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarBrand().getId()).stream()
+        Map<Long, String> models = modelService.getAllBrandModels(carDto.getBrandId()).stream()
                 .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
 
         model.addAttribute("car", carDto);
@@ -81,10 +80,7 @@ public class AddCarController {
                                Model model, RedirectAttributes redirectAttrs) {
         carDto.setId(null); // TODO: service level?
 
-        // Mapper won't set car.carBrand without it
-        carDto.getCarModel().setCarBrand(carDto.getCarBrand());
-        Car car = modelMapper.map(carDto, Car.class);
-
+        Car car = CarDtoMapper.fromDto(carDto);
         carService.addNewCar(car);
 
         redirectAttrs.addFlashAttribute("carId", car.getId());

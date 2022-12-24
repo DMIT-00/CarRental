@@ -5,8 +5,8 @@
 
 <form:form method="POST" action="/CarRental/add-model" modelAttribute="model">
     <div class="mb-3">
-        <form:label path="carBrand.id" class="form-label">Brand name</form:label>
-        <form:select path="carBrand.id" class="form-select">
+        <form:label path="brandId" class="form-label">Brand name</form:label>
+        <form:select path="brandId" class="form-select">
             <form:options items="${brands}" />
         </form:select>
     </div>
