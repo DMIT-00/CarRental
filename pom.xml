@@ -24,7 +24,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <slf4j.version>1.7.36</slf4j.version>
-    <slf4j.version>2.17.1</slf4j.version>
     <spring.version>5.3.23</spring.version>
     <spring.boot.version>2.7.6</spring.boot.version>
   </properties>
@@ -37,20 +36,15 @@
         <version>${spring.version}</version>
       </dependency>
 
-      <!-- logging -->
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-        <version>${log4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-1.2-api</artifactId>
-        <version>${log4j.version}</version>
-      </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
         <version>${slf4j.version}</version>
       </dependency>
 
