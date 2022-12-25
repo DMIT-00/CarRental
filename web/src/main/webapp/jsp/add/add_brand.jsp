@@ -6,6 +6,7 @@
     <div class="mb-3">
         <form:label path="brandName" class="form-label">Name</form:label>
         <form:input path="brandName" class="form-control"/>
+        <form:errors path="brandName" cssClass="text-danger"/>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

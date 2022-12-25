@@ -5,12 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarModelDto {
     private Long id;
+    @Size(min = 2, max = 14)
     private String modelName;
     private CarBrandDto carBrand;
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,9 +36,9 @@ public class AddModelController {
     }
 
     @PostMapping("add-model")
-    public String addModel(@ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult) {
-        //        if (bindingResult.hasErrors())
-//            return "redirect:/add-brand";
+    public String addModel(@Valid @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "add/add_model";
 
         carModelDto.setId(null); // TODO: service level?
 

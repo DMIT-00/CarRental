@@ -74,6 +74,13 @@
             <version>2.14.0</version>
         </dependency>
 
+        <!-- Input validation in web layer -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.2.5.Final</version>
+        </dependency>
+
         <!-- Used for DTO mapping -->
         <dependency>
             <groupId>org.modelmapper</groupId>

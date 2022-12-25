@@ -49,14 +49,17 @@
             <div class="col-sm">
                 <form:label path="color" class="form-label">Color</form:label>
                 <form:input path="color" value="BLACK" class="form-control"/>
+                <form:errors path="color" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
                 <form:label path="year" class="form-label">Year of manufacture</form:label>
                 <form:input path="year" type="number" min="1800" max="2800" value="2000" class="form-control"/>
+                <form:errors path="year" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
                 <form:label path="numberOfSeats" class="form-label">Number of seats</form:label>
                 <form:input path="numberOfSeats" type="number" min="0" max="400" value="5" class="form-control"/>
+                <form:errors path="numberOfSeats" cssClass="text-danger"/>
             </div>
         </div>
     </div>
@@ -66,14 +69,17 @@
             <div class="col-sm">
                 <form:label path="enginePower" class="form-label">Engine power</form:label>
                 <form:input path="enginePower" type="number" min="0" max="1000" step="0.1" class="form-control"/>
+                <form:errors path="enginePower" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
                 <form:label path="fuelConsumption" class="form-label">Fuel consumption</form:label>
                 <form:input path="fuelConsumption" type="number" min="0" max="1000" step="0.1" class="form-control"/>
+                <form:errors path="fuelConsumption" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
                 <form:label path="price" class="form-label">Price</form:label>
                 <form:input path="price" type="number" step="any" value="100" class="form-control"/>
+                <form:errors path="price" cssClass="text-danger"/>
             </div>
         </div>
     </div>

@@ -14,6 +14,7 @@
     <div class="mb-3">
         <form:label path="modelName" class="form-label">Model Name</form:label>
         <form:input path="modelName" class="form-control"/>
+        <form:errors path="modelName" cssClass="text-danger"/>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>

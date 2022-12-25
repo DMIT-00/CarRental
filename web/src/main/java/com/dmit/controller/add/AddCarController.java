@@ -16,8 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -61,24 +63,24 @@ public class AddCarController {
         return "add/add_car";
     }
 
-    //  This method updates form on select input changes
     @PostMapping(value = "add-car")
-    public String addCarRefresh(@ModelAttribute("car") CarDto carDto, BindingResult bindingResult,
-                         Model model) {
-        Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarBrand().getId()).stream()
-                .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
+    public String addCar(@Valid @ModelAttribute("car") CarDto carDto, BindingResult bindingResult,
+                         @RequestParam(value = "submit-car", required = false) String action, Model model,
+                         RedirectAttributes redirectAttrs) {
+        // Binding has errors, or page refreshed on select change,
+        // just update the page with errors and CarModel and CarBrand from database
+        if (bindingResult.hasErrors() || action == null) {
+            Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarBrand().getId()).stream()
+                    .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
 
-        model.addAttribute("car", carDto);
-        model.addAttribute("models", models);
-        model.addAttribute("brands", brandService.getAllBrands().stream()
-                .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
+            model.addAttribute("car", carDto);
+            model.addAttribute("models", models);
+            model.addAttribute("brands", brandService.getAllBrands().stream()
+                    .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
 
-        return "add/add_car";
-    }
+            return "add/add_car";
+        }
 
-    @PostMapping(value = "add-car", params = "submit-car")
-    public String addCar(@ModelAttribute("car") CarDto carDto, BindingResult bindingResult,
-                               Model model, RedirectAttributes redirectAttrs) {
         carDto.setId(null); // TODO: service level?
 
         // Mapper won't set car.carBrand without it
