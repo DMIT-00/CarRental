@@ -24,22 +24,22 @@
 
     <tbody>
         <tr class='table-row'>
-            <td><c:out value="${carDto.carBrand.brandName}"/></td>
-            <td><c:out value="${carDto.carModel.modelName}"/></td>
-            <td><c:out value="${carDto.transmission}"/></td>
-            <td><c:out value="${carDto.numberOfSeats}"/></td>
-            <td><c:out value="${carDto.fuelType}"/></td>
-            <td><c:out value="${carDto.fuelConsumption}"/></td>
-            <td><c:out value="${carDto.enginePower}"/></td>
-            <td><c:out value="${carDto.color}"/></td>
-            <td><c:out value="${carDto.year}"/></td>
-            <td><c:out value="${carDto.abs}"/></td>
-            <td><c:out value="${carDto.cruiseControl}"/></td>
-            <td><c:out value="${carDto.heatedSeats}"/></td>
-            <td><c:out value="${carDto.climateControl}"/></td>
-            <td><c:out value="${carDto.airBags}"/></td>
-            <td><c:out value="${carDto.bodyType}"/></td>
-            <td><c:out value="${carDto.price}"/></td>
+            <td><c:out value="${car.carModel.carBrand.brandName}"/></td>
+            <td><c:out value="${car.carModel.modelName}"/></td>
+            <td><c:out value="${car.transmission}"/></td>
+            <td><c:out value="${car.numberOfSeats}"/></td>
+            <td><c:out value="${car.fuelType}"/></td>
+            <td><c:out value="${car.fuelConsumption}"/></td>
+            <td><c:out value="${car.enginePower}"/></td>
+            <td><c:out value="${car.color}"/></td>
+            <td><c:out value="${car.year}"/></td>
+            <td><c:out value="${car.abs}"/></td>
+            <td><c:out value="${car.cruiseControl}"/></td>
+            <td><c:out value="${car.heatedSeats}"/></td>
+            <td><c:out value="${car.climateControl}"/></td>
+            <td><c:out value="${car.airBags}"/></td>
+            <td><c:out value="${car.bodyType}"/></td>
+            <td><c:out value="${car.price}"/></td>
         </tr>
     </tbody>
 

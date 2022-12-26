@@ -36,7 +36,7 @@ public class ShowCarController {
 
         CarDto carDto = modelMapper.map(car, CarDto.class);
 
-        model.addAttribute("carDto", carDto);
+        model.addAttribute("car", carDto);
         model.addAttribute("images", images);
 
         return "show_car";

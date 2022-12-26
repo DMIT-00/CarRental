@@ -27,7 +27,7 @@
   <tbody class="clickable">
     <c:forEach items="${cars}" var="car">
       <tr class='table-row' data-href='show-car/${car.id}'>
-        <td><c:out value="${car.carBrand.brandName}"/></td>
+        <td><c:out value="${car.carModel.carBrand.brandName}"/></td>
         <td><c:out value="${car.carModel.modelName}"/></td>
         <td><c:out value="${car.transmission}"/></td>
         <td><c:out value="${car.numberOfSeats}"/></td>

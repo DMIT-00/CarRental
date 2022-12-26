@@ -2,6 +2,7 @@ package com.dmit.controller.add;
 
 import com.dmit.dto.CarBrandDto;
 import com.dmit.dto.CarDto;
+import com.dmit.dto.CarModelDto;
 import com.dmit.entity.car.Car;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
@@ -45,13 +46,19 @@ public class AddCarController {
 
         // Set the first brand as current, if exists
         if (brandsMap.size() > 0) {
-
             Map.Entry<Long, String> firstBrand = brandsMap.entrySet().iterator().next();
+            CarBrandDto carBrandDto = new CarBrandDto(firstBrand.getKey(), firstBrand.getValue());
 
-            carDto.setCarBrand(new CarBrandDto(firstBrand.getKey(), firstBrand.getValue()));
-
-            modelsMap = modelService.getAllBrandModels(carDto.getCarBrand().getId()).stream()
+            modelsMap = modelService.getAllBrandModels(carBrandDto.getId()).stream()
                     .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
+
+            // Set the first model as current, if exists
+            if (modelsMap.size() > 0) {
+                Map.Entry<Long, String> firstModel = brandsMap.entrySet().iterator().next();
+                carDto.setCarModel(new CarModelDto(firstModel.getKey(), firstModel.getValue(), carBrandDto));
+            } else {
+                carDto.setCarModel(new CarModelDto(null, null, carBrandDto));
+            }
         } else {
             modelsMap = new HashMap<>();
         }
@@ -70,8 +77,9 @@ public class AddCarController {
         // Binding has errors, or page refreshed on select change,
         // just update the page with errors and CarModel and CarBrand from database
         if (bindingResult.hasErrors() || action == null) {
-            Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarBrand().getId()).stream()
-                    .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
+            Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarModel()
+                            .getCarBrand().getId()).stream()
+                            .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
 
             model.addAttribute("car", carDto);
             model.addAttribute("models", models);
@@ -83,8 +91,6 @@ public class AddCarController {
 
         carDto.setId(null); // TODO: service level?
 
-        // Mapper won't set car.carBrand without it
-        carDto.getCarModel().setCarBrand(carDto.getCarBrand());
         Car car = modelMapper.map(carDto, Car.class);
 
         carService.addNewCar(car);
