@@ -82,7 +82,8 @@ public class AddCarController {
                             .getCarBrand().getId()).stream()
                             .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
 
-            model.addAttribute("car", carDto);
+            // Don't think that is needed
+            //model.addAttribute("car", carDto);
             model.addAttribute("models", models);
             model.addAttribute("brands", brandService.getAllBrands().stream()
                     .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));

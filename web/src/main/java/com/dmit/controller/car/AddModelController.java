@@ -36,9 +36,14 @@ public class AddModelController {
     }
 
     @PostMapping("add-model")
-    public String addModel(@Valid @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
+    public String addModel(@Valid @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult,
+                           Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("brands", brandService.getAllBrands().stream()
+                    .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
+
             return "add/add_model";
+        }
 
         carModelDto.setId(null); // TODO: service level?
 
