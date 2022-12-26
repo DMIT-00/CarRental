@@ -7,8 +7,8 @@
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col-sm">
-                <form:label path="carBrand.id" class="form-label">Brand name</form:label>
-                <form:select path="carBrand.id" class="form-select" onchange="this.form.submit();">
+                <form:label path="carModel.carBrand.id" class="form-label">Brand name</form:label>
+                <form:select path="carModel.carBrand.id" class="form-select" onchange="this.form.submit();">
                     <form:options items="${brands}" />
                 </form:select>
             </div>

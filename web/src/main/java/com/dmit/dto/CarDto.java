@@ -47,7 +47,5 @@ public class CarDto {
     @NotNull
     private BodyType bodyType;
     @NotNull
-    private CarBrandDto carBrand;
-    @NotNull
     private CarModelDto carModel;
 }

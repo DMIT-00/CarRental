@@ -69,39 +69,10 @@ public class Car {
     private BodyType bodyType;
 
     @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
-    private CarBrand carBrand;
-
-    @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
     private CarModel carModel;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="car_id", nullable=false)
     private List<Image> images;
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Car{");
-        sb.append("id=").append(id);
-        sb.append(", year=").append(year);
-        sb.append(", color='").append(color).append('\'');
-        sb.append(", enginePower=").append(enginePower);
-        sb.append(", fuelType=").append(fuelType);
-        sb.append(", fuelConsumption=").append(fuelConsumption);
-        sb.append(", transmission=").append(transmission);
-        sb.append(", numberOfSeats=").append(numberOfSeats);
-        sb.append(", abs=").append(abs);
-        sb.append(", cruiseControl=").append(cruiseControl);
-        sb.append(", heatedSeats=").append(heatedSeats);
-        sb.append(", climateControl=").append(climateControl);
-        sb.append(", airBags=").append(airBags);
-        sb.append(", price=").append(price);
-        sb.append(", bodyType=").append(bodyType);
-        sb.append(", carBrand=").append(carBrand.getBrandName());
-        sb.append(", carModel=").append(carModel.getModelName());
-        //sb.append(", images=").append(images);
-        sb.append('}');
-        return sb.toString();
-    }
 }
