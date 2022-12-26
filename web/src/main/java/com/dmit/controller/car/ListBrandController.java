@@ -1,4 +1,4 @@
-package com.dmit.controller.list;
+package com.dmit.controller.car;
 
 import com.dmit.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.Map;
 
 @Controller
-public class BrandListController {
+public class ListBrandController {
     @Autowired
     BrandService brandService;
 

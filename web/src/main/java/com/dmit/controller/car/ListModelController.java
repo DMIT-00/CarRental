@@ -1,4 +1,4 @@
-package com.dmit.controller.list;
+package com.dmit.controller.car;
 
 import com.dmit.dto.CarBrandDto;
 import com.dmit.dto.CarModelDto;
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
-public class ModelListController {
+public class ListModelController {
     @Autowired
     ModelMapper modelMapper;
     @Autowired

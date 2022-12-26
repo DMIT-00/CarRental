@@ -1,4 +1,4 @@
-package com.dmit.controller.add;
+package com.dmit.controller.car;
 
 import com.dmit.entity.car.Image;
 import com.dmit.service.CarService;

@@ -1,4 +1,4 @@
-package com.dmit.controller;
+package com.dmit.controller.car;
 
 import com.dmit.dto.CarBrandDto;
 import com.dmit.dto.CarDto;

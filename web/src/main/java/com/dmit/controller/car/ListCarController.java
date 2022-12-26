@@ -1,4 +1,4 @@
-package com.dmit.controller.list;
+package com.dmit.controller.car;
 
 import com.dmit.dto.CarDto;
 import com.dmit.service.CarService;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-public class CarListController {
+public class ListCarController {
     @Autowired
     ModelMapper modelMapper;
     @Autowired
