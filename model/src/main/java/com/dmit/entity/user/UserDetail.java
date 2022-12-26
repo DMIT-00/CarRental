@@ -2,6 +2,7 @@ package com.dmit.entity.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -13,7 +14,8 @@ import java.util.UUID;
 @Table(name = "t_user_detail")
 public class UserDetail {
     @Id
-    @Column(name = "user_detail_id")
+    @Column(name = "user_detail_id", columnDefinition = "CHAR(36)")
+    @Type(type = "uuid-char")
     private UUID id;
     @Column(name = "user_first_name", nullable = false)
     private String firstName;
