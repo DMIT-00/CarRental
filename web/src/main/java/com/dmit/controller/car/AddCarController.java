@@ -46,6 +46,7 @@ public class AddCarController {
 
         // Set the first brand as current, if exists
         if (brandsMap.size() > 0) {
+
             Map.Entry<Long, String> firstBrand = brandsMap.entrySet().iterator().next();
             CarBrandDto carBrandDto = new CarBrandDto(firstBrand.getKey(), firstBrand.getValue());
 
