@@ -9,6 +9,7 @@
         <form:select path="carBrand.id" class="form-select">
             <form:options items="${brands}" />
         </form:select>
+        <form:errors path="carBrand.id" cssClass="text-danger"/>
     </div>
 
     <div class="mb-3">
