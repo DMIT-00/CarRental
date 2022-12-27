@@ -5,7 +5,7 @@
 
 <form:form method="POST" action="/CarRental/add-model" modelAttribute="model">
     <div class="mb-3">
-        <form:label path="carBrand.id" class="form-label">Brand name</form:label>
+        <form:label path="carBrand.id" class="form-label"><fmt:message key="car.brand_name"/></form:label>
         <form:select path="carBrand.id" class="form-select">
             <form:options items="${brands}" />
         </form:select>
@@ -13,12 +13,12 @@
     </div>
 
     <div class="mb-3">
-        <form:label path="modelName" class="form-label">Model Name</form:label>
+        <form:label path="modelName" class="form-label"><fmt:message key="car.model_name"/></form:label>
         <form:input path="modelName" class="form-control"/>
         <form:errors path="modelName" cssClass="text-danger"/>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary"><fmt:message key="add_model.submit"/></button>
 </form:form>
 
 <%@ include file="../templates/footer.jsp" %>

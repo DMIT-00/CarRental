@@ -23,7 +23,7 @@
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col text-center">
-                <button type="submit" style="width:100%;" name="submit-car" class="btn btn-primary btn-lg btn-block">Add images</button>
+                <button type="submit" style="width:100%;" name="submit-car" class="btn btn-primary btn-lg btn-block"><fmt:message key="add_images.submit"/></button>
             </div>
         </div>
     </div>

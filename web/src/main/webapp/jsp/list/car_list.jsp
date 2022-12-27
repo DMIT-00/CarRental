@@ -6,22 +6,22 @@
 
 <table style="width:100%" class="table" id="cartable">
   <tr>
-    <th>Brand</th>
-    <th>Model</th>
-    <th>Transmission</th>
-    <th>Seats</th>
-    <th>Fuel type</th>
-    <th>Fuel consumption</th>
-    <th>Engine power</th>
-    <th>Color</th>
-    <th>Year</th>
-    <th>ABS</th>
-    <th>Cruise control</th>
-    <th>Heated Seats</th>
-    <th>Climate control</th>
-    <th>Air bags</th>
-    <th>Body type</th>
-    <th>Price</th>
+    <th><fmt:message key="car.brand_name"/></th>
+    <th><fmt:message key="car.model_name"/></th>
+    <th><fmt:message key="car.transmission"/></th>
+    <th><fmt:message key="car.number_of_seats"/></th>
+    <th><fmt:message key="car.fuel_type"/></th>
+    <th><fmt:message key="car.fuel_consumption"/></th>
+    <th><fmt:message key="car.engine_power"/></th>
+    <th><fmt:message key="car.color"/></th>
+    <th><fmt:message key="car.year"/></th>
+    <th><fmt:message key="car.abs"/></th>
+    <th><fmt:message key="car.cruise_control"/></th>
+    <th><fmt:message key="car.heated_seats"/></th>
+    <th><fmt:message key="car.climate_control"/></th>
+    <th><fmt:message key="car.air_bags"/></th>
+    <th><fmt:message key="car.body_type"/></th>
+    <th><fmt:message key="car.price"/></th>
   </tr>
 
   <tbody class="clickable">

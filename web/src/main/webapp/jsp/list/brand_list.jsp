@@ -4,7 +4,7 @@
 
 <table style="width:100%" class="table">
   <tr>
-    <th>Name</th>
+    <th><fmt:message key="car.brand_name"/></th>
   </tr>
   <tbody>
     <c:forEach items="${brands}" var="carBrand">
