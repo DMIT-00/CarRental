@@ -1,4 +1,4 @@
-package com.dmit.dto;
+package com.dmit.dto.car;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.dmit.dto;
+package com.dmit.dto.car;
 
 import com.dmit.entity.car.BodyType;
 import com.dmit.entity.car.FuelType;

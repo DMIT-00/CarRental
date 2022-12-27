@@ -1,6 +1,6 @@
 package com.dmit.controller.car;
 
-import com.dmit.dto.CarBrandDto;
+import com.dmit.dto.car.CarBrandDto;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.service.BrandService;
 import org.modelmapper.ModelMapper;

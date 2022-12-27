@@ -1,6 +1,6 @@
 package com.dmit.controller.api;
 
-import com.dmit.dto.CarBrandDto;
+import com.dmit.dto.car.CarBrandDto;
 import com.dmit.service.BrandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

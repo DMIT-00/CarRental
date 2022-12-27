@@ -1,6 +1,5 @@
-package com.dmit.configuration;
+package com.dmit.config;
 
-import com.dmit.config.DataConfig;
 import com.dmit.service.config.ServiceConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -16,7 +15,7 @@ public class ServletInitializer extends AbstractAnnotationConfigDispatcherServle
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { WebConfiguration.class };
+        return new Class[] { WebConfig.class };
     }
 
     @Override

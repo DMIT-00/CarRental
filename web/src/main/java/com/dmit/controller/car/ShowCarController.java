@@ -1,8 +1,6 @@
 package com.dmit.controller.car;
 
-import com.dmit.dto.CarBrandDto;
-import com.dmit.dto.CarDto;
-import com.dmit.dto.CarModelDto;
+import com.dmit.dto.car.CarDto;
 import com.dmit.entity.car.Car;
 import com.dmit.entity.car.Image;
 import com.dmit.service.CarImageService;

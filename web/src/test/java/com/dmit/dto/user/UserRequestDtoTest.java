@@ -1,17 +1,14 @@
 package com.dmit.dto.user;
 
 import com.dmit.config.DataConfig;
-import com.dmit.configuration.WebConfiguration;
+import com.dmit.config.WebConfig;
 import com.dmit.service.config.ServiceConfig;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -25,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {
-        WebConfiguration.class,
+        WebConfig.class,
         ServiceConfig.class,
         DataConfig.class
 })

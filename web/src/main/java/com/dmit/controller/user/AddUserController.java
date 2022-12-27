@@ -3,7 +3,7 @@ package com.dmit.controller.user;
 import com.dmit.dto.user.UserDetailDto;
 import com.dmit.dto.user.UserRequestDto;
 import com.dmit.entity.user.User;
-import com.dmit.service.user.UserService;
+import com.dmit.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

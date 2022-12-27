@@ -1,7 +1,7 @@
 package com.dmit.controller.user;
 
 import com.dmit.dto.user.UserLoginDto;
-import com.dmit.service.user.UserService;
+import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.dmit.dao.user;
+package com.dmit.dao;
 
 import com.dmit.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

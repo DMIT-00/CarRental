@@ -1,6 +1,6 @@
-package com.dmit.service.user;
+package com.dmit.service;
 
-import com.dmit.dao.user.UserDao;
+import com.dmit.dao.UserDao;
 import com.dmit.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
