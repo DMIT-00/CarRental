@@ -26,7 +26,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/CarRental/list/car"><fmt:message key="navbar.our_cars"/></a>
+                    <a class="nav-link" href="/CarRental/car-list"><fmt:message key="navbar.our_cars"/></a>
                 </li>
 
                 <li class="nav-item dropdown">

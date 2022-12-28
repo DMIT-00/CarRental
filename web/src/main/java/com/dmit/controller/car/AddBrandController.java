@@ -25,14 +25,14 @@ public class AddBrandController {
     public String addBrandForm(Model model) {
         model.addAttribute("brand", new CarBrandDto());
 
-        return "add/add_brand";
+        return "car/add_brand";
     }
 
     @PostMapping("add-brand")
     public String addBrand(@Valid @ModelAttribute("brand") CarBrandDto carBrandDto, BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors())
-            return "add/add_brand";
+            return "car/add_brand";
 
         carBrandDto.setId(null); // TODO: service level?
 

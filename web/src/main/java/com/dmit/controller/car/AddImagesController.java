@@ -29,7 +29,7 @@ public class AddImagesController {
     // FIXME:: call security! Only car owner can do that!
     @GetMapping(value = "add-images")
     public String addCarImagesForm(Model model) {
-        return "add/add_images";
+        return "car/add_images";
     }
 
     // FIXME:: call security! Only car owner can do that!

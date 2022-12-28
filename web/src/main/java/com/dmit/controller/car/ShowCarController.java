@@ -37,7 +37,7 @@ public class ShowCarController {
         model.addAttribute("car", carDto);
         model.addAttribute("images", images);
 
-        return "show_car";
+        return "car/show_car";
     }
 
     @ResponseBody

@@ -52,7 +52,7 @@ public class ListModelController {
         model.addAttribute("brand", currentBrand);
         model.addAttribute("brands", brands);
         model.addAttribute("models", modelsDto);
-        return "list/model_list";
+        return "car/list_model";
     }
 
     @PostMapping("model-list")
@@ -78,6 +78,6 @@ public class ListModelController {
         model.addAttribute("brands", brands);
         model.addAttribute("models", modelsDto);
 
-        return "list/model_list";
+        return "car/list_model";
     }
 }

@@ -28,6 +28,6 @@ public class ListCarController {
 
         model.addAttribute("cars", cars);
 
-        return "list/car_list";
+        return "car/list_car";
     }
 }

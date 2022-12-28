@@ -32,7 +32,7 @@ public class AddModelController {
         model.addAttribute("brands", brandService.getAllBrands().stream()
                 .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
 
-        return "add/add_model";
+        return "car/add_model";
     }
 
     @PostMapping("add-model")
@@ -42,7 +42,7 @@ public class AddModelController {
             model.addAttribute("brands", brandService.getAllBrands().stream()
                     .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
 
-            return "add/add_model";
+            return "car/add_model";
         }
 
         carModelDto.setId(null); // TODO: service level?

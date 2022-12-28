@@ -68,7 +68,7 @@ public class AddCarController {
         model.addAttribute("models", modelsMap);
         model.addAttribute("brands", brandsMap);
 
-        return "add/add_car";
+        return "car/add_car";
     }
 
     @PostMapping(value = "add-car")
@@ -88,7 +88,7 @@ public class AddCarController {
             model.addAttribute("brands", brandService.getAllBrands().stream()
                     .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
 
-            return "add/add_car";
+            return "car/add_car";
         }
 
         carDto.setId(null); // TODO: service level?
