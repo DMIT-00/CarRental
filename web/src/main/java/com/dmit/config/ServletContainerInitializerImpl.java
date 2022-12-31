@@ -1,5 +1,6 @@
 package com.dmit.config;
 
+import com.dmit.security.WebSecurityConfig;
 import com.dmit.service.config.ServiceConfig;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -18,6 +19,7 @@ public class ServletContainerInitializerImpl implements ServletContainerInitiali
         context.register(DataConfig.class);
         context.register(ServiceConfig.class);
         context.register(WebConfig.class);
+        context.register(WebSecurityConfig.class);
 
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
 
