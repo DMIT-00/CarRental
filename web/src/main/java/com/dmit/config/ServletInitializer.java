@@ -1,5 +1,6 @@
 package com.dmit.config;
 
+import com.dmit.security.WebSecurityConfig;
 import com.dmit.service.config.ServiceConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -10,7 +11,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { DataConfig.class, ServiceConfig.class };
+        return new Class[] { DataConfig.class, ServiceConfig.class, WebSecurityConfig.class };
     }
 
     @Override
