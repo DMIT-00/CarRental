@@ -18,13 +18,19 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/").permitAll()
+                        .antMatchers("/add-user").permitAll()
+                        .antMatchers("/logout").permitAll()
                         .antMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(withDefaults());
-                .formLogin();
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .permitAll()
+                );
         return http.build();
     }
 

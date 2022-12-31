@@ -84,6 +84,10 @@
                     </security:authorize>
                 </li>
 
+                <security:authorize access="isAnonymous()">
+                    <a class="nav-link" href="/CarRental/add-user"><fmt:message key="navbar.register"/></a>
+                </security:authorize>
+
             </ul>
 
             <form class="d-flex" role="search" action="/hello/search.do" method="post">

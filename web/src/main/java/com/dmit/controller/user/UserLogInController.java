@@ -14,22 +14,9 @@ import javax.validation.Valid;
 
 @Controller
 public class UserLogInController {
-    @Autowired
-    UserService userService;
 
-    @GetMapping("user-login")
-    public String loginUserForm(Model model) {
-        model.addAttribute("user", new UserLoginDto());
-
+    @GetMapping("login")
+    public String loginUserForm() {
         return "user/user_login";
-    }
-
-    @PostMapping(value = "user-login")
-    public String registerUser(@Valid @ModelAttribute("user") UserLoginDto userLoginDto,
-                               BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors())
-            return "user/add_user";
-
-        return "redirect:/";
     }
 }
