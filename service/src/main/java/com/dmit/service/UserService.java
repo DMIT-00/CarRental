@@ -23,4 +23,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);
     }
+
+    @Transactional
+    public User findUserByUsername(String username) {
+        return userDao.findByUsername(username);
+    }
 }
