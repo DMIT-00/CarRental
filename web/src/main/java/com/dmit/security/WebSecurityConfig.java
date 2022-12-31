@@ -20,6 +20,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/").permitAll()
+                        .antMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.httpBasic(withDefaults());
