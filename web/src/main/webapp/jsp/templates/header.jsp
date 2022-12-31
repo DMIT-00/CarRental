@@ -68,6 +68,13 @@
                     </ul>
                 </li>
 
+                <security:authorize access="isAnonymous()">
+                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<fmt:message key="navbar.guest"/>&nbsp;</a>
+                </security:authorize>
+                <security:authorize access="isAuthenticated()">
+                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<security:authentication property="name"/>&nbsp;</a>
+                </security:authorize>
+
                 <li class="nav-item">
                     <security:authorize access="isAnonymous()">
                         <a class="nav-link" href="${pageContext.request.contextPath}/login"><fmt:message key="navbar.login"/></a>
@@ -77,12 +84,6 @@
                     </security:authorize>
                 </li>
 
-                <security:authorize access="isAnonymous()">
-                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<fmt:message key="navbar.guest"/>&nbsp;</a>
-                </security:authorize>
-                <security:authorize access="isAuthenticated()">
-                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<security:authentication property="name"/>&nbsp;</a>
-                </security:authorize>
             </ul>
 
             <form class="d-flex" role="search" action="/hello/search.do" method="post">
