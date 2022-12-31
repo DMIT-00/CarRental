@@ -19,9 +19,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
+                        .antMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults());
+                //.httpBasic(withDefaults());
+                .formLogin();
         return http.build();
     }
 

@@ -15,6 +15,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
@@ -66,6 +67,22 @@
                         <li><a class="dropdown-item" href="?lang=ru"><fmt:message key="language.ru"/></a></li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <security:authorize access="isAnonymous()">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/login"><fmt:message key="navbar.login"/></a>
+                    </security:authorize>
+                    <security:authorize access="isAuthenticated()">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/logout"><fmt:message key="navbar.logout"/></a>
+                    </security:authorize>
+                </li>
+
+                <security:authorize access="isAnonymous()">
+                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<fmt:message key="navbar.guest"/>&nbsp;</a>
+                </security:authorize>
+                <security:authorize access="isAuthenticated()">
+                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<security:authentication property="name"/>&nbsp;</a>
+                </security:authorize>
             </ul>
 
             <form class="d-flex" role="search" action="/hello/search.do" method="post">
