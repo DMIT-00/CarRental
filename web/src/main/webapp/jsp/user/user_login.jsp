@@ -1,6 +1,6 @@
 <%@ include file="../templates/header.jsp" %>
 
-<form method="POST" action="${pageContext.request.contextPath}/login">
+<form method="POST" action="${pageContext.request.contextPath}/user-login">
     <div class="container mt-2 col-md-12">
         <div class="row">
             <div class="col-sm">

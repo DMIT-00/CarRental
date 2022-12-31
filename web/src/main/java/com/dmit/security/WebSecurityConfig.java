@@ -19,18 +19,27 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/").permitAll()
                         .antMatchers("/add-user").permitAll()
-                        .antMatchers("/logout").permitAll()
+                        .antMatchers("/user-login").permitAll()
+                        .antMatchers("/user-logout").permitAll()
                         .antMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                //.httpBasic(withDefaults());
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .permitAll()
-                );
+
+                .formLogin()
+                .loginPage("/user-login")
+                .loginProcessingUrl("/user-login")
+                .defaultSuccessUrl("/", false)
+
+                .and()
+
+                .logout()
+                .logoutUrl("/user-logout")
+                .deleteCookies("JSESSIONID");
+
         return http.build();
     }
 

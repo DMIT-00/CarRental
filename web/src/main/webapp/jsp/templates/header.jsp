@@ -23,7 +23,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index"><fmt:message key="navbar.home"/></a>
+                    <a class="nav-link active" aria-current="page" href="/CarRental/"><fmt:message key="navbar.home"/></a>
                 </li>
 
                 <li class="nav-item">
@@ -77,10 +77,10 @@
 
                 <li class="nav-item">
                     <security:authorize access="isAnonymous()">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/login"><fmt:message key="navbar.login"/></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/user-login"><fmt:message key="navbar.login"/></a>
                     </security:authorize>
                     <security:authorize access="isAuthenticated()">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/logout"><fmt:message key="navbar.logout"/></a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/user-logout"><fmt:message key="navbar.logout"/></a>
                     </security:authorize>
                 </li>
 

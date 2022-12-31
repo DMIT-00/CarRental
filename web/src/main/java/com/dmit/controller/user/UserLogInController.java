@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Controller
 public class UserLogInController {
 
-    @GetMapping("login")
+    @GetMapping("user-login")
     public String loginUserForm() {
         return "user/user_login";
     }
