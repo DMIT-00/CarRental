@@ -20,7 +20,7 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
 
-                .authorizeHttpRequests((authz) -> authz
+                .authorizeHttpRequests((authorize ) -> authorize
                         .antMatchers("/").permitAll()
                         .antMatchers("/add-user").permitAll()
                         .antMatchers("/user-login").permitAll()
