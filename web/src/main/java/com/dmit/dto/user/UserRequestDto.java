@@ -23,10 +23,10 @@ public class UserRequestDto {
     @Size(min = 4, max = 20)
     private String username;
     @NotNull
-    @Size(min = 8, max = 42)
+    @Size(min = 4, max = 42)
     private String password;
     @NotNull
-    @Size(min = 8, max = 42)
+    @Size(min = 4, max = 42)
     private String passwordRepeat;
     @Valid
     @NotNull

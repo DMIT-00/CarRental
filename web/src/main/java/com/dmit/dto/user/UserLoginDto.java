@@ -11,6 +11,6 @@ public class UserLoginDto {
     @Email(regexp = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$")
     private String email;
     @NotNull
-    @Size(min = 8, max = 42)
+    @Size(min = 4, max = 42)
     private String password;
 }
