@@ -27,7 +27,19 @@ public class User {
     @Column(name = "user_password", nullable = false)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetail userDetail;
+
+    public void addUserDetail(UserDetail userDetail) {
+        userDetail.setUser(this);
+        this.userDetail = userDetail;
+    }
+
+    public void removeUserDetail() {
+        if (userDetail != null) {
+            userDetail.setUser(null);
+            this.userDetail = null;
+        }
+    }
 }

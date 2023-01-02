@@ -29,7 +29,7 @@ public class UserDetail {
     private Date birthDate;
 
     @MapsId
-    @OneToOne(mappedBy = "userDetail")
+    @OneToOne
     @JoinColumn(name = "user_detail_id")   //same name as id @Column
     private User user;
 }
