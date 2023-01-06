@@ -1,5 +1,6 @@
 package com.dmit.security;
 
+import com.dmit.dto.user.UserDto;
 import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +20,7 @@ public class AuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            com.dmit.entity.user.User user = userService.findUserByUsername(username);
+            UserDto user = userService.findUserByUsername(username);
 
             if (user == null)
                 throw new UsernameNotFoundException("User not found: " + username);

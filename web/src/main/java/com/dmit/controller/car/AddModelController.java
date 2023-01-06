@@ -1,11 +1,9 @@
 package com.dmit.controller.car;
 
+import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarModelDto;
-import com.dmit.entity.car.CarBrand;
-import com.dmit.entity.car.CarModel;
 import com.dmit.service.BrandService;
 import com.dmit.service.ModelService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +18,6 @@ import java.util.stream.Collectors;
 @Controller
 public class AddModelController {
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
     BrandService brandService;
     @Autowired
     ModelService modelService;
@@ -30,7 +26,7 @@ public class AddModelController {
     public String addModelForm(Model model) {
         model.addAttribute("model", new CarModelDto());
         model.addAttribute("brands", brandService.getAllBrands().stream()
-                .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
+                .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
 
         return "car/add_model";
     }
@@ -40,16 +36,14 @@ public class AddModelController {
                            Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("brands", brandService.getAllBrands().stream()
-                    .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
+                    .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
 
             return "car/add_model";
         }
 
         carModelDto.setId(null); // TODO: service level?
 
-        CarModel carModel = modelMapper.map(carModelDto, CarModel.class);
-
-        modelService.addNewModel(carModel);
+        modelService.addNewModel(carModelDto);
 
         return "redirect:/model-list";
     }

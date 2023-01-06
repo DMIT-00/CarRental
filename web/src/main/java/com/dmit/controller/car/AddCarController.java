@@ -3,13 +3,9 @@ package com.dmit.controller.car;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarDto;
 import com.dmit.dto.car.CarModelDto;
-import com.dmit.entity.car.Car;
-import com.dmit.entity.car.CarBrand;
-import com.dmit.entity.car.CarModel;
 import com.dmit.service.BrandService;
 import com.dmit.service.CarService;
 import com.dmit.service.ModelService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +24,6 @@ import java.util.stream.Collectors;
 @Controller
 public class AddCarController {
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
     CarService carService;
     @Autowired
     ModelService modelService;
@@ -42,7 +36,7 @@ public class AddCarController {
         Map<Long, String> modelsMap;
 
         Map<Long, String> brandsMap = brandService.getAllBrands().stream()
-                .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName));
+                .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName));
 
         // Set the first brand as current, if exists
         if (brandsMap.size() > 0) {
@@ -51,7 +45,7 @@ public class AddCarController {
             CarBrandDto carBrandDto = new CarBrandDto(firstBrand.getKey(), firstBrand.getValue());
 
             modelsMap = modelService.getAllBrandModels(carBrandDto.getId()).stream()
-                    .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
+                    .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
             // Set the first model as current, if exists
             if (modelsMap.size() > 0) {
@@ -80,24 +74,22 @@ public class AddCarController {
         if (bindingResult.hasErrors() || action == null) {
             Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarModel()
                             .getCarBrand().getId()).stream()
-                            .collect(Collectors.toMap(CarModel::getId, CarModel::getModelName));
+                            .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
             // Don't think that is needed
             //model.addAttribute("car", carDto);
             model.addAttribute("models", models);
             model.addAttribute("brands", brandService.getAllBrands().stream()
-                    .collect(Collectors.toMap(CarBrand::getId, CarBrand::getBrandName)));
+                    .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
 
             return "car/add_car";
         }
 
         carDto.setId(null); // TODO: service level?
 
-        Car car = modelMapper.map(carDto, Car.class);
+        carService.addNewCar(carDto);
 
-        carService.addNewCar(car);
-
-        redirectAttrs.addFlashAttribute("carId", car.getId());
+        redirectAttrs.addFlashAttribute("carId", carDto.getId());
 
         return "redirect:/add-images";
     }

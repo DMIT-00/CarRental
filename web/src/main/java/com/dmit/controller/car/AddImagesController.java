@@ -26,7 +26,7 @@ public class AddImagesController {
     CarService carService;
 
 
-    // FIXME:: call security! Only car owner can do that!
+    // FIXME: call security! Only car owner can do that!
     @GetMapping(value = "add-images")
     public String addCarImagesForm(Model model) {
         return "car/add_images";
@@ -36,13 +36,13 @@ public class AddImagesController {
     @PostMapping(value = "add-images")
     public String addCarImages(@ModelAttribute("images") MultipartFile[] files, Model model) {
 
-        List<Image> images = new ArrayList<>();
+        List<byte[]> images = new ArrayList<>();
 
         Arrays.stream(files)
                 .filter(Predicate.not(MultipartFile::isEmpty))
                 .forEach(f -> {
                     try {
-                        images.add(new Image(null, f.getBytes()));
+                        images.add(f.getBytes());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

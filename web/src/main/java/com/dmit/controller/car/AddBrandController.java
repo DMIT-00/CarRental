@@ -1,9 +1,7 @@
 package com.dmit.controller.car;
 
 import com.dmit.dto.car.CarBrandDto;
-import com.dmit.entity.car.CarBrand;
 import com.dmit.service.BrandService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +14,6 @@ import javax.validation.Valid;
 
 @Controller
 public class AddBrandController {
-    @Autowired
-    ModelMapper modelMapper;
     @Autowired
     BrandService brandService;
 
@@ -36,7 +32,7 @@ public class AddBrandController {
 
         carBrandDto.setId(null); // TODO: service level?
 
-        brandService.addNewBrand(modelMapper.map(carBrandDto, CarBrand.class));
+        brandService.addNewBrand(carBrandDto);
 
         return "redirect:/brand-list";
     }

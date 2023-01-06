@@ -15,8 +15,10 @@ public class CarImageService {
     CarImageDao carImageDao;
 
     @Transactional
-    public Image getImage(UUID imageId) {
-        return carImageDao.findById(imageId).orElse(null); // TODO: Exception?
+    public byte[] getImage(UUID imageId) {
+        Image image = carImageDao.findById(imageId)
+                .orElseThrow(); // TODO: notfoundexception
+        return image.getImage();
     }
 
     public List<UUID> getImageIdsByCarId(UUID carId) {

@@ -1,6 +1,5 @@
 package com.dmit.config;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,11 +21,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages = "com.dmit.controller")
 public class WebConfig implements WebMvcConfigurer {
     static final long MAXIMUM_FILE_SIZE = 1_000_000;
-
-    @Bean
-    public ModelMapper getMapper() {
-        return new ModelMapper();
-    }
 
     @Bean
     public ViewResolver internalResourceViewResolver() {

@@ -1,20 +1,21 @@
 package com.dmit.dto.user;
 
-import com.dmit.dto.constraints.PasswordsEqualConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@PasswordsEqualConstraint(message = "Passwords must be equal")
-public class UserRequestDto {
+public class UserDto {
     @NotEmpty
     @NotNull
     @Email(regexp = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$")
@@ -25,14 +26,11 @@ public class UserRequestDto {
     @NotNull
     @Size(min = 4, max = 42)
     private String password;
-    @NotNull
-    @Size(min = 4, max = 42)
-    private String passwordRepeat;
     @Valid
     @NotNull
     private UserDetailDto userDetail;
 
-    public UserRequestDto(UserDetailDto userDetailDto) {
+    public UserDto(UserDetailDto userDetailDto) {
         this.userDetail = userDetailDto;
     }
 }

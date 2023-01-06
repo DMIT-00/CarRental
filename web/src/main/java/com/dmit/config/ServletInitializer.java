@@ -1,7 +1,6 @@
 package com.dmit.config;
 
 import com.dmit.security.WebSecurityConfig;
-import com.dmit.service.config.ServiceConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**

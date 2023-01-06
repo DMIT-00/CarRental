@@ -2,9 +2,7 @@ package com.dmit.controller.user;
 
 import com.dmit.dto.user.UserDetailDto;
 import com.dmit.dto.user.UserRequestDto;
-import com.dmit.entity.user.User;
 import com.dmit.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +15,6 @@ import javax.validation.Valid;
 
 @Controller
 public class AddUserController {
-    @Autowired
-    ModelMapper modelMapper;
     @Autowired
     UserService userService;
 
@@ -35,10 +31,7 @@ public class AddUserController {
         if (bindingResult.hasErrors())
             return "user/add_user";
 
-        User user = modelMapper.map(userRequestDto, User.class);
-        user.setId(null);
-
-        userService.registerUser(user);
+        userService.registerUser(userRequestDto);
 
         return "redirect:/";
     }
