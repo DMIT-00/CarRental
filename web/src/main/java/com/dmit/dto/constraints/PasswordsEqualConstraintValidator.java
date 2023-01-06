@@ -1,6 +1,6 @@
 package com.dmit.dto.constraints;
 
-import com.dmit.dto.user.UserRequestDto;
+import com.dmit.dto.UserRequestDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

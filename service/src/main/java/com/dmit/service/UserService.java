@@ -2,7 +2,6 @@ package com.dmit.service;
 
 import com.dmit.dao.UserDao;
 import com.dmit.dto.user.UserDto;
-import com.dmit.dto.user.UserRequestDto;
 import com.dmit.entity.user.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,12 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void registerUser(UserRequestDto userRequestDto) {
-        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
+    public void registerUser(UserDto userRequestDto) {
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userRequestDto);
 
         if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<UserRequestDto> constraintViolation : violations) {
+            for (ConstraintViolation<UserDto> constraintViolation : violations) {
                 sb.append(constraintViolation.getMessage());
             }
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
