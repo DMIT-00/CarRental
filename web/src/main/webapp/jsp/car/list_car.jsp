@@ -47,6 +47,40 @@
     </c:forEach>
   </tbody>
 
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+      <%-- Disable Previous on the first page --%>
+      <c:choose>
+            <c:when test="${page == 1}">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1"><fmt:message key="pagination.previous"/></a>
+              </li>
+            </c:when>
+            <c:otherwise>
+              <li class="page-item"><a class="page-link" href="/CarRental/car-list?page=${page - 1}"><fmt:message key="pagination.previous"/></a></li>
+            </c:otherwise>
+      </c:choose>
+
+
+      <li class="page-item"><a class="page-link" href=""><c:out value="${page}"/></a></li>
+
+      <c:choose>
+        <c:when test="${page == pages}">
+          <li class="page-item disabled">
+            <a class="page-link" href="/CarRental/car-list?page=${page}" tabindex="-1"><fmt:message key="pagination.next"/></a>
+          </li>
+        </c:when>
+        <c:otherwise>
+          <li class="page-item">
+            <a class="page-link" href="/CarRental/car-list?page=${page + 1}"><fmt:message key="pagination.next"/></a>
+          </li>
+        </c:otherwise>
+      </c:choose>
+
+    </ul>
+  </nav>
+
   <script type="text/javascript">
         $(document).ready(function($) {
             $(".table-row").click(function() {
