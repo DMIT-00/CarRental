@@ -9,6 +9,7 @@ curl --request POST --url 'http://localhost:8080/CarRental/add-model?carBrand.id
 
 curl --request POST --url 'http://localhost:8080/CarRental/add-model?carBrand.id=2&modelName=Sportage'
 curl --request POST --url 'http://localhost:8080/CarRental/add-model?carBrand.id=2&modelName=Sorento'
+curl --request POST --url 'http://localhost:8080/CarRental/add-model?carBrand.id=2&modelName=Rio'
 
 curl --request POST --url 'http://localhost:8080/CarRental/add-model?carBrand.id=3&modelName=Accord'
 curl --request POST --url 'http://localhost:8080/CarRental/add-model?carBrand.id=3&modelName=CR-V'
