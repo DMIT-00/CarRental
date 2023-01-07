@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -32,4 +33,19 @@ public class UserDetail {
     @OneToOne
     @JoinColumn(name = "user_detail_id")   //same name as id @Column
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UserDetail userDetail = (UserDetail) o;
+        return Objects.equals(id, userDetail.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
