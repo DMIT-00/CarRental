@@ -7,6 +7,7 @@ import com.dmit.entity.car.Image;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -47,6 +48,7 @@ public class CarService {
     }
 
     @Transactional
+    @Secured("ROLE_MANAGER")
     public void addNewCar(CarDto carDto) {
         Set<ConstraintViolation<CarDto>> violations = validator.validate(carDto);
 
@@ -75,6 +77,7 @@ public class CarService {
 
     // TODO: security check
     @Transactional
+    @Secured("ROLE_MANAGER")
     public void updateCarImages(UUID carId, List<byte[]> images) {
         Car car = carDao.findById(carId)
                 .orElseThrow(); // TODO: custom exception

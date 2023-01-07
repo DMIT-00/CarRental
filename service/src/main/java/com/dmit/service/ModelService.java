@@ -5,6 +5,7 @@ import com.dmit.dto.car.CarModelDto;
 import com.dmit.entity.car.CarModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,6 +40,7 @@ public class ModelService {
     }
 
     @Transactional
+    @Secured("ROLE_MANAGER")
     public void addNewModel(CarModelDto carModelDto) {
         Set<ConstraintViolation<CarModelDto>> violations = validator.validate(carModelDto);
 

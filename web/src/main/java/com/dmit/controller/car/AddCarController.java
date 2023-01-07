@@ -7,6 +7,7 @@ import com.dmit.service.BrandService;
 import com.dmit.service.CarService;
 import com.dmit.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
+@Secured("ROLE_MANAGER")
 public class AddCarController {
     @Autowired
     CarService carService;

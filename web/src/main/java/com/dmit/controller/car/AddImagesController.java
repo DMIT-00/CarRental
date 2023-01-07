@@ -3,6 +3,7 @@ package com.dmit.controller.car;
 import com.dmit.entity.car.Image;
 import com.dmit.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import java.util.function.Predicate;
 // TODO: is SessionAttributes ok?
 @Controller
 @SessionAttributes("carId")
+@Secured("ROLE_MANAGER")
 public class AddImagesController {
     @Autowired
     CarService carService;
