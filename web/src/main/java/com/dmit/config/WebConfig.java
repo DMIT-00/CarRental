@@ -18,7 +18,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.dmit.controller")
+@ComponentScan(basePackages = {
+        "com.dmit.controller",
+        "com.dmit.security"
+})
 public class WebConfig implements WebMvcConfigurer {
     static final long MAXIMUM_FILE_SIZE = 1_000_000;
 
