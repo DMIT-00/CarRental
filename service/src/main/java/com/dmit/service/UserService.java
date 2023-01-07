@@ -15,6 +15,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,6 +33,8 @@ public class UserService {
 
     @Transactional
     public void registerUser(UserDto userRequestDto) {
+        final String DEFAULT_ROLE = "USER";
+
         Set<ConstraintViolation<UserDto>> violations = validator.validate(userRequestDto);
 
         if (!violations.isEmpty()) {
@@ -59,10 +62,13 @@ public class UserService {
         user.getUserDetail().setUser(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role role = roleDao.findByRoleName("USER")
-                .orElse(roleDao.save(new Role(null, "USER", new HashSet<>())));
+        Optional<Role> role = roleDao.findByRoleName(DEFAULT_ROLE);
+        if (role.isEmpty()) {
+            roleDao.save(new Role(null, DEFAULT_ROLE, new HashSet<>()));
+            role = roleDao.findByRoleName(DEFAULT_ROLE);
+        }
 
-        user.addRole(role);
+        user.addRole(role.orElseThrow()); // TODO: Custom exception
 
         userDao.save(user);
     }
