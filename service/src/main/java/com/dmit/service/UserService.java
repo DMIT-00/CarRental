@@ -1,7 +1,9 @@
 package com.dmit.service;
 
+import com.dmit.dao.RoleDao;
 import com.dmit.dao.UserDao;
 import com.dmit.dto.user.UserDto;
+import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -22,6 +25,8 @@ public class UserService {
     private ModelMapper modelMapper;
     @Autowired
     UserDao userDao;
+    @Autowired
+    RoleDao roleDao;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -53,6 +58,11 @@ public class UserService {
         user.setId(null); // In case we get input with id somehow
         user.getUserDetail().setUser(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        Role role = roleDao.findByRoleName("USER")
+                .orElse(roleDao.save(new Role(null, "USER", new HashSet<>())));
+
+        user.addRole(role);
 
         userDao.save(user);
     }

@@ -10,6 +10,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +31,10 @@ public class UserDto {
     @Valid
     @NotNull
     private UserDetailDto userDetail;
+
+    @Valid
+    @NotNull
+    private Set<RoleDto> roles = new HashSet<>();
 
     public UserDto(UserDetailDto userDetailDto) {
         this.userDetail = userDetailDto;
