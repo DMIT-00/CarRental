@@ -20,7 +20,7 @@ import java.util.Set;
 @Table(name = "t_role")
 public class Role {
     @Id
-    @Column(name = "brand_id")
+    @Column(name = "role_id")
     @GeneratedValue(generator = "increment")
     @GenericGenerator(
             name = "increment",
