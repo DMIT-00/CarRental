@@ -3,10 +3,13 @@ package com.dmit.service;
 import com.dmit.dao.RoleDao;
 import com.dmit.dao.UserDao;
 import com.dmit.dto.user.UserDto;
+import com.dmit.dto.user.UserResponceDto;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,8 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -77,5 +79,27 @@ public class UserService {
     public UserDto findUserByUsername(String username) {
         // TODO NullPointer?
         return modelMapper.map(userDao.findByUsername(username), UserDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public long countUsers() {
+        return userDao.count();
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public List<UserResponceDto> getAllUsersPageable(int page, int size) {
+        return userDao.findAll(PageRequest.of(page, size)).stream()
+                .map(user -> modelMapper.map(user, UserResponceDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public UserResponceDto findUserById(UUID userId) {
+        Optional<User> user = userDao.findById(userId);
+        return modelMapper.map(user.orElseThrow(), UserResponceDto.class);
+        // TODO: custom exception
     }
 }

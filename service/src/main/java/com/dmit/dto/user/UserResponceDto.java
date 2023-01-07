@@ -18,7 +18,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserResponceDto {
     UUID id;
     @NotEmpty
     @NotNull
@@ -27,9 +27,6 @@ public class UserDto {
     @NotNull
     @Size(min = 4, max = 20)
     private String username;
-    @NotNull
-    @Size(min = 4, max = 42)
-    private String password;
     @Valid
     @NotNull
     private UserDetailDto userDetail;
@@ -38,7 +35,7 @@ public class UserDto {
     @NotNull
     private Set<RoleDto> roles = new HashSet<>();
 
-    public UserDto(UserDetailDto userDetailDto) {
+    public UserResponceDto(UserDetailDto userDetailDto) {
         this.userDetail = userDetailDto;
     }
 }

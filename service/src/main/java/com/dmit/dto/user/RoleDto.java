@@ -22,4 +22,9 @@ public class RoleDto implements GrantedAuthority {
     public String getAuthority() {
         return "ROLE_" + roleName;
     }
+
+    @Override
+    public String toString() {
+        return roleName;
+    }
 }

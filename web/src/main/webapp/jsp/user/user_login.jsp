@@ -4,7 +4,7 @@
     <div class="container mt-2 col-md-12">
         <div class="row">
             <div class="col-sm">
-                <input type="text" id="username" name="username" class="form-control" placeholder="<fmt:message key="add_user.username"/>" required
+                <input type="text" id="username" name="username" class="form-control" placeholder="<fmt:message key="user.username"/>" required
                        autofocus>
             </div>
         </div>
@@ -12,7 +12,7 @@
     <div class="container mt-2 col-md-12">
         <div class="row">
             <div class="col-sm">
-                <input type="password" id="password" name="password" class="form-control" placeholder="<fmt:message key="add_user.password"/>" required>
+                <input type="password" id="password" name="password" class="form-control" placeholder="<fmt:message key="user.password"/>" required>
             </div>
         </div>
     </div>

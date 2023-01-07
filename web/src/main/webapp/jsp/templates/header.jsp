@@ -51,6 +51,8 @@
                         <li><a class="dropdown-item" href="/CarRental/brand-list"><fmt:message key="navbar.list_brands"/></a></li>
                         <li><a class="dropdown-item" href="/CarRental/model-list"><fmt:message key="navbar.list_models"/></a></li>
                         <li><a class="dropdown-item" href="/CarRental/car-list"><fmt:message key="navbar.list_cars"/></a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" href="/CarRental/user-list"><fmt:message key="navbar.list_user"/></a></li>
                     </ul>
                 </li>
 

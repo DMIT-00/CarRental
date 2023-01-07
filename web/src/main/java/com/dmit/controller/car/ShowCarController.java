@@ -21,7 +21,6 @@ public class ShowCarController {
     @Autowired
     CarImageService carImageService;
 
-    // TODO: security
     @GetMapping("/show-car/{carId}")
     String showCar(@PathVariable(required = true) UUID carId, Model model) {
         CarDto carDto = carService.getCar(carId);
