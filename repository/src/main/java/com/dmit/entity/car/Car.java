@@ -1,5 +1,6 @@
 package com.dmit.entity.car;
 
+import com.dmit.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -75,4 +76,8 @@ public class Car {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="car_id", nullable=false)
     private List<Image> images;
+
+    @OneToOne
+    @JoinColumn(name = "active_order_id")
+    Order activeOrder;
 }

@@ -1,5 +1,6 @@
 package com.dmit.entity.user;
 
+import com.dmit.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "active_order_id")
+    Order activeOrder;
 
     public void addUserDetail(UserDetail userDetail) {
         userDetail.setUser(this);
