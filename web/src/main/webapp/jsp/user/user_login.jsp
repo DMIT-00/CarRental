@@ -1,6 +1,17 @@
 <%@ include file="../templates/header.jsp" %>
 
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
 <form method="POST" action="${pageContext.request.contextPath}/user-login">
+    <div class="container mt-2 col-md-12">
+        <c:if test="${param.error != null}">
+            <div id="error" class="text-danger" align="center">
+                <fmt:message key="user.bad_credentials"/>
+                ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+            </div>
+        </c:if>
+    </div>
+
     <div class="container mt-2 col-md-12">
         <div class="row">
             <div class="col-sm">
@@ -25,7 +36,6 @@
             </div>
         </div>
     </div>
-
 
 </form>
 
