@@ -1,7 +1,6 @@
 package com.dmit.controller.user;
 
-import com.dmit.dto.user.UserDto;
-import com.dmit.dto.user.UserResponceDto;
+import com.dmit.dto.user.UserResponseDto;
 import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -20,9 +19,9 @@ public class ShowUserController {
 
     @GetMapping("/user-show/{userId}")
     String showUser(@PathVariable(required = true) UUID userId, Model model) {
-        UserResponceDto userResponceDto = userService.findUserById(userId);
+        UserResponseDto userResponseDto = userService.findUserById(userId);
 
-        model.addAttribute("user", userResponceDto);
+        model.addAttribute("user", userResponseDto);
 
         return "user/show_user";
     }

@@ -12,6 +12,7 @@
         <th><fmt:message key="user.credit_card"/></th>
         <th><fmt:message key="user.birth_date"/></th>
         <th><fmt:message key="user.roles"/></th>
+        <th><fmt:message key="user.locked"/></th>
     </tr>
 
     <tbody>
@@ -24,6 +25,7 @@
             <td><c:out value="${user.userDetail.creditCard}"/></td>
             <td><c:out value="${user.userDetail.birthDate}"/></td>
             <td><c:out value="${user.roles}"/></td>
+            <td><c:out value="${user.locked}"/></td>
         </tr>
     </tbody>
 

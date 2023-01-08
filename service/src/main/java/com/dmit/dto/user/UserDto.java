@@ -30,10 +30,10 @@ public class UserDto {
     @NotNull
     @Size(min = 4, max = 42)
     private String password;
+    private boolean locked;
     @Valid
     @NotNull
     private UserDetailDto userDetail;
-
     @Valid
     @NotNull
     private Set<RoleDto> roles = new HashSet<>();

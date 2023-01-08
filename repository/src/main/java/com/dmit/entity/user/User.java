@@ -34,6 +34,9 @@ public class User {
     @Column(name = "user_password", nullable = false)
     private String password;
 
+    @Column(name = "user_locked", nullable = false)
+    private boolean locked;
+
     @PrimaryKeyJoinColumn
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserDetail userDetail;

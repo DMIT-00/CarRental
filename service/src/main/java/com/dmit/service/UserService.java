@@ -3,7 +3,7 @@ package com.dmit.service;
 import com.dmit.dao.RoleDao;
 import com.dmit.dao.UserDao;
 import com.dmit.dto.user.UserDto;
-import com.dmit.dto.user.UserResponceDto;
+import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import org.modelmapper.ModelMapper;
@@ -60,7 +60,10 @@ public class UserService {
             throw new IllegalArgumentException("Credit card is already used to register");
 
         User user = modelMapper.map(userRequestDto, User.class);
+
         user.setId(null); // In case we get input with id somehow
+        user.setLocked(false);
+
         user.getUserDetail().setUser(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -89,17 +92,17 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_ADMIN")
-    public List<UserResponceDto> getAllUsersPageable(int page, int size) {
+    public List<UserResponseDto> getAllUsersPageable(int page, int size) {
         return userDao.findAll(PageRequest.of(page, size)).stream()
-                .map(user -> modelMapper.map(user, UserResponceDto.class))
+                .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional
     @Secured("ROLE_ADMIN")
-    public UserResponceDto findUserById(UUID userId) {
+    public UserResponseDto findUserById(UUID userId) {
         Optional<User> user = userDao.findById(userId);
-        return modelMapper.map(user.orElseThrow(), UserResponceDto.class);
+        return modelMapper.map(user.orElseThrow(), UserResponseDto.class);
         // TODO: custom exception
     }
 }
