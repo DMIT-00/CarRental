@@ -92,8 +92,64 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_ADMIN")
+    public long countBlockedUsers() {
+        return userDao.countByLockedTrue();
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public long countNotBlockedUsers() {
+        return userDao.countByLockedFalse();
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public long countActiveOrderUsers() {
+        return userDao.countByActiveOrderNotNull();
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public long countInactiveOrderUsers() {
+        return userDao.countByActiveOrderIsNull();
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
     public List<UserResponseDto> getAllUsersPageable(int page, int size) {
         return userDao.findAll(PageRequest.of(page, size)).stream()
+                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public List<UserResponseDto> getBlockedUsersPageable(int page, int size) {
+        return userDao.findAllByLockedTrue(PageRequest.of(page, size)).stream()
+                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public List<UserResponseDto> getNotBlockedUsersPageable(int page, int size) {
+        return userDao.findAllByLockedFalse(PageRequest.of(page, size)).stream()
+                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public List<UserResponseDto> getActiveOrderUsersPageable(int page, int size) {
+        return userDao.findAllByActiveOrderNotNull(PageRequest.of(page, size)).stream()
+                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Secured("ROLE_ADMIN")
+    public List<UserResponseDto> getInactiveOrderUsersPageable(int page, int size) {
+        return userDao.findAllByActiveOrderIsNull(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
     }
