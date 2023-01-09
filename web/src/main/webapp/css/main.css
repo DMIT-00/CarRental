@@ -1,28 +1,3 @@
-/* Make footer stay on the bottom */
-html{ height:100%; }
-body { min-height:100%;  margin:0; }
-
-header {
-  height: 50px;
-}
-
-article {
-  height: 1%;
-}
-
-footer {
-  height: 50px;
-}
-
-body {
-  display: table;
-  width: 100%;
-}
-
-body > footer {
-   display: table-row;
-}
-
 /* Select hovered clickable tables */
 .clickable tr:hover{
   cursor: pointer;
