@@ -26,9 +26,9 @@ import java.util.Set;
 @Service
 public class OrderService {
     @Autowired
-    private Validator validator;
+    Validator validator;
     @Autowired
-    private ModelMapper modelMapper;
+    ModelMapper modelMapper;
     @Autowired
     OrderDao orderDao;
     @Autowired
@@ -49,16 +49,17 @@ public class OrderService {
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
         }
 
+        // Get current user for the order
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDao.findByUsername(auth.getName());
         if (user == null)
             throw new UsernameNotFoundException("User not found! Username: " + auth.getName());
 
+        // Get car for the order
         Car car = carDao.findById(orderRequestDto.getCarId())
                 .orElseThrow(() -> new UsernameNotFoundException("Car can't be found! Car ID " + orderRequestDto.getCarId())); // TODO: Custom exception
 
         Order order = modelMapper.map(orderRequestDto, Order.class);
-
 
         order.setId(null);
         order.setOrderStatus(OrderStatus.PAYMENT);
