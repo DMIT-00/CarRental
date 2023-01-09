@@ -4,6 +4,24 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+      <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="/CarRental/user-list">All</a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link ${param.filter == 'active' ? 'active' : ''}" href="?filter=active">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link ${param.filter == 'blocked' ? 'active' : ''}" href="?filter=blocked">Blocked</a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link ${param.filter == 'active_order' ? 'active' : ''}" href="?filter=active_order">With active order</a>
+  </li>
+  <li class="nav-item">
+      <a class="nav-link ${param.filter == 'inactive_order' ? 'active' : ''}" href="?filter=inactive_order">Without active order</a>
+  </li>
+</ul>
+
 <table style="width:100%" class="table" id="usertable">
   <tr>
     <th><fmt:message key="user.username"/></th>
@@ -15,6 +33,7 @@
     <th><fmt:message key="user.birth_date"/></th>
     <th><fmt:message key="user.roles"/></th>
     <th><fmt:message key="user.locked"/></th>
+    <th><fmt:message key="order.active_order"/></th>
   </tr>
 
   <tbody class="clickable">
@@ -29,12 +48,20 @@
         <td><c:out value="${user.userDetail.birthDate}"/></td>
         <td><c:out value="${user.roles}"/></td>
         <td><c:out value="${user.locked}"/></td>
+        <c:choose>
+          <c:when test="${user.activeOrder != null}">
+            <td><a href="/CarRental/show-order/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
+          </c:when>
+          <c:otherwise>
+            <td>-</td>
+          </c:otherwise>
+        </c:choose>
       </tr>
     </c:forEach>
   </tbody>
 
   <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination justify-content-center position-bottom">
 
       <%-- Disable Previous on the first page --%>
       <c:choose>

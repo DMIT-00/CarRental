@@ -13,6 +13,7 @@
         <th><fmt:message key="user.birth_date"/></th>
         <th><fmt:message key="user.roles"/></th>
         <th><fmt:message key="user.locked"/></th>
+        <th><fmt:message key="order.active_order"/></th>
     </tr>
 
     <tbody>
@@ -26,6 +27,14 @@
             <td><c:out value="${user.userDetail.birthDate}"/></td>
             <td><c:out value="${user.roles}"/></td>
             <td><c:out value="${user.locked}"/></td>
+            <c:choose>
+                <c:when test="${user.activeOrder != null}">
+                    <td><a href="/CarRental/show-order/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
+                </c:when>
+                <c:otherwise>
+                    <td>-</td>
+                </c:otherwise>
+            </c:choose>
         </tr>
     </tbody>
 
