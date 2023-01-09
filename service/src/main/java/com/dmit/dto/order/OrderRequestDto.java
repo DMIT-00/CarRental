@@ -17,9 +17,9 @@ import java.util.UUID;
 public class OrderRequestDto {
     @Future
     @NotNull
-    Timestamp startDate;
+    private Timestamp startDate;
     @NotNull
-    Long numberOfHours;
+    private Long numberOfHours;
     @NotNull
     private UUID carId;
 }
