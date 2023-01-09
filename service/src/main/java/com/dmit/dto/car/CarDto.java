@@ -1,5 +1,6 @@
 package com.dmit.dto.car;
 
+import com.dmit.dto.order.OrderDto;
 import com.dmit.entity.car.BodyType;
 import com.dmit.entity.car.FuelType;
 import com.dmit.entity.car.TransmissionType;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -59,4 +61,6 @@ public class CarDto {
     private BodyType bodyType;
     @NotNull
     private CarModelDto carModel;
+    @Valid
+    private OrderDto activeOrder;
 }

@@ -1,5 +1,6 @@
 package com.dmit.dto.user;
 
+import com.dmit.dto.order.OrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,8 @@ public class UserResponseDto {
     @Valid
     @NotNull
     private UserDetailDto userDetail;
+    @Valid
+    private OrderDto activeOrder;
     @Valid
     @NotNull
     private Set<RoleDto> roles = new HashSet<>();
