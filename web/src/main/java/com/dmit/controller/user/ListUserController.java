@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@Secured("ROLE_ADMIN")
 public class ListUserController {
     @Autowired
     UserService userService;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("user-list")
     public String userList(Model model,
                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,

@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.UUID;
 
 @Controller
-@Secured("ROLE_ADMIN")
 public class ShowUserController {
     @Autowired
     UserService userService;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/user-show/{userId}")
     String showUser(@PathVariable(required = true) UUID userId, Model model) {
         UserResponseDto userResponseDto = userService.findUserById(userId);
