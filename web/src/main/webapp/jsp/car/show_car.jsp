@@ -1,6 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ include file="../templates/header.jsp" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <table style="width:100%" class="table">
     <tr>
@@ -54,6 +55,33 @@
         </c:forEach>
     </div>
 </div>
+
+<form:form method="POST" modelAttribute="order">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <form:label path="startDate" class="form-label"><fmt:message key="order.date"/></form:label>
+                <form:input path="startDate" type="timestamp" class="form-control"/>
+                <form:errors path="startDate" cssClass="text-danger"/>
+            </div>
+            <div class="col-sm">
+                <form:label path="numberOfHours" class="form-label"><fmt:message key="order.hours"/></form:label>
+                <form:input path="numberOfHours" type="number" value="1" class="form-control"/>
+                <form:errors path="numberOfHours" cssClass="text-danger"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4 col-md-12">
+        <div class="row">
+            <div class="col text-center">
+                <button type="submit" style="width:100%;" name="order-car" class="btn btn-primary btn-lg btn-block"><fmt:message key="order.submit"/></button>
+            </div>
+        </div>
+    </div>
+
+
+</form:form>
 
 
 <%@ include file="../templates/footer.jsp" %>

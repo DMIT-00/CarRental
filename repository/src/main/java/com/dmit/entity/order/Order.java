@@ -29,16 +29,16 @@ public class Order {
     private UUID id;
 
     @Column(name = "order_status", nullable = false)
-    OrderStatus orderStatus;
+    private OrderStatus orderStatus;
 
     @Column(name = "order_start_date", nullable = false)
-    Timestamp startDate;
+    private Timestamp startDate;
 
     @Column(name = "order_hours", nullable = false)
-    Long numberOfHours;
+    private Long numberOfHours;
 
     @Column(name = "order_total_price", nullable = false)
-    BigDecimal totalPrice;
+    private BigDecimal totalPrice;
 
     @OneToOne
     @JoinColumn(name = "user_id")
