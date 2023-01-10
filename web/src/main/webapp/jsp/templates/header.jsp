@@ -70,26 +70,32 @@
                     </ul>
                 </li>
 
-                <security:authorize access="isAnonymous()">
-                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<fmt:message key="navbar.guest"/>&nbsp;</a>
-                </security:authorize>
-                <security:authorize access="isAuthenticated()">
-                    <a class="nav-link disabled"><fmt:message key="navbar.welcome"/>,&nbsp;<security:authentication property="name"/>&nbsp;</a>
-                </security:authorize>
-
-                <li class="nav-item">
+                <li class="d-flex nav-item dropdown">
                     <security:authorize access="isAnonymous()">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/user-login"><fmt:message key="navbar.login"/></a>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false"><fmt:message key="navbar.guest"/></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/user-login">
+                                <fmt:message key="navbar.login"/></a>
+                            </li>
+                            <li><a class="dropdown-item" href="/CarRental/user-add">
+                                <fmt:message key="navbar.register"/></a>
+                            </li>
+                        </ul>
                     </security:authorize>
                     <security:authorize access="isAuthenticated()">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/user-logout"><fmt:message key="navbar.logout"/></a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false"><security:authentication property="name"/></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/CarRental/user-profile">
+                                <fmt:message key="navbar.profile"/></a>
+                            </li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/user-logout">
+                                <fmt:message key="navbar.logout"/></a>
+                            </li>
+                        </ul>
                     </security:authorize>
                 </li>
-
-                <security:authorize access="isAnonymous()">
-                    <a class="nav-link" href="/CarRental/user-add"><fmt:message key="navbar.register"/></a>
-                </security:authorize>
-
             </ul>
 
             <form class="d-flex" role="search" action="/hello/search.do" method="post">

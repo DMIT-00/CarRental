@@ -11,6 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -164,6 +167,17 @@ public class UserService {
     public UserResponseDto findUserById(UUID userId) {
         User user = userDao.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found! Id: " + userId));
+
+        return modelMapper.map(user, UserResponseDto.class);
+    }
+
+    @Transactional
+    @Secured({"ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"})
+    public UserResponseDto getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDao.findByUsername(auth.getName());
+        if (user == null)
+            throw new UsernameNotFoundException("User not found! Username: " + auth.getName());
 
         return modelMapper.map(user, UserResponseDto.class);
     }
