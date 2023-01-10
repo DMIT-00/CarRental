@@ -12,7 +12,7 @@
 <body>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar navbar-expand-lg bg-light">
@@ -51,6 +51,8 @@
                         <li><a class="dropdown-item" href="/CarRental/car-list"><fmt:message key="navbar.list_cars"/></a></li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" href="/CarRental/user-list"><fmt:message key="navbar.list_user"/></a></li>
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" href="/CarRental/order-list"><fmt:message key="navbar.list_order"/></a></li>
                     </ul>
                 </li>
 
