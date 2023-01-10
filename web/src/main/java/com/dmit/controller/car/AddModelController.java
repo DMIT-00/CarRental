@@ -1,5 +1,6 @@
 package com.dmit.controller.car;
 
+import com.dmit.dto.MessageBox;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.service.BrandService;
@@ -47,6 +48,8 @@ public class AddModelController {
 
         modelService.addNewModel(carModelDto);
 
-        return "redirect:/model-list";
+        model.addAttribute("messageBox",
+                new MessageBox("add_model.success", "add_model.success_full", MessageBox.MessageBoxType.SUCCESS));
+        return "message_box";
     }
 }

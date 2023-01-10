@@ -1,5 +1,6 @@
 package com.dmit.controller.car;
 
+import com.dmit.dto.MessageBox;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class AddBrandController {
 
         brandService.addNewBrand(carBrandDto);
 
-        return "redirect:/brand-list";
+        model.addAttribute("messageBox",
+                new MessageBox("add_brand.success", "add_brand.success_full", MessageBox.MessageBoxType.SUCCESS));
+        return "message_box";
     }
 }
