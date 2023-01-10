@@ -16,7 +16,7 @@ public class ListUserController {
     @Autowired
     UserService userService;
 
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     @GetMapping("user-list")
     public String userList(Model model,
                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,

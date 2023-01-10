@@ -16,7 +16,7 @@ public class ShowUserController {
     @Autowired
     UserService userService;
 
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     @GetMapping("/user-show/{userId}")
     String showUser(@PathVariable(required = true) UUID userId, Model model) {
         UserResponseDto userResponseDto = userService.findUserById(userId);

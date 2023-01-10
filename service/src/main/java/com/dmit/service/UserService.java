@@ -90,37 +90,37 @@ public class UserService {
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public long countUsers() {
         return userDao.count();
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public long countBlockedUsers() {
         return userDao.countByLockedTrue();
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public long countNotBlockedUsers() {
         return userDao.countByLockedFalse();
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public long countActiveOrderUsers() {
         return userDao.countByActiveOrderNotNull();
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public long countInactiveOrderUsers() {
         return userDao.countByActiveOrderIsNull();
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public List<UserResponseDto> getAllUsersPageable(int page, int size) {
         return userDao.findAll(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -128,7 +128,7 @@ public class UserService {
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public List<UserResponseDto> getBlockedUsersPageable(int page, int size) {
         return userDao.findAllByLockedTrue(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -136,7 +136,7 @@ public class UserService {
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public List<UserResponseDto> getNotBlockedUsersPageable(int page, int size) {
         return userDao.findAllByLockedFalse(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -144,7 +144,7 @@ public class UserService {
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public List<UserResponseDto> getActiveOrderUsersPageable(int page, int size) {
         return userDao.findAllByActiveOrderNotNull(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -152,7 +152,7 @@ public class UserService {
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public List<UserResponseDto> getInactiveOrderUsersPageable(int page, int size) {
         return userDao.findAllByActiveOrderIsNull(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -160,7 +160,7 @@ public class UserService {
     }
 
     @Transactional
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGER")
     public UserResponseDto findUserById(UUID userId) {
         User user = userDao.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found! Id: " + userId));
