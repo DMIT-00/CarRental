@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 <table style="width:100%" class="table" id="cartable">
   <tr>
     <th><fmt:message key="car.brand_name"/></th>
@@ -50,7 +48,7 @@
         <sec:authorize access="hasRole('ROLE_MANAGER')">
           <c:choose>
             <c:when test="${car.activeOrder != null}">
-              <td><a href="/CarRental/show-order/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
+              <td><a href="/CarRental/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
             </c:when>
             <c:otherwise>
               <td>-</td>
@@ -94,6 +92,8 @@
 
     </ul>
   </nav>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
   <script type="text/javascript">
         $(document).ready(function($) {

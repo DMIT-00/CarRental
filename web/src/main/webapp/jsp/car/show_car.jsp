@@ -48,7 +48,7 @@
             <sec:authorize access="hasRole('ROLE_MANAGER')">
                 <c:choose>
                     <c:when test="${car.activeOrder != null}">
-                        <td><a href="/CarRental/show-order/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
+                        <td><a href="/CarRental/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
                     </c:when>
                     <c:otherwise>
                         <td>-</td>
@@ -75,7 +75,9 @@
         <div class="row">
             <div class="col-sm">
                 <form:label path="startDate" class="form-label"><fmt:message key="order.date"/></form:label>
-                <form:input path="startDate" type="timestamp" class="form-control"/>
+                <form:input path="startDate" type="timestamp"
+                            value=''
+                            class="form-control"/>
                 <form:errors path="startDate" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
@@ -85,6 +87,26 @@
             </div>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function formatDate() {
+             var d = new Date(),
+                 month = '' + (d.getMonth() + 1),
+                 day = '' + (d.getDate() + 1),
+                 year = d.getFullYear();
+
+             if (month.length < 2) month = '0' + month;
+             if (day.length < 2) day = '0' + day;
+
+             return [year, month, day].join('-') + " 10:00:00";
+         }
+
+        $( document ).ready(function() {
+           $("#startDate").attr("value", formatDate());
+        });
+    </script>
 
     <div class="container mt-4 col-md-12">
         <div class="row">

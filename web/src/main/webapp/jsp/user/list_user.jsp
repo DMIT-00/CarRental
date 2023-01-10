@@ -50,7 +50,7 @@
         <td><c:out value="${user.locked}"/></td>
         <c:choose>
           <c:when test="${user.activeOrder != null}">
-            <td><a href="/CarRental/show-order/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
+            <td><a href="/CarRental/order-show/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
           </c:when>
           <c:otherwise>
             <td>-</td>

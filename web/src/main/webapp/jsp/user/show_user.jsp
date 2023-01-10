@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ include file="../templates/header.jsp" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <table style="width:100%" class="table">
     <tr>
@@ -29,7 +29,7 @@
             <td><c:out value="${user.locked}"/></td>
             <c:choose>
                 <c:when test="${user.activeOrder != null}">
-                    <td><a href="/CarRental/show-order/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
+                    <td><a href="/CarRental/order-show/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
                 </c:when>
                 <c:otherwise>
                     <td>-</td>
