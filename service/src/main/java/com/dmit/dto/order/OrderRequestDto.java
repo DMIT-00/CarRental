@@ -19,8 +19,8 @@ public class OrderRequestDto {
     @Future
     @NotNull
     private Timestamp startDate;
-    @Positive
     @NotNull
+    @Positive
     private Long numberOfHours;
     @NotNull
     private UUID carId;
