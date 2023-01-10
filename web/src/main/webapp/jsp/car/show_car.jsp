@@ -70,6 +70,7 @@
     </div>
 </div>
 
+<security:authorize access="isAuthenticated()">
 <form:form method="POST" modelAttribute="order">
     <div class="container">
         <div class="row">
@@ -115,9 +116,15 @@
             </div>
         </div>
     </div>
-
-
 </form:form>
+</security:authorize>
 
+<security:authorize access="isAnonymous()">
+    <div class="container mt-4 col-md-12">
+        <div class="alert alert-light" role="alert">
+            <fmt:message key="order.login_to_order"/>
+        </div>
+    </div>
+</security:authorize>
 
 <%@ include file="../templates/footer.jsp" %>
