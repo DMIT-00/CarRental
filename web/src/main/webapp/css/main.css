@@ -1,5 +1,5 @@
 /* Select hovered clickable tables */
 .clickable tr:hover{
   cursor: pointer;
-  background-color: #ccc;
+  background-color: #34495e;
 }
