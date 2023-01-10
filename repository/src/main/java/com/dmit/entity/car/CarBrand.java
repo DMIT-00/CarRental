@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -29,17 +30,15 @@ public class CarBrand {
     private String brandName;
 
     @OneToMany(mappedBy = "carBrand", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<CarModel> carModels;
+    private List<CarModel> carModels = new ArrayList<>();
 
-    // TODO: Fix proxy
-//    @Override
-//    public String toString() {
-//        final StringBuffer sb = new StringBuffer("CarBrand{");
-//        sb.append("id=").append(id);
-//        sb.append(", name='").append(name).append('\'');
-//        sb.append(", models=").append(models);
-//        sb.append(", cars=").append(cars);
-//        sb.append('}');
-//        return sb.toString();
-//    }
+    public void addModel(CarModel carModel) {
+        carModels.add(carModel);
+        carModel.setCarBrand(this);
+    }
+
+    public void removeModel(CarModel carModel) {
+        carModels.remove(carModel);
+        carModel.setCarBrand(null);
+    }
 }
