@@ -27,6 +27,8 @@ public class WebSecurityConfig {
                         .antMatchers("/user-add").permitAll()
                         .antMatchers("/user-login").permitAll()
                         .antMatchers("/user-logout").permitAll()
+                        .antMatchers("/car-list").permitAll()
+                        .antMatchers("/car-show/**").permitAll()
                         .antMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()
 //                        .anyRequest().permitAll()

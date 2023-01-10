@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class OrderRequestDto {
     @Future
     @NotNull
     private Timestamp startDate;
+    @Positive
     @NotNull
     private Long numberOfHours;
     @NotNull
