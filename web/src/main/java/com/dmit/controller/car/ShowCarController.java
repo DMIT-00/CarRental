@@ -1,8 +1,8 @@
 package com.dmit.controller.car;
 
+import com.dmit.dto.MessageBox;
 import com.dmit.dto.car.CarDto;
 import com.dmit.dto.order.OrderRequestDto;
-import com.dmit.entity.order.OrderStatus;
 import com.dmit.service.CarImageService;
 import com.dmit.service.CarService;
 import com.dmit.service.OrderService;
@@ -55,7 +55,9 @@ public class ShowCarController {
 
         orderService.createNewOrder(orderRequestDto);
 
-        return "car/show_car";
+        model.addAttribute("messageBox",
+                new MessageBox("order.success", "order.success_full", MessageBox.MessageBoxType.SUCCESS));
+        return "message_box";
     }
 
     @ResponseBody
