@@ -1,5 +1,6 @@
 package com.dmit.controller.user;
 
+import com.dmit.dto.MessageBox;
 import com.dmit.dto.user.UserDetailDto;
 import com.dmit.dto.UserRequestDto;
 import com.dmit.service.UserService;
@@ -33,6 +34,8 @@ public class AddUserController {
 
         userService.registerUser(userRequestDto);
 
-        return "redirect:/";
+        model.addAttribute("messageBox",
+                new MessageBox("user.success", "user.success_full", MessageBox.MessageBoxType.SUCCESS));
+        return "message_box";
     }
 }
