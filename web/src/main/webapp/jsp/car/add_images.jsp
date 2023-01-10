@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form method="POST" action="/CarRental/add-images" enctype="multipart/form-data">
+<form:form method="POST" action="/CarRental/images-add" enctype="multipart/form-data">
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col-sm">

@@ -29,13 +29,13 @@ public class AddImagesController {
 
 
     // FIXME: call security! Only car owner can do that!
-    @GetMapping(value = "add-images")
+    @GetMapping(value = "images-add")
     public String addCarImagesForm(Model model) {
         return "car/add_images";
     }
 
     // FIXME:: call security! Only car owner can do that!
-    @PostMapping(value = "add-images")
+    @PostMapping(value = "images-add")
     public String addCarImages(@ModelAttribute("images") MultipartFile[] files, Model model) {
 
         List<byte[]> images = new ArrayList<>();

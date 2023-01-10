@@ -24,7 +24,7 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests((authorize ) -> authorize
                         .antMatchers("/").permitAll()
-                        .antMatchers("/add-user").permitAll()
+                        .antMatchers("/user-add").permitAll()
                         .antMatchers("/user-login").permitAll()
                         .antMatchers("/user-logout").permitAll()
                         .antMatchers("/css/**").permitAll()

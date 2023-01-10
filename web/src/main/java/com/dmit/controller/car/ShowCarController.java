@@ -26,7 +26,7 @@ public class ShowCarController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping("/show-car/{carId}")
+    @GetMapping("/car-show/{carId}")
     String showCar(@PathVariable(required = true) UUID carId, Model model) {
         CarDto carDto = carService.getCar(carId);
         List<UUID> images = carImageService.getImageIdsByCarId(carId);
@@ -40,7 +40,7 @@ public class ShowCarController {
         return "car/show_car";
     }
 
-    @PostMapping("/show-car/{carId}")
+    @PostMapping("/car-show/{carId}")
     String orderForm(@PathVariable(required = true) UUID carId, Model model,
                      @Valid @ModelAttribute("order") OrderRequestDto orderRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

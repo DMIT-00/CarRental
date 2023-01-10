@@ -43,7 +43,7 @@
             <td><c:out value="${order.numberOfHours}"/></td>
             <td><c:out value="${order.totalPrice}"/></td>
             <td><a href="/CarRental/user-show/${order.user.id}">${order.user.id}</a></td>
-            <td><a href="/CarRental/show-car/${order.car.id}">${order.car.id}</a></td>
+            <td><a href="/CarRental/car-show/${order.car.id}">${order.car.id}</a></td>
         </tr>
     </c:forEach>
     </tbody>

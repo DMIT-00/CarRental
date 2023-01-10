@@ -19,14 +19,14 @@ public class AddUserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("add-user")
+    @GetMapping("user-add")
     public String registerUserForm(Model model) {
         model.addAttribute("user", new UserRequestDto(new UserDetailDto()));
 
         return "user/add_user";
     }
 
-    @PostMapping(value = "add-user")
+    @PostMapping(value = "user-add")
     public String registerUser(@Valid @ModelAttribute("user") UserRequestDto userRequestDto,
                                BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors())

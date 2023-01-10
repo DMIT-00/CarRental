@@ -32,7 +32,7 @@ public class AddCarController {
     @Autowired
     BrandService brandService;
 
-    @GetMapping("add-car")
+    @GetMapping("car-add")
     public String addCarForm(Model model) {
         CarDto carDto = new CarDto();
         Map<Long, String> modelsMap;
@@ -67,7 +67,7 @@ public class AddCarController {
         return "car/add_car";
     }
 
-    @PostMapping(value = "add-car")
+    @PostMapping(value = "car-add")
     public String addCar(@Valid @ModelAttribute("car") CarDto carDto, BindingResult bindingResult,
                          @RequestParam(value = "submit-car", required = false) String action, Model model,
                          RedirectAttributes redirectAttrs) {
@@ -93,6 +93,6 @@ public class AddCarController {
 
         redirectAttrs.addFlashAttribute("carId", carDto.getId());
 
-        return "redirect:/add-images";
+        return "redirect:/images-add";
     }
 }

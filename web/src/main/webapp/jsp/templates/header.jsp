@@ -34,9 +34,9 @@
                         <fmt:message key="navbar.add"/>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/CarRental/add-brand"><fmt:message key="navbar.add_brand"/></a></li>
-                        <li><a class="dropdown-item" href="/CarRental/add-model"><fmt:message key="navbar.add_model"/></a></li>
-                        <li><a class="dropdown-item" href="/CarRental/add-car"><fmt:message key="navbar.add_car"/></a></li>
+                        <li><a class="dropdown-item" href="/CarRental/brand-add"><fmt:message key="navbar.add_brand"/></a></li>
+                        <li><a class="dropdown-item" href="/CarRental/model-add"><fmt:message key="navbar.add_model"/></a></li>
+                        <li><a class="dropdown-item" href="/CarRental/car-add"><fmt:message key="navbar.add_car"/></a></li>
                     </ul>
                 </li>
 
@@ -87,7 +87,7 @@
                 </li>
 
                 <security:authorize access="isAnonymous()">
-                    <a class="nav-link" href="/CarRental/add-user"><fmt:message key="navbar.register"/></a>
+                    <a class="nav-link" href="/CarRental/user-add"><fmt:message key="navbar.register"/></a>
                 </security:authorize>
 
             </ul>

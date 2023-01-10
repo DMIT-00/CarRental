@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomepageController {
     @GetMapping({"/", "index"})
     public String homepage(ModelAndView modelAndView) {
-        modelAndView.addObject("greeting", "Hello, User!");
         return "index";
     }
 }

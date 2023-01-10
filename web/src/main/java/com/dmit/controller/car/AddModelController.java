@@ -24,7 +24,7 @@ public class AddModelController {
     @Autowired
     ModelService modelService;
 
-    @GetMapping("add-model")
+    @GetMapping("model-add")
     public String addModelForm(Model model) {
         model.addAttribute("model", new CarModelDto());
         model.addAttribute("brands", brandService.getAllBrands().stream()
@@ -33,7 +33,7 @@ public class AddModelController {
         return "car/add_model";
     }
 
-    @PostMapping("add-model")
+    @PostMapping("model-add")
     public String addModel(@Valid @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors()) {

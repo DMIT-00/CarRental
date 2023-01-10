@@ -19,14 +19,14 @@ public class AddBrandController {
     @Autowired
     BrandService brandService;
 
-    @GetMapping("add-brand")
+    @GetMapping("brand-add")
     public String addBrandForm(Model model) {
         model.addAttribute("brand", new CarBrandDto());
 
         return "car/add_brand";
     }
 
-    @PostMapping("add-brand")
+    @PostMapping("brand-add")
     public String addBrand(@Valid @ModelAttribute("brand") CarBrandDto carBrandDto, BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors())
