@@ -6,6 +6,7 @@ import com.dmit.dto.user.UserDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
+import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -67,21 +68,25 @@ public class UserService {
         user.getUserDetail().setUser(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        // TODO: shouldn't do that
         Optional<Role> role = roleDao.findByRoleName(DEFAULT_ROLE);
         if (role.isEmpty()) {
             roleDao.save(new Role(null, DEFAULT_ROLE, new HashSet<>()));
             role = roleDao.findByRoleName(DEFAULT_ROLE);
         }
 
-        user.addRole(role.orElseThrow()); // TODO: Custom exception
+        user.addRole(role.orElseThrow(() -> new NotFoundException("Role not found! Name: " + DEFAULT_ROLE)));
 
         userDao.save(user);
     }
 
     @Transactional
     public UserDto findUserByUsername(String username) {
-        // TODO NullPointer?
-        return modelMapper.map(userDao.findByUsername(username), UserDto.class);
+        User user = userDao.findByUsername(username);
+        if (user == null)
+            throw new NotFoundException("User not found! Name: " + username);
+
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Transactional
@@ -157,8 +162,9 @@ public class UserService {
     @Transactional
     @Secured("ROLE_ADMIN")
     public UserResponseDto findUserById(UUID userId) {
-        Optional<User> user = userDao.findById(userId);
-        return modelMapper.map(user.orElseThrow(), UserResponseDto.class);
-        // TODO: custom exception
+        User user = userDao.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found! Id: " + userId));
+
+        return modelMapper.map(user, UserResponseDto.class);
     }
 }
