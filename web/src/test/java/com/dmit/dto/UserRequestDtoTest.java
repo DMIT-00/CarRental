@@ -1,15 +1,7 @@
 package com.dmit.dto;
 
-import com.dmit.config.DataConfig;
-import com.dmit.config.ServiceConfig;
-import com.dmit.config.WebConfig;
 import com.dmit.dto.user.UserDetailDto;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,19 +10,11 @@ import javax.validation.ValidatorFactory;
 import java.sql.Date;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-@RunWith(SpringRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {
-        WebConfig.class,
-        ServiceConfig.class,
-        DataConfig.class
-})
+import static org.junit.Assert.assertEquals;
 public class UserRequestDtoTest {
-    private Validator validator;
+    private final Validator validator;
 
-    @Before
-    public void setUp() {
+    public UserRequestDtoTest() {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
         validatorFactory.close();
