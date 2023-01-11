@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form method="POST" action="/CarRental/model-list" modelAttribute="brand">
+<form:form method="POST" action="${pageContext.request.contextPath}/model-list" modelAttribute="brand">
     <div class="mb-3">
         <form:label path="id" class="form-label"><fmt:message key="car.brand_name"/></form:label>
         <form:select path="id" class="form-select" onchange="this.form.submit();">

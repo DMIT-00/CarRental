@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form method="POST" action="/CarRental/brand-add" modelAttribute="brand">
+<form:form method="POST" action="${pageContext.request.contextPath}/brand-add" modelAttribute="brand">
     <div class="mb-3">
         <form:label path="brandName" class="form-label"><fmt:message key="car.brand_name"/></form:label>
         <form:input path="brandName" class="form-control"/>

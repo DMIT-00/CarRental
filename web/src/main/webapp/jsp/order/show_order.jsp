@@ -21,9 +21,9 @@
             <td><c:out value="${order.startDate}"/></td>
             <td><c:out value="${order.numberOfHours}"/></td>
             <td><c:out value="${order.totalPrice}"/></td>
-            <td><a href="/CarRental/user-show/${order.user.id}">${order.user.id}</a></td>
+            <td><a href="${pageContext.request.contextPath}/user-show/${order.user.id}">${order.user.id}</a></td>
             <td><c:out value="${order.user.username}"/></td>
-            <td><a href="/CarRental/car-show/${order.car.id}">${order.car.id}</a></td>
+            <td><a href="${pageContext.request.contextPath}/car-show/${order.car.id}">${order.car.id}</a></td>
             <td><c:out value="${order.car.carModel.carBrand.brandName}"/></td>
             <td><c:out value="${order.car.carModel.modelName}"/></td>
         </tr>

@@ -6,7 +6,7 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="/CarRental/order-list">All</a>
+        <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/order-list">All</a>
     </li>
     <li class="nav-item">
         <a class="nav-link ${param.filter == 'payment' ? 'active' : ''}" href="?filter=payment">Payment</a>
@@ -45,57 +45,56 @@
             <td><c:out value="${order.startDate}"/></td>
             <td><c:out value="${order.numberOfHours}"/></td>
             <td><c:out value="${order.totalPrice}"/></td>
-            <td><a href="/CarRental/user-show/${order.user.id}">${order.user.id}</a></td>
+            <td><a href="${pageContext.request.contextPath}/user-show/${order.user.id}">${order.user.id}</a></td>
             <td><c:out value="${order.user.username}"/></td>
-            <td><a href="/CarRental/car-show/${order.car.id}">${order.car.id}</a></td>
+            <td><a href="${pageContext.request.contextPath}/car-show/${order.car.id}">${order.car.id}</a></td>
             <td><c:out value="${order.car.carModel.carBrand.brandName}"/></td>
             <td><c:out value="${order.car.carModel.modelName}"/></td>
         </tr>
     </c:forEach>
     </tbody>
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center position-bottom">
-
-            <%-- Disable Previous on the first page --%>
-            <c:choose>
-                <c:when test="${page == 1}">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1"><fmt:message key="pagination.previous"/></a>
-                    </li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item"><a class="page-link" href="/CarRental/order-list?page=${page - 1}"><fmt:message key="pagination.previous"/></a></li>
-                </c:otherwise>
-            </c:choose>
-
-
-            <li class="page-item"><a class="page-link" href=""><c:out value="${page}"/></a></li>
-
-            <c:choose>
-                <c:when test="${page == pages}">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="/CarRental/car-list?page=${page}" tabindex="-1"><fmt:message key="pagination.next"/></a>
-                    </li>
-                </c:when>
-                <c:otherwise>
-                    <li class="page-item">
-                        <a class="page-link" href="/CarRental/car-list?page=${page + 1}"><fmt:message key="pagination.next"/></a>
-                    </li>
-                </c:otherwise>
-            </c:choose>
-
-        </ul>
-    </nav>
-
-    <script type="text/javascript">
-        $(document).ready(function($) {
-            $(".table-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-        });
-  </script>
-
 </table>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center position-bottom">
+
+        <%-- Disable Previous on the first page --%>
+        <c:choose>
+            <c:when test="${page == 1}">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1"><fmt:message key="pagination.prev"/></a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/order-list?page=${page - 1}"><fmt:message key="pagination.prev"/></a></li>
+            </c:otherwise>
+        </c:choose>
+
+
+        <li class="page-item"><a class="page-link" href=""><c:out value="${page}"/></a></li>
+
+        <c:choose>
+            <c:when test="${page == pages}">
+                <li class="page-item disabled">
+                    <a class="page-link" href="${pageContext.request.contextPath}/car-list?page=${page}" tabindex="-1"><fmt:message key="pagination.next"/></a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/car-list?page=${page + 1}"><fmt:message key="pagination.next"/></a>
+                </li>
+            </c:otherwise>
+        </c:choose>
+
+    </ul>
+</nav>
+
+<script type="text/javascript">
+    $(document).ready(function($) {
+        $(".table-row").click(function() {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
 
 <%@ include file="../templates/footer.jsp" %>

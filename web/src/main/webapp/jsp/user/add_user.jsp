@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form method="POST" action="/CarRental/user-add" modelAttribute="user">
+<form:form method="POST" action="${pageContext.request.contextPath}/user-add" modelAttribute="user">
     <div class="container mt-2 col-md-12">
         <div class="row">
             <div class="col-sm">

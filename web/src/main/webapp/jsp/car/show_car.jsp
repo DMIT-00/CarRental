@@ -48,7 +48,7 @@
             <sec:authorize access="hasRole('ROLE_MANAGER')">
                 <c:choose>
                     <c:when test="${car.activeOrder != null}">
-                        <td><a href="/CarRental/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
                     </c:when>
                     <c:otherwise>
                         <td>-</td>
@@ -64,7 +64,7 @@
     <div class="row">
         <c:forEach items="${images}" var="image">
             <div class="col-sm">
-                <td><img src="/CarRental/car-image/${image}" alt="${image}" style="width:420px;"></td>
+                <td><img src="${pageContext.request.contextPath}/car-image/${image}" alt="${image}" style="width:420px;"></td>
             </div>
         </c:forEach>
     </div>

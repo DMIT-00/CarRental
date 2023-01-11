@@ -48,7 +48,7 @@
         <sec:authorize access="hasRole('ROLE_MANAGER')">
           <c:choose>
             <c:when test="${car.activeOrder != null}">
-              <td><a href="/CarRental/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
+              <td><a href="${pageContext.request.contextPath}/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
             </c:when>
             <c:otherwise>
               <td>-</td>
@@ -58,51 +58,50 @@
       </tr>
     </c:forEach>
   </tbody>
-
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-
-      <%-- Disable Previous on the first page --%>
-      <c:choose>
-            <c:when test="${page == 1}">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1"><fmt:message key="pagination.previous"/></a>
-              </li>
-            </c:when>
-            <c:otherwise>
-              <li class="page-item"><a class="page-link" href="/CarRental/car-list?page=${page - 1}"><fmt:message key="pagination.previous"/></a></li>
-            </c:otherwise>
-      </c:choose>
-
-
-      <li class="page-item"><a class="page-link" href=""><c:out value="${page}"/></a></li>
-
-      <c:choose>
-        <c:when test="${page == pages}">
-          <li class="page-item disabled">
-            <a class="page-link" href="/CarRental/car-list?page=${page}" tabindex="-1"><fmt:message key="pagination.next"/></a>
-          </li>
-        </c:when>
-        <c:otherwise>
-          <li class="page-item">
-            <a class="page-link" href="/CarRental/car-list?page=${page + 1}"><fmt:message key="pagination.next"/></a>
-          </li>
-        </c:otherwise>
-      </c:choose>
-
-    </ul>
-  </nav>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-  <script type="text/javascript">
-        $(document).ready(function($) {
-            $(".table-row").click(function() {
-                window.document.location = $(this).data("href");
-            });
-        });
-  </script>
-
 </table>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+    <%-- Disable Previous on the first page --%>
+    <c:choose>
+          <c:when test="${page == 1}">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1"><fmt:message key="pagination.prev"/></a>
+            </li>
+          </c:when>
+          <c:otherwise>
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/car-list?page=${page - 1}"><fmt:message key="pagination.prev"/></a></li>
+          </c:otherwise>
+    </c:choose>
+
+
+    <li class="page-item"><a class="page-link" href=""><c:out value="${page}"/></a></li>
+
+    <c:choose>
+      <c:when test="${page == pages}">
+        <li class="page-item disabled">
+          <a class="page-link" href="${pageContext.request.contextPath}/car-list?page=${page}" tabindex="-1"><fmt:message key="pagination.next"/></a>
+        </li>
+      </c:when>
+      <c:otherwise>
+        <li class="page-item">
+          <a class="page-link" href="${pageContext.request.contextPath}/car-list?page=${page + 1}"><fmt:message key="pagination.next"/></a>
+        </li>
+      </c:otherwise>
+    </c:choose>
+
+  </ul>
+</nav>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+      $(document).ready(function($) {
+          $(".table-row").click(function() {
+              window.document.location = $(this).data("href");
+          });
+      });
+</script>
 
 <%@ include file="../templates/footer.jsp" %>
