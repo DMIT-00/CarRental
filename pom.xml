@@ -10,12 +10,44 @@
   <modules>
     <module>repository</module>
     <module>service</module>
-    <module>web</module>
   </modules>
 
   <name>CarRental</name>
 
   <packaging>pom</packaging>
+
+  <profiles>
+    <profile>
+      <id>all</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>repository</module>
+        <module>service</module>
+        <module>web</module>
+        <module>rest-api</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>web</id>
+      <modules>
+        <module>repository</module>
+        <module>service</module>
+        <module>web</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>rest-api</id>
+      <modules>
+        <module>repository</module>
+        <module>service</module>
+        <module>rest-api</module>
+      </modules>
+    </profile>
+  </profiles>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>

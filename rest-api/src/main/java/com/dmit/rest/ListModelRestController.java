@@ -1,4 +1,4 @@
-package com.dmit.controller.api;
+package com.dmit.rest;
 
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.service.ModelService;
