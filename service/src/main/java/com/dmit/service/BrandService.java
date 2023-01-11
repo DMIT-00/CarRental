@@ -46,7 +46,7 @@ public class BrandService {
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
         }
 
-            CarBrand carBrand = modelMapper.map(carBrandDto, CarBrand.class);
+        CarBrand carBrand = modelMapper.map(carBrandDto, CarBrand.class);
         carBrand.setId(null); // In case we get input with id somehow
 
         carBrandDao.save(carBrand);
