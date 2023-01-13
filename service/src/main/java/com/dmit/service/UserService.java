@@ -38,10 +38,10 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void registerUser(UserDto userRequestDto) {
+    public UserResponseDto registerUser(UserDto userDto) {
         final String DEFAULT_ROLE = "USER";
 
-        Set<ConstraintViolation<UserDto>> violations = validator.validate(userRequestDto);
+        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
 
         if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
@@ -51,19 +51,19 @@ public class UserService {
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
         }
 
-        if (userDao.findByUsername(userRequestDto.getUsername()) != null)
+        if (userDao.findByUsername(userDto.getUsername()) != null)
             throw new IllegalArgumentException("Username is already used to register");
 
-        if (userDao.findByEmail(userRequestDto.getEmail()) != null)
+        if (userDao.findByEmail(userDto.getEmail()) != null)
             throw new IllegalArgumentException("Email is already used to register");
 
-        if (userDao.findByUserDetail_PhoneNumber(userRequestDto.getUserDetail().getPhoneNumber()) != null)
+        if (userDao.findByUserDetail_PhoneNumber(userDto.getUserDetail().getPhoneNumber()) != null)
             throw new IllegalArgumentException("Phone number is already used to register");
 
-        if (userDao.findByUserDetail_CreditCard(userRequestDto.getUserDetail().getCreditCard()) != null)
+        if (userDao.findByUserDetail_CreditCard(userDto.getUserDetail().getCreditCard()) != null)
             throw new IllegalArgumentException("Credit card is already used to register");
 
-        User user = modelMapper.map(userRequestDto, User.class);
+        User user = modelMapper.map(userDto, User.class);
 
         user.setId(null); // In case we get input with id somehow
         user.setLocked(false);
@@ -81,6 +81,8 @@ public class UserService {
         user.addRole(role.orElseThrow(() -> new NotFoundException("Role not found! Name: " + DEFAULT_ROLE)));
 
         userDao.save(user);
+        
+        return modelMapper.map(user, UserResponseDto.class);
     }
 
     @Transactional
