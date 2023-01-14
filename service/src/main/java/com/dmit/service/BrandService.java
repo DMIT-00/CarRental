@@ -3,6 +3,7 @@ package com.dmit.service;
 import com.dmit.dao.CarBrandDao;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.entity.car.CarBrand;
+import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -35,8 +36,8 @@ public class BrandService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public void addNewBrand(CarBrandDto carBrandDto) {
-        Set<ConstraintViolation<CarBrandDto>> violations = validator.validate(carBrandDto);
+    public CarBrandDto addNewBrand(CarBrandDto newBrand) {
+        Set<ConstraintViolation<CarBrandDto>> violations = validator.validate(newBrand);
 
         if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
@@ -46,9 +47,40 @@ public class BrandService {
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
         }
 
-        CarBrand carBrand = modelMapper.map(carBrandDto, CarBrand.class);
-        carBrand.setId(null); // In case we get input with id somehow
+        CarBrand brand = modelMapper.map(newBrand, CarBrand.class);
+        brand.setId(null); // In case we get input with id somehow
 
-        carBrandDao.save(carBrand);
+        carBrandDao.save(brand);
+
+        return modelMapper.map(brand, CarBrandDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public CarBrandDto findBrandById(Long id) {
+        CarBrand brand = carBrandDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
+
+        return modelMapper.map(brand, CarBrandDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public CarBrandDto updateBrand(CarBrandDto updatedBrand) {
+        CarBrand brand = carBrandDao.findById(updatedBrand.getId())
+                .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + updatedBrand.getId()));
+
+        brand.setBrandName(updatedBrand.getBrandName());
+
+        return modelMapper.map(carBrandDao.save(brand), CarBrandDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public void deleteBrand(Long id) {
+        CarBrand brand = carBrandDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
+
+        carBrandDao.delete(brand);
     }
 }
