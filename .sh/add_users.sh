@@ -1,4 +1,42 @@
 #!/bin/sh
-curl --request POST --url 'http://localhost:8080/CarRental/user-add?email=user%40gmail.com&username=user&password=user&passwordRepeat=user&userDetail.firstName=User&userDetail.lastName=The+User&userDetail.phoneNumber=%2B12200000000&userDetail.creditCard=0000000000000001&userDetail.birthDate=0008-08-08&submit-user='
-curl --request POST --url 'http://localhost:8080/CarRental/user-add?email=root%40gmail.com&username=root&password=root&passwordRepeat=root&userDetail.firstName=Root&userDetail.lastName=The+Root&userDetail.phoneNumber=%2B880000000&userDetail.creditCard=0000000000000000&userDetail.birthDate=0008-08-08&submit-user='
-curl --request POST --url 'http://localhost:8080/CarRental/user-add?email=manager%40gmail.com&username=manager&password=manager&passwordRepeat=manager&userDetail.firstName=Manager&userDetail.lastName=The+Manager&userDetail.phoneNumber=%2B2800000000&userDetail.creditCard=0000000000000008&userDetail.birthDate=0008-08-08&submit-user='
+curl --request POST --url http://localhost:8080/CarRentalRest/api/v1/users --header 'Content-Type: application/json' \
+  --data '{
+	"email": "root@gmail.com",
+	"username": "root",
+	"password": "root",
+	"userDetail": {
+		"firstName": "Root",
+		"lastName": "The Root",
+		"phoneNumber": "+880000000",
+		"creditCard": "0000000000000000",
+		"birthDate": -61895934000000
+	}
+}'
+
+curl --request POST --url http://localhost:8080/CarRentalRest/api/v1/users --header 'Content-Type: application/json' \
+  --data '{
+	"email": "manager@gmail.com",
+	"username": "manager",
+	"password": "manager",
+	"userDetail": {
+		"firstName": "Manager",
+		"lastName": "The Manager",
+		"phoneNumber": "+880000001",
+		"creditCard": "0000000000000001",
+		"birthDate": -61895934000000
+	}
+}'
+
+curl --request POST --url http://localhost:8080/CarRentalRest/api/v1/users --header 'Content-Type: application/json' \
+  --data '{
+	"email": "user@gmail.com",
+	"username": "user",
+	"password": "user",
+	"userDetail": {
+		"firstName": "User",
+		"lastName": "The User",
+		"phoneNumber": "+880000002",
+		"creditCard": "0000000000000002",
+		"birthDate": -61895934000000
+	}
+}'
