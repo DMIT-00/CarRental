@@ -1,10 +1,216 @@
 #!/bin/sh
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=1&carModel.id=1&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=1&carModel.id=2&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=1&carModel.id=3&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=2&carModel.id=4&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=2&carModel.id=5&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=2&carModel.id=6&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=3&carModel.id=7&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=3&carModel.id=8&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
-curl --request POST --url 'http://localhost:8080/CarRental/car-add?carModel.carBrand.id=3&carModel.id=9&fuelType=PETROL&transmission=AUTOMATIC&bodyType=HATCHBACK&color=BLACK&year=2000&numberOfSeats=5&enginePower=0.0&fuelConsumption=0.0&price=100&_abs=on&_cruiseControl=on&_heatedSeats=on&_climateControl=on&_airBags=on&submit-car='
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2020,
+	"color": "BLACK",
+	"enginePower": 10.0,
+	"fuelType": "DIESEL",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": true,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 80.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 1,
+		"carBrand": {
+			"id": 1
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2000,
+	"color": "RED",
+	"enginePower": 8.0,
+	"fuelType": "ELECTRIC",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": false,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 60.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 2,
+		"carBrand": {
+			"id": 1
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2020,
+	"color": "GREEN",
+	"enginePower": 8.0,
+	"fuelType": "PETROL",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": false,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 60.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 3,
+		"carBrand": {
+			"id": 1
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2020,
+	"color": "BLACK",
+	"enginePower": 10.0,
+	"fuelType": "DIESEL",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": true,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 80.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 1,
+		"carBrand": {
+			"id": 2
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2000,
+	"color": "RED",
+	"enginePower": 8.0,
+	"fuelType": "ELECTRIC",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": false,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 60.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 2,
+		"carBrand": {
+			"id": 2
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2020,
+	"color": "GREEN",
+	"enginePower": 8.0,
+	"fuelType": "PETROL",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": false,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 60.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 3,
+		"carBrand": {
+			"id": 2
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2020,
+	"color": "BLACK",
+	"enginePower": 10.0,
+	"fuelType": "DIESEL",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": true,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 80.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 1,
+		"carBrand": {
+			"id": 3
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2000,
+	"color": "RED",
+	"enginePower": 8.0,
+	"fuelType": "ELECTRIC",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": false,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 60.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 2,
+		"carBrand": {
+			"id": 3
+		}
+	}
+}'
+
+curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRest/api/v1/cars \
+  --header 'Content-Type: application/json' --data '{
+	"year": 2020,
+	"color": "GREEN",
+	"enginePower": 8.0,
+	"fuelType": "PETROL",
+	"fuelConsumption": 8.0,
+	"transmission": "AUTOMATIC",
+	"numberOfSeats": 5,
+	"abs": true,
+	"cruiseControl": false,
+	"heatedSeats": true,
+	"climateControl": true,
+	"airBags": true,
+	"price": 60.00,
+	"bodyType": "SUV",
+	"carModel": {
+		"id": 3,
+		"carBrand": {
+			"id": 3
+		}
+	}
+}'
