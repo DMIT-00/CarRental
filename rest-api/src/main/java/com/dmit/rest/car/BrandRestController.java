@@ -40,7 +40,7 @@ public class BrandRestController {
     }
 
     @PostMapping
-    public ResponseEntity<CarBrandDto> addBrand(CarBrandDto brand) {
+    public ResponseEntity<CarBrandDto> addBrand(@RequestBody CarBrandDto brand) {
         CarBrandDto addedBrand = brandService.addNewBrand(brand);
         return new ResponseEntity<>(addedBrand, HttpStatus.CREATED);
     }

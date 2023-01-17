@@ -55,7 +55,7 @@ public class ModelRestController {
     }
 
     @PostMapping
-    public ResponseEntity<CarModelDto> addModel(CarModelDto model) {
+    public ResponseEntity<CarModelDto> addModel(@RequestBody CarModelDto model) {
         CarModelDto addedModel = modelService.addNewModel(model);
         return new ResponseEntity<>(addedModel, HttpStatus.CREATED);
     }
