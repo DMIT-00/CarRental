@@ -1,10 +1,14 @@
 package com.dmit.service;
 
 import com.dmit.dao.CarDao;
+import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarDto;
+import com.dmit.dto.user.UserRequestDto;
 import com.dmit.entity.car.Car;
+import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.Image;
 import com.dmit.exception.AlreadyExistsException;
+import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -50,18 +54,21 @@ public class CarService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public void addNewCar(CarDto carDto) {
-        Set<ConstraintViolation<CarDto>> violations = validator.validate(carDto);
+    public CarDto addNewCar(CarDto newCar) {
+        Set<ConstraintViolation<CarDto>> violations = validator.validate(newCar);
 
         if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder errors = new StringBuilder();
             for (ConstraintViolation<CarDto> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
+                errors.append(constraintViolation.getPropertyPath())
+                        .append(" ")
+                        .append(constraintViolation.getMessage())
+                        .append("; ");
             }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
+            throw new ConstraintViolationException("Validation errors: " + errors, violations);
         }
 
-        Car car = modelMapper.map(carDto, Car.class);
+        Car car = modelMapper.map(newCar, Car.class);
 
         // Check for duplicate Id
         if (car.getId() != null && carDao.findById(car.getId()).isPresent()) {
@@ -70,12 +77,46 @@ public class CarService {
 
         carDao.save(car);
 
-        carDto.setId(car.getId()); // TODO: IS it ok?
+        return modelMapper.map(car, CarDto.class);
     }
 
     @Transactional
-    public CarDto getCar(UUID carId) {
-        Car car = carDao.findById(carId).orElseThrow(); // TODO: custom exception
+    @Secured("ROLE_MANAGER")
+    public CarDto updateCar(CarDto updatedCar) {
+        Set<ConstraintViolation<CarDto>> violations = validator.validate(updatedCar);
+
+        if (!violations.isEmpty()) {
+            StringBuilder errors = new StringBuilder();
+            for (ConstraintViolation<CarDto> constraintViolation : violations) {
+                errors.append(constraintViolation.getPropertyPath())
+                        .append(" ")
+                        .append(constraintViolation.getMessage())
+                        .append("; ");
+            }
+            throw new ConstraintViolationException("Validation errors: " + errors, violations);
+        }
+
+        if (!carDao.existsById(updatedCar.getId()))
+            throw new NotFoundException("Car not found! Id: " + updatedCar.getId());
+
+        Car car = modelMapper.map(updatedCar, Car.class);
+
+        return modelMapper.map(carDao.save(car), CarDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public void deleteCar(UUID id) {
+        if (!carDao.existsById(id))
+            throw new NotFoundException("Car not found! Id: " + id);
+
+        carDao.deleteById(id);
+    }
+
+    @Transactional
+    public CarDto findCarById(UUID id) {
+        Car car = carDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Car not found! Id: " + id));
 
         return modelMapper.map(car, CarDto.class);
     }
@@ -83,9 +124,9 @@ public class CarService {
     // TODO: security check
     @Transactional
     @Secured("ROLE_MANAGER")
-    public void updateCarImages(UUID carId, List<byte[]> images) {
-        Car car = carDao.findById(carId)
-                .orElseThrow(); // TODO: custom exception
+    public void updateCarImages(UUID id, List<byte[]> images) {
+        Car car = carDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Car not found! Id: " + id));
 
         car.setImages(images.stream()
                 .map(image -> new Image(null, image))

@@ -87,11 +87,9 @@ public class AddCarController {
             return "car/add_car";
         }
 
-        carDto.setId(null); // TODO: service level?
+        CarDto addedCar = carService.addNewCar(carDto);
 
-        carService.addNewCar(carDto);
-
-        redirectAttrs.addFlashAttribute("carId", carDto.getId());
+        redirectAttrs.addFlashAttribute("carId", addedCar.getId());
 
         return "redirect:/images-add";
     }

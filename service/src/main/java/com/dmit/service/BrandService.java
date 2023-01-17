@@ -72,6 +72,16 @@ public class BrandService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarBrandDto updateBrand(CarBrandDto updatedBrand) {
+        Set<ConstraintViolation<CarBrandDto>> violations = validator.validate(updatedBrand);
+
+        if (!violations.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (ConstraintViolation<CarBrandDto> constraintViolation : violations) {
+                sb.append(constraintViolation.getMessage());
+            }
+            throw new ConstraintViolationException("Error occurred: " + sb, violations);
+        }
+
         CarBrand brand = brandDao.findById(updatedBrand.getId())
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + updatedBrand.getId()));
 

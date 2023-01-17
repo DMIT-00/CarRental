@@ -28,7 +28,7 @@ public class ShowCarController {
 
     @GetMapping("/car-show/{carId}")
     String showCar(@PathVariable(required = true) UUID carId, Model model) {
-        CarDto carDto = carService.getCar(carId);
+        CarDto carDto = carService.findCarById(carId);
         List<UUID> images = carImageService.getImageIdsByCarId(carId);
 
         OrderRequestDto orderRequestDto = new OrderRequestDto(null, null, carId);
@@ -44,7 +44,7 @@ public class ShowCarController {
     String orderForm(@PathVariable(required = true) UUID carId, Model model,
                      @Valid @ModelAttribute("order") OrderRequestDto orderRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            CarDto carDto = carService.getCar(carId);
+            CarDto carDto = carService.findCarById(carId);
             List<UUID> images = carImageService.getImageIdsByCarId(carId);
 
             model.addAttribute("car", carDto);

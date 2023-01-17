@@ -91,9 +91,9 @@ public class ModelService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public void deleteModel(Long id) {
-        CarModel model = modelDao.findById(id)
-                .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
+        if (!modelDao.existsById(id))
+            throw new NotFoundException("Model not found! Id: " + id);
 
-        modelDao.delete(model);
+        modelDao.deleteById(id);
     }
 }
