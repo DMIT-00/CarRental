@@ -86,7 +86,7 @@
                     <security:authorize access="isAuthenticated()">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false"><security:authentication property="name"/></a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/user-profile">
                                 <fmt:message key="navbar.profile"/></a>
                             </li>
