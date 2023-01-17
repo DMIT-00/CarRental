@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,8 +26,9 @@ public class RestSecurityConfig {
                 .csrf().disable()
 
                 .authorizeHttpRequests((authorize ) -> authorize
-                        .anyRequest().authenticated()
-//                        .anyRequest().permitAll()
+                                .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                                .anyRequest().authenticated()
+//                              .anyRequest().permitAll()
                 )
 
                 .httpBasic(withDefaults());
