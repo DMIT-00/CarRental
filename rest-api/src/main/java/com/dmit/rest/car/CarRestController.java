@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/api/v1/cars")
 public class CarRestController {
@@ -19,8 +21,9 @@ public class CarRestController {
     CarService carService;
 
     @GetMapping
-    public ResponseEntity<List<CarDto>> getCars(@RequestParam("page") int page,
-                                                @RequestParam("size") int size) {
+    public ResponseEntity<List<CarDto>> getCars(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
+                                                int size) {
         List<CarDto> cars = carService.getAllCarsPageable(page, size);
         if (cars.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -47,7 +50,8 @@ public class CarRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CarDto> updateCar(@PathVariable("id") UUID id, @RequestBody CarDto updatedCar) {
+    public ResponseEntity<CarDto> updateCar(@PathVariable("id") UUID id,
+                                            @RequestBody CarDto updatedCar) {
         CarDto resultCar;
 
         updatedCar.setId(id);

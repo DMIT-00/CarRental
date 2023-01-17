@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/api/v1/brands")
 public class BrandRestController {
@@ -17,8 +19,9 @@ public class BrandRestController {
     BrandService brandService;
 
     @GetMapping
-    public ResponseEntity<List<CarBrandDto>> getBrands(@RequestParam("page") int page,
-                                                       @RequestParam("size") int size) {
+    public ResponseEntity<List<CarBrandDto>> getBrands(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                       @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
+                                                       int size) {
         // TODO: Pagination?
         List<CarBrandDto> brands = brandService.getAllBrands();
         if (brands.isEmpty())
@@ -46,7 +49,8 @@ public class BrandRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CarBrandDto> updateBrand(@PathVariable("id") Long id, @RequestBody CarBrandDto updatedBrand) {
+    public ResponseEntity<CarBrandDto> updateBrand(@PathVariable("id") Long id,
+                                                   @RequestBody CarBrandDto updatedBrand) {
         CarBrandDto resultBrand;
 
         updatedBrand.setId(id);

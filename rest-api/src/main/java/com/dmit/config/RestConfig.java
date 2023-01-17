@@ -12,4 +12,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         "com.dmit.security"
 })
 public class RestConfig implements WebMvcConfigurer {
+    public static final String DEFAULT_PAGE_SIZE = "20";
 }

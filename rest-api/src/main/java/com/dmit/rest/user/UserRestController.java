@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserRestController {
@@ -21,8 +23,9 @@ public class UserRestController {
 
     @GetMapping
     @Secured("ROLE_MANAGER")
-    public ResponseEntity<List<UserResponseDto>> getUsers(@RequestParam("page") int page,
-                                                          @RequestParam("size") int size) {
+    public ResponseEntity<List<UserResponseDto>> getUsers(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                          @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
+                                                          int size) {
         List<UserResponseDto> users = userService.getAllUsersPageable(page, size);
         if (users.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

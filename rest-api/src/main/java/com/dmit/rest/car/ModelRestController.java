@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/api/v1/models")
 public class ModelRestController {
@@ -22,8 +24,9 @@ public class ModelRestController {
     ModelService modelService;
 
     @GetMapping
-    public ResponseEntity<List<CarModelDto>> getModels(@RequestParam("page") int page,
-                                                       @RequestParam("size") int size) {
+    public ResponseEntity<List<CarModelDto>> getModels(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                       @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
+                                                       int size) {
         // TODO: Pagination?
         List<CarModelDto> models = modelService.getAllModels();
         if (models.isEmpty())
@@ -61,7 +64,8 @@ public class ModelRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CarModelDto> updateModel(@PathVariable("id") Long id, @RequestBody CarModelDto newModel) {
+    public ResponseEntity<CarModelDto> updateModel(@PathVariable("id") Long id,
+                                                   @RequestBody CarModelDto newModel) {
         CarModelDto model;
 
         try {
