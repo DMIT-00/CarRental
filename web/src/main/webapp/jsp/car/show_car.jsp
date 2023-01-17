@@ -23,7 +23,7 @@
         <th><fmt:message key="car.body_type"/></th>
         <th><fmt:message key="car.price"/></th>
         <sec:authorize access="hasRole('ROLE_MANAGER')">
-            <th><fmt:message key="order.active_order"/></th>
+            <th><fmt:message key="order.orders"/></th>
         </sec:authorize>
     </tr>
 
@@ -46,14 +46,7 @@
             <td><c:out value="${car.bodyType}"/></td>
             <td><c:out value="${car.price}"/></td>
             <sec:authorize access="hasRole('ROLE_MANAGER')">
-                <c:choose>
-                    <c:when test="${car.activeOrder != null}">
-                        <td><a href="${pageContext.request.contextPath}/order-show/${car.activeOrder.id}">${car.activeOrder.id}</a></td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>-</td>
-                    </c:otherwise>
-                </c:choose>
+                <td><a href="${pageContext.request.contextPath}/order-list?car=${car.id}">${car.orders.size()}</a></td>
             </sec:authorize>
         </tr>
     </tbody>

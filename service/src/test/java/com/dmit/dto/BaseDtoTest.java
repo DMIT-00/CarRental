@@ -6,10 +6,6 @@ import com.dmit.entity.order.OrderStatus;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import com.dmit.entity.user.UserDetail;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
@@ -57,7 +53,7 @@ public class BaseDtoTest {
                 false,
                 null,
                 new HashSet<>(),
-                null
+                new ArrayList<>()
         );
 
         user.addUserDetail(userDetail);
@@ -87,7 +83,7 @@ public class BaseDtoTest {
                 BodyType.JEEP,
                 carModel,
                 null,
-                null
+                new ArrayList<>()
         );
 
 
@@ -101,7 +97,7 @@ public class BaseDtoTest {
                 car
         );
 
-        user.setActiveOrder(order);
-        car.setActiveOrder(order);
+        order.addUser(user);
+        order.addCar(car);
     }
 }

@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -31,13 +32,11 @@ public class CarDto {
     @NotNull
     @Range(min = 0, max = 40)
     private float enginePower;
-    //TODO: enum validation
     @NotNull
     private FuelType fuelType;
     @NotNull
     @Range(min = 0, max = 400)
     private float fuelConsumption;
-    //TODO: enum validation
     @NotNull
     private TransmissionType transmission;
     @NotNull
@@ -56,11 +55,10 @@ public class CarDto {
     @NotNull
     @Range(min = 0, max = 8000000)
     private BigDecimal price;
-    //TODO: enum validation
     @NotNull
     private BodyType bodyType;
     @NotNull
     private CarModelDto carModel;
     @Valid
-    private OrderDto activeOrder;
+    private List<OrderDto> orders;
 }

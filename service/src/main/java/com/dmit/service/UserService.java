@@ -5,12 +5,14 @@ import com.dmit.dao.UserDao;
 import com.dmit.dto.user.UserAuthenticationDto;
 import com.dmit.dto.user.UserRequestDto;
 import com.dmit.dto.user.UserResponseDto;
+import com.dmit.entity.order.OrderStatus;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -111,30 +113,6 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public long countBlockedUsers() {
-        return userDao.countByLockedTrue();
-    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public long countNotBlockedUsers() {
-        return userDao.countByLockedFalse();
-    }
-
-//    @Transactional
-//    @Secured("ROLE_MANAGER")
-//    public long countActiveOrderUsers() {
-//        return userDao.countByActiveOrderNotNull();
-//    }
-//
-//    @Transactional
-//    @Secured("ROLE_MANAGER")
-//    public long countInactiveOrderUsers() {
-//        return userDao.countByActiveOrderIsNull();
-//    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
     public List<UserResponseDto> getAllUsersPageable(int page, int size) {
         return userDao.findAll(PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -143,35 +121,33 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public List<UserResponseDto> getBlockedUsersPageable(int page, int size) {
-        return userDao.findAllByLockedTrue(PageRequest.of(page, size)).stream()
+    public long countUsersByLocked(boolean locked) {
+        return userDao.countByLocked(locked);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public List<UserResponseDto> findUsersByLocked(boolean locked, int page, int size) {
+        return userDao.findAllByLocked(locked, PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public List<UserResponseDto> getNotBlockedUsersPageable(int page, int size) {
-        return userDao.findAllByLockedFalse(PageRequest.of(page, size)).stream()
+    public long countUsersByOrder(OrderStatus orderStatus) {
+        return userDao.countByOrdersOrderStatus(orderStatus);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public List<UserResponseDto> findUsersByOrder(OrderStatus orderStatus, int page, int size) {
+        Page<User> users = userDao.findAllByOrders_OrderStatus(orderStatus, PageRequest.of(page, size));
+        return users.stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
     }
 
-//    @Transactional
-//    @Secured("ROLE_MANAGER")
-//    public List<UserResponseDto> getActiveOrderUsersPageable(int page, int size) {
-//        return userDao.findAllByActiveOrderNotNull(PageRequest.of(page, size)).stream()
-//                .map(user -> modelMapper.map(user, UserResponseDto.class))
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Transactional
-//    @Secured("ROLE_MANAGER")
-//    public List<UserResponseDto> getInactiveOrderUsersPageable(int page, int size) {
-//        return userDao.findAllByActiveOrderIsNull(PageRequest.of(page, size)).stream()
-//                .map(user -> modelMapper.map(user, UserResponseDto.class))
-//                .collect(Collectors.toList());
-//    }
 
     @Transactional
     @Secured("ROLE_MANAGER")

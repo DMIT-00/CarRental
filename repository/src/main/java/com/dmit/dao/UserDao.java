@@ -1,5 +1,6 @@
 package com.dmit.dao;
 
+import com.dmit.entity.order.OrderStatus;
 import com.dmit.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +15,8 @@ public interface UserDao extends JpaRepository<User, UUID> {
     User findByUsername(String username);
     User findByUserDetail_CreditCard(String creditCard);
     User findByUserDetail_PhoneNumber(String phoneNumber);
-    long countByLockedTrue();
-    long countByLockedFalse();
-    long countByActiveOrderNotNull();
-    long countByActiveOrderIsNull();
-
-    Page<User> findAllByLockedTrue(Pageable pageable);
-    Page<User> findAllByLockedFalse(Pageable pageable);
-    Page<User> findAllByActiveOrderNotNull(Pageable pageable);
-    Page<User> findAllByActiveOrderIsNull(Pageable pageable);
+    long countByLocked(boolean locked);
+    Page<User> findAllByLocked(boolean locked, Pageable pageable);
+    long countByOrdersOrderStatus(OrderStatus orderStatus);
+    Page<User> findAllByOrders_OrderStatus(OrderStatus orderStatus, Pageable pageable);
 }

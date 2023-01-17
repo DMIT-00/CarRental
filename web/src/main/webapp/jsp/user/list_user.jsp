@@ -15,10 +15,19 @@
     <a class="nav-link ${param.filter == 'blocked' ? 'active' : ''}" href="?filter=blocked">Blocked</a>
   </li>
   <li class="nav-item">
-      <a class="nav-link ${param.filter == 'active_order' ? 'active' : ''}" href="?filter=active_order">With active order</a>
+      <a class="nav-link ${param.filter == 'payment' ? 'active' : ''}" href="?filter=payment">With active order</a>
   </li>
   <li class="nav-item">
-      <a class="nav-link ${param.filter == 'inactive_order' ? 'active' : ''}" href="?filter=inactive_order">Without active order</a>
+      <a class="nav-link ${param.filter == 'paid' ? 'active' : ''}" href="?filter=paid">Without active order</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link ${param.filter == 'car_in_use' ? 'active' : ''}" href="?filter=car_in_use">Without active order</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link ${param.filter == 'car_returned' ? 'active' : ''}" href="?filter=car_returned">Without active order</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link ${param.filter == 'closed' ? 'active' : ''}" href="?filter=closed">Without active order</a>
   </li>
 </ul>
 
@@ -33,7 +42,7 @@
     <th><fmt:message key="user.birth_date"/></th>
     <th><fmt:message key="user.roles"/></th>
     <th><fmt:message key="user.locked"/></th>
-    <th><fmt:message key="order.active_order"/></th>
+    <th><fmt:message key="order.orders"/></th>
   </tr>
 
   <tbody class="clickable">
@@ -48,14 +57,7 @@
         <td><c:out value="${user.userDetail.birthDate}"/></td>
         <td><c:out value="${user.roles}"/></td>
         <td><c:out value="${user.locked}"/></td>
-        <c:choose>
-          <c:when test="${user.activeOrder != null}">
-            <td><a href="${pageContext.request.contextPath}/order-show/${user.activeOrder.id}">${user.activeOrder.id}</a></td>
-          </c:when>
-          <c:otherwise>
-            <td>-</td>
-          </c:otherwise>
-        </c:choose>
+        <td><a href="${pageContext.request.contextPath}/order-list?user=${user.id}">${user.orders.size()}</a></td>
       </tr>
     </c:forEach>
   </tbody>

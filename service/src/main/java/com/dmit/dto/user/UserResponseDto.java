@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class UserResponseDto {
     @NotNull
     private UserDetailDto userDetail;
     @Valid
-    private OrderDto activeOrder;
+    private List<OrderDto> orders;
     @Valid
     @NotNull
     private Set<RoleDto> roles = new HashSet<>();

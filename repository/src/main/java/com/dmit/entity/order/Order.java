@@ -40,11 +40,35 @@ public class Order {
     @Column(name = "order_total_price", nullable = false)
     private BigDecimal totalPrice;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
+
+    public void addUser(User user) {
+        this.user = user;
+        user.getOrders().add(this);
+    }
+
+    public void removeUser() {
+        if (user != null) {
+            user.getOrders().remove(this);
+            this.user = null;
+        }
+    }
+
+    public void addCar(Car car) {
+        this.car = car;
+        car.getOrders().add(this);
+    }
+
+    public void removeCar() {
+        if (car != null) {
+            car.getOrders().remove(this);
+            this.car = null;
+        }
+    }
 }

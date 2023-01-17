@@ -10,6 +10,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -77,7 +78,6 @@ public class Car {
     @JoinColumn(name="car_id", nullable=false)
     private List<Image> images;
 
-    @OneToOne
-    @JoinColumn(name = "active_order_id")
-    Order activeOrder;
+    @OneToMany(mappedBy = "car")
+    private List<Order> orders = new ArrayList<>();
 }

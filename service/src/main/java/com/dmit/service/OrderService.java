@@ -62,14 +62,12 @@ public class OrderService {
         User user = userDao.findByUsername(auth.getName());
         if (user == null)
             throw new UsernameNotFoundException("User not found! Username: " + auth.getName());
-        if (user.getActiveOrder() != null)
-            throw new InvalidOperation("User can't have multiple orders!");
 
         // Get car for the order
         Car car = carDao.findById(orderRequestDto.getCarId())
                 .orElseThrow(() -> new NotFoundException("Car not found! Id: " + orderRequestDto.getCarId()));
-        if (car.getActiveOrder() != null)
-            throw new InvalidOperation("This car is already taken!");
+
+        // TODO: check if car is busy
 
         Order order = modelMapper.map(orderRequestDto, Order.class);
 
@@ -80,18 +78,12 @@ public class OrderService {
 
         order.setOrderStatus(OrderStatus.PAYMENT);
 
-        order.setCar(car);
-        order.setUser(user);
+        order.addCar(car);
+        order.addUser(user);
 
         order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(order.getNumberOfHours())));
 
         orderDao.save(order);
-
-        user.setActiveOrder(order);
-        userDao.save(user);
-
-        car.setActiveOrder(order);
-        carDao.save(car);
     }
 
     @Transactional
