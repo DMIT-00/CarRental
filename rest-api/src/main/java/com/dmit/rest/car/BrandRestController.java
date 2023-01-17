@@ -6,6 +6,7 @@ import com.dmit.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,12 +44,14 @@ public class BrandRestController {
     }
 
     @PostMapping
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<CarBrandDto> addBrand(@RequestBody CarBrandDto brand) {
         CarBrandDto addedBrand = brandService.addNewBrand(brand);
         return new ResponseEntity<>(addedBrand, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<CarBrandDto> updateBrand(@PathVariable("id") Long id,
                                                    @RequestBody CarBrandDto updatedBrand) {
         CarBrandDto resultBrand;
@@ -65,6 +68,7 @@ public class BrandRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<?> deleteBrand(@PathVariable("id") Long id) {
         try {
             brandService.deleteBrand(id);

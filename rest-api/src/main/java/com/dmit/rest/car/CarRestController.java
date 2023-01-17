@@ -7,6 +7,7 @@ import com.dmit.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,12 +45,14 @@ public class CarRestController {
     }
 
     @PostMapping
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<CarDto> addCar(@RequestBody CarDto car) {
         CarDto addedCar = carService.addNewCar(car);
         return new ResponseEntity<>(addedCar, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<CarDto> updateCar(@PathVariable("id") UUID id,
                                             @RequestBody CarDto updatedCar) {
         CarDto resultCar;
@@ -66,6 +69,7 @@ public class CarRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<?> deleteCar(@PathVariable("id") UUID id) {
         try {
             carService.deleteCar(id);

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,12 +59,14 @@ public class ModelRestController {
     }
 
     @PostMapping
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<CarModelDto> addModel(@RequestBody CarModelDto model) {
         CarModelDto addedModel = modelService.addNewModel(model);
         return new ResponseEntity<>(addedModel, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<CarModelDto> updateModel(@PathVariable("id") Long id,
                                                    @RequestBody CarModelDto newModel) {
         CarModelDto model;
@@ -83,6 +86,7 @@ public class ModelRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_MANAGER")
     public ResponseEntity<?> deleteModel(@PathVariable("id") Long id) {
         try {
             modelService.deleteModel(id);
