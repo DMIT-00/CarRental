@@ -23,7 +23,7 @@ public class UserRequestDtoTest {
     @Test
     public void shouldMarkPasswordsAsInvalid() throws Exception {
         // Given
-        UserRequestDto userRequestDto = new UserRequestDto(new UserDetailDto(
+        UserRequestFormDto userRequestDto = new UserRequestFormDto(new UserDetailDto(
                 "First Name", "Last Name", "+37544222222",
                 "0000000000000000", Date.valueOf("2000-01-01")));
         userRequestDto.setEmail("aaaa@gmail.com");
@@ -33,7 +33,7 @@ public class UserRequestDtoTest {
         userRequestDto.setPasswordRepeat("BBBBBBBB");
 
         // When
-        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
+        Set<ConstraintViolation<UserRequestFormDto>> violations = validator.validate(userRequestDto);
 
         // Then
         assertEquals(1, violations.size());
@@ -42,7 +42,7 @@ public class UserRequestDtoTest {
     @Test
     public void shouldMarkPasswordsAsValid() throws Exception {
         // Given
-        UserRequestDto userRequestDto = new UserRequestDto(new UserDetailDto(
+        UserRequestFormDto userRequestDto = new UserRequestFormDto(new UserDetailDto(
                 "First Name", "Last Name", "+37544222222",
                 "0000000000000000", Date.valueOf("2000-01-01")));
         userRequestDto.setEmail("aaaa@gmail.com");
@@ -52,7 +52,7 @@ public class UserRequestDtoTest {
         userRequestDto.setPasswordRepeat("AAAAAAAA");
 
         // When
-        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
+        Set<ConstraintViolation<UserRequestFormDto>> violations = validator.validate(userRequestDto);
 
         // Then
         assertEquals(0, violations.size());

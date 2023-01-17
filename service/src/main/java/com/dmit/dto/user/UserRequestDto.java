@@ -10,15 +10,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserRequestDto {
     private UUID id;
     @NotEmpty
     @NotNull
@@ -30,15 +28,11 @@ public class UserDto {
     @NotNull
     @Size(min = 4, max = 42)
     private String password;
-    private boolean locked;
     @Valid
     @NotNull
     private UserDetailDto userDetail;
-    @Valid
-    @NotNull
-    private Set<RoleDto> roles = new HashSet<>();
 
-    public UserDto(UserDetailDto userDetailDto) {
+    public UserRequestDto(UserDetailDto userDetailDto) {
         this.userDetail = userDetailDto;
     }
 }

@@ -1,6 +1,6 @@
 package com.dmit.security;
 
-import com.dmit.dto.user.UserDto;
+import com.dmit.dto.user.UserAuthenticationDto;
 import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +17,7 @@ public class AuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            UserDto user = userService.findUserByUsername(username);
+            UserAuthenticationDto user = userService.findUserByUsername(username);
 
             if (user == null)
                 throw new UsernameNotFoundException("User not found: " + username);

@@ -2,7 +2,8 @@ package com.dmit.service;
 
 import com.dmit.dao.RoleDao;
 import com.dmit.dao.UserDao;
-import com.dmit.dto.user.UserDto;
+import com.dmit.dto.user.UserAuthenticationDto;
+import com.dmit.dto.user.UserRequestDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
@@ -39,32 +40,44 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserResponseDto registerUser(UserDto userDto) {
+    public UserAuthenticationDto findUserByUsername(String username) {
+        User user = userDao.findByUsername(username);
+        if (user == null)
+            throw new NotFoundException("User not found! Name: " + username);
+
+        return modelMapper.map(user, UserAuthenticationDto.class);
+    }
+
+    @Transactional
+    public UserResponseDto addNewUser(UserRequestDto userRequestDto) {
         final String DEFAULT_ROLE = "USER";
 
-        Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
 
         if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<UserDto> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
+            StringBuilder errors = new StringBuilder();
+            for (ConstraintViolation<UserRequestDto> constraintViolation : violations) {
+                errors.append(constraintViolation.getPropertyPath())
+                        .append(" ")
+                        .append(constraintViolation.getMessage())
+                        .append("; ");
             }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
+            throw new ConstraintViolationException("Validation errors: " + errors, violations);
         }
 
-        if (userDao.findByUsername(userDto.getUsername()) != null)
+        if (userDao.findByUsername(userRequestDto.getUsername()) != null)
             throw new IllegalArgumentException("Username is already used to register");
 
-        if (userDao.findByEmail(userDto.getEmail()) != null)
+        if (userDao.findByEmail(userRequestDto.getEmail()) != null)
             throw new IllegalArgumentException("Email is already used to register");
 
-        if (userDao.findByUserDetail_PhoneNumber(userDto.getUserDetail().getPhoneNumber()) != null)
+        if (userDao.findByUserDetail_PhoneNumber(userRequestDto.getUserDetail().getPhoneNumber()) != null)
             throw new IllegalArgumentException("Phone number is already used to register");
 
-        if (userDao.findByUserDetail_CreditCard(userDto.getUserDetail().getCreditCard()) != null)
+        if (userDao.findByUserDetail_CreditCard(userRequestDto.getUserDetail().getCreditCard()) != null)
             throw new IllegalArgumentException("Credit card is already used to register");
 
-        User user = modelMapper.map(userDto, User.class);
+        User user = modelMapper.map(userRequestDto, User.class);
 
         // Check for duplicate Id
         if (user.getId() != null && userDao.findById(user.getId()).isPresent()) {
@@ -91,15 +104,6 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto findUserByUsername(String username) {
-        User user = userDao.findByUsername(username);
-        if (user == null)
-            throw new NotFoundException("User not found! Name: " + username);
-
-        return modelMapper.map(user, UserDto.class);
-    }
-
-    @Transactional
     @Secured("ROLE_MANAGER")
     public long countUsers() {
         return userDao.count();
@@ -117,17 +121,17 @@ public class UserService {
         return userDao.countByLockedFalse();
     }
 
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public long countActiveOrderUsers() {
-        return userDao.countByActiveOrderNotNull();
-    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public long countInactiveOrderUsers() {
-        return userDao.countByActiveOrderIsNull();
-    }
+//    @Transactional
+//    @Secured("ROLE_MANAGER")
+//    public long countActiveOrderUsers() {
+//        return userDao.countByActiveOrderNotNull();
+//    }
+//
+//    @Transactional
+//    @Secured("ROLE_MANAGER")
+//    public long countInactiveOrderUsers() {
+//        return userDao.countByActiveOrderIsNull();
+//    }
 
     @Transactional
     @Secured("ROLE_MANAGER")
@@ -153,21 +157,21 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public List<UserResponseDto> getActiveOrderUsersPageable(int page, int size) {
-        return userDao.findAllByActiveOrderNotNull(PageRequest.of(page, size)).stream()
-                .map(user -> modelMapper.map(user, UserResponseDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public List<UserResponseDto> getInactiveOrderUsersPageable(int page, int size) {
-        return userDao.findAllByActiveOrderIsNull(PageRequest.of(page, size)).stream()
-                .map(user -> modelMapper.map(user, UserResponseDto.class))
-                .collect(Collectors.toList());
-    }
+//    @Transactional
+//    @Secured("ROLE_MANAGER")
+//    public List<UserResponseDto> getActiveOrderUsersPageable(int page, int size) {
+//        return userDao.findAllByActiveOrderNotNull(PageRequest.of(page, size)).stream()
+//                .map(user -> modelMapper.map(user, UserResponseDto.class))
+//                .collect(Collectors.toList());
+//    }
+//
+//    @Transactional
+//    @Secured("ROLE_MANAGER")
+//    public List<UserResponseDto> getInactiveOrderUsersPageable(int page, int size) {
+//        return userDao.findAllByActiveOrderIsNull(PageRequest.of(page, size)).stream()
+//                .map(user -> modelMapper.map(user, UserResponseDto.class))
+//                .collect(Collectors.toList());
+//    }
 
     @Transactional
     @Secured("ROLE_MANAGER")

@@ -1,8 +1,8 @@
 package com.dmit.controller.user;
 
 import com.dmit.dto.MessageBox;
+import com.dmit.dto.UserRequestFormDto;
 import com.dmit.dto.user.UserDetailDto;
-import com.dmit.dto.UserRequestDto;
 import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,18 +21,18 @@ public class AddUserController {
 
     @GetMapping("user-add")
     public String registerUserForm(Model model) {
-        model.addAttribute("user", new UserRequestDto(new UserDetailDto()));
+        model.addAttribute("user", new UserRequestFormDto(new UserDetailDto()));
 
         return "user/add_user";
     }
 
     @PostMapping(value = "user-add")
-    public String registerUser(@Valid @ModelAttribute("user") UserRequestDto userRequestDto,
+    public String registerUser(@Valid @ModelAttribute("user") UserRequestFormDto userRequestDto,
                                BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors())
             return "user/add_user";
 
-        userService.registerUser(userRequestDto);
+        userService.addNewUser(userRequestDto);
 
         model.addAttribute("messageBox",
                 new MessageBox("user.success", "user.success_full", MessageBox.MessageBoxType.SUCCESS));

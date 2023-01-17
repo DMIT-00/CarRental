@@ -1,16 +1,14 @@
 package com.dmit.dto.user;
 
 import com.dmit.dto.BaseDtoTest;
-import com.dmit.dto.car.CarBrandDto;
-import com.dmit.dto.order.OrderRequestDto;
-import com.dmit.entity.order.Order;
 import com.dmit.entity.user.User;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-public class UserDtoTest extends BaseDtoTest {
-    UserDto targetObject;
+public class UserAuthenticationDtoTest extends BaseDtoTest {
+    UserAuthenticationDto targetObject;
     final int TARGET_CLASS_NUMBER_OF_FIELDS = 7;
 
     @Test
@@ -19,7 +17,7 @@ public class UserDtoTest extends BaseDtoTest {
         // see parent class
 
         // When
-        targetObject = modelMapper.map(user, UserDto.class);
+        targetObject = modelMapper.map(user, UserAuthenticationDto.class);
 
         // Then
         try {
@@ -52,7 +50,7 @@ public class UserDtoTest extends BaseDtoTest {
     @Test
     public void mappingFromDto() {
         // Given
-        targetObject = modelMapper.map(user, UserDto.class);
+        targetObject = modelMapper.map(user, UserAuthenticationDto.class);
 
         // When
         User userResult = modelMapper.map(targetObject, User.class);
