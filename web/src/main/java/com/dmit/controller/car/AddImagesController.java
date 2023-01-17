@@ -1,6 +1,5 @@
 package com.dmit.controller.car;
 
-import com.dmit.entity.car.Image;
 import com.dmit.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-// TODO: is SessionAttributes ok?
 @Controller
 @SessionAttributes("carId")
 @Secured("ROLE_MANAGER")
@@ -27,14 +25,11 @@ public class AddImagesController {
     @Autowired
     CarService carService;
 
-
-    // FIXME: call security! Only car owner can do that!
     @GetMapping(value = "images-add")
     public String addCarImagesForm(Model model) {
         return "car/add_images";
     }
 
-    // FIXME:: call security! Only car owner can do that!
     @PostMapping(value = "images-add")
     public String addCarImages(@ModelAttribute("images") MultipartFile[] files, Model model) {
 

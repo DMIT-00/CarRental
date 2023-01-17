@@ -22,7 +22,8 @@ public class ModelRestController {
     ModelService modelService;
 
     @GetMapping
-    public ResponseEntity<List<CarModelDto>> getModels() {
+    public ResponseEntity<List<CarModelDto>> getModels(@RequestParam("page") int page,
+                                                       @RequestParam("size") int size) {
         // TODO: Pagination?
         List<CarModelDto> models = modelService.getAllModels();
         if (models.isEmpty())

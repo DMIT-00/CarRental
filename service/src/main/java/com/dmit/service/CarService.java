@@ -4,6 +4,7 @@ import com.dmit.dao.CarDao;
 import com.dmit.dto.car.CarDto;
 import com.dmit.entity.car.Car;
 import com.dmit.entity.car.Image;
+import com.dmit.exception.AlreadyExistsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +62,11 @@ public class CarService {
         }
 
         Car car = modelMapper.map(carDto, Car.class);
-        car.setId(null); // In case we get input with id somehow
+
+        // Check for duplicate Id
+        if (car.getId() != null && carDao.findById(car.getId()).isPresent()) {
+            throw new AlreadyExistsException("Car already exists! Id: " + car.getId());
+        }
 
         carDao.save(car);
 

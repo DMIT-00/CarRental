@@ -2,6 +2,7 @@ package com.dmit.service;
 
 import com.dmit.dao.CarImageDao;
 import com.dmit.entity.car.Image;
+import com.dmit.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +13,17 @@ import java.util.UUID;
 @Service
 public class CarImageService {
     @Autowired
-    CarImageDao carImageDao;
+    CarImageDao imageDao;
 
     @Transactional
     public byte[] getImage(UUID imageId) {
-        Image image = carImageDao.findById(imageId)
-                .orElseThrow(); // TODO: notfoundexception
+        Image image = imageDao.findById(imageId)
+                .orElseThrow(() -> new NotFoundException("Image not found! Id: " + imageId));
         return image.getImage();
     }
 
+    @Transactional
     public List<UUID> getImageIdsByCarId(UUID carId) {
-        return carImageDao.getAllImagesIdByCarId(carId.toString());
+        return imageDao.getAllImagesIdByCarId(carId.toString());
     }
 }

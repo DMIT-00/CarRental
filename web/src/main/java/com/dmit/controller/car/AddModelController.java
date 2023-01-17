@@ -44,8 +44,6 @@ public class AddModelController {
             return "car/add_model";
         }
 
-        carModelDto.setId(null); // TODO: service level?
-
         modelService.addNewModel(carModelDto);
 
         model.addAttribute("messageBox",

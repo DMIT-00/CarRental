@@ -3,6 +3,7 @@ package com.dmit.service;
 import com.dmit.dao.CarBrandDao;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.entity.car.CarBrand;
+import com.dmit.exception.AlreadyExistsException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -16,9 +17,9 @@ import org.modelmapper.convention.MatchingStrategies;
 import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,7 +31,7 @@ public class BrandServiceTest {
     @Mock
     Validator validator;
     @Mock
-    CarBrandDao carBrandDao;
+    CarBrandDao brandDao;
     @InjectMocks
     BrandService targetObject;
 
@@ -46,7 +47,7 @@ public class BrandServiceTest {
                 new CarBrandDto(2L, "SUZUKI")
         );
 
-        when(carBrandDao.findAll()).thenReturn(List.of(
+        when(brandDao.findAll()).thenReturn(List.of(
                 new CarBrand(1L, "BMW", new ArrayList<>()),
                 new CarBrand(2L, "SUZUKI", new ArrayList<>())
         ));
@@ -73,9 +74,22 @@ public class BrandServiceTest {
 
         // Then
         ArgumentCaptor<CarBrand> argument = ArgumentCaptor.forClass(CarBrand.class);
-        verify(carBrandDao).save(argument.capture());
-        assertNull(argument.getValue().getId());
+        verify(brandDao).save(argument.capture());
         assertEquals(argument.getValue().getBrandName(), carBrandDto.getBrandName());
+        assertEquals(argument.getValue().getId(), carBrandDto.getId());
+    }
+
+    @Test
+    public void addNewBrandShouldThrowOnDuplicateId() {
+        // Given
+        CarBrandDto carBrandDto = new CarBrandDto(1L, "BMW");
+
+        // When
+        when(brandDao.findById(carBrandDto.getId()))
+                .thenReturn(Optional.of(new CarBrand(1L, "Ferrari", null)));
+
+        // Then
+        assertThrows(AlreadyExistsException.class, () -> targetObject.addNewBrand(carBrandDto));
     }
 
 }

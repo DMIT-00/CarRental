@@ -1,10 +1,10 @@
 package com.dmit.service;
 
 import com.dmit.dao.CarModelDao;
-import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
+import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +26,18 @@ public class ModelService {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    CarModelDao carModelDao;
+    CarModelDao modelDao;
 
     @Transactional
     public List<CarModelDto> getAllBrandModels(long brandId) {
-        return carModelDao.findAllByBrand(brandId).stream()
+        return modelDao.findAllByBrand(brandId).stream()
                 .map(model -> modelMapper.map(model, CarModelDto.class))
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public List<CarModelDto> getAllModels() {
-        return carModelDao.findAll().stream()
+        return modelDao.findAll().stream()
                 .map(model -> modelMapper.map(model, CarModelDto.class))
                 .collect(Collectors.toList());
     }
@@ -56,9 +56,13 @@ public class ModelService {
         }
 
         CarModel model = modelMapper.map(newModel, CarModel.class);
-        model.setId(null); // In case we get input with id somehow
 
-        carModelDao.save(model);
+        // Check for duplicate Id
+        if (model.getId() != null && modelDao.findById(model.getId()).isPresent()) {
+            throw new AlreadyExistsException("Model already exists! Id: " + model.getId());
+        }
+
+        modelDao.save(model);
 
         return modelMapper.map(model, CarModelDto.class);
     }
@@ -66,7 +70,7 @@ public class ModelService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarModelDto findModelById(Long id) {
-        CarModel model = carModelDao.findById(id)
+        CarModel model = modelDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
 
         return modelMapper.map(model, CarModelDto.class);
@@ -75,21 +79,21 @@ public class ModelService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarModelDto updateModel(CarModelDto updatedModel) {
-        CarModel model = carModelDao.findById(updatedModel.getId())
+        CarModel model = modelDao.findById(updatedModel.getId())
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + updatedModel.getId()));
 
         model.setModelName(updatedModel.getModelName());
         model.setCarBrand(modelMapper.map(updatedModel.getCarBrand(), CarBrand.class));
 
-        return modelMapper.map(carModelDao.save(model), CarModelDto.class);
+        return modelMapper.map(modelDao.save(model), CarModelDto.class);
     }
 
     @Transactional
     @Secured("ROLE_MANAGER")
     public void deleteModel(Long id) {
-        CarModel model = carModelDao.findById(id)
+        CarModel model = modelDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
 
-        carModelDao.delete(model);
+        modelDao.delete(model);
     }
 }

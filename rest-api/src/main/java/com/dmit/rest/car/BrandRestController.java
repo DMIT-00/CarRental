@@ -17,7 +17,8 @@ public class BrandRestController {
     BrandService brandService;
 
     @GetMapping
-    public ResponseEntity<List<CarBrandDto>> getBrands() {
+    public ResponseEntity<List<CarBrandDto>> getBrands(@RequestParam("page") int page,
+                                                       @RequestParam("size") int size) {
         // TODO: Pagination?
         List<CarBrandDto> brands = brandService.getAllBrands();
         if (brands.isEmpty())

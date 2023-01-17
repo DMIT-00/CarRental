@@ -6,6 +6,7 @@ import com.dmit.dto.user.UserDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
+import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,11 @@ public class UserService {
 
         User user = modelMapper.map(userDto, User.class);
 
-        user.setId(null); // In case we get input with id somehow
+        // Check for duplicate Id
+        if (user.getId() != null && userDao.findById(user.getId()).isPresent()) {
+            throw new AlreadyExistsException("User already exists! Id: " + user.getId());
+        }
+
         user.setLocked(false);
 
         user.getUserDetail().setUser(user);

@@ -3,6 +3,7 @@ package com.dmit.service;
 import com.dmit.dao.CarBrandDao;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.entity.car.CarBrand;
+import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ public class BrandService {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    private CarBrandDao carBrandDao;
+    private CarBrandDao brandDao;
 
 
     @Transactional
     public List<CarBrandDto> getAllBrands() {
-        return carBrandDao.findAll().stream()
+        return brandDao.findAll().stream()
                 .map(brand -> modelMapper.map(brand, CarBrandDto.class))
                 .collect(Collectors.toList());
     }
@@ -48,9 +49,13 @@ public class BrandService {
         }
 
         CarBrand brand = modelMapper.map(newBrand, CarBrand.class);
-        brand.setId(null); // In case we get input with id somehow
 
-        carBrandDao.save(brand);
+        // Check for duplicate Id
+        if (brand.getId() != null && brandDao.findById(brand.getId()).isPresent()) {
+            throw new AlreadyExistsException("Brand already exists! Id: " + brand.getId());
+        }
+
+        brandDao.save(brand);
 
         return modelMapper.map(brand, CarBrandDto.class);
     }
@@ -58,7 +63,7 @@ public class BrandService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarBrandDto findBrandById(Long id) {
-        CarBrand brand = carBrandDao.findById(id)
+        CarBrand brand = brandDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
 
         return modelMapper.map(brand, CarBrandDto.class);
@@ -67,20 +72,20 @@ public class BrandService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarBrandDto updateBrand(CarBrandDto updatedBrand) {
-        CarBrand brand = carBrandDao.findById(updatedBrand.getId())
+        CarBrand brand = brandDao.findById(updatedBrand.getId())
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + updatedBrand.getId()));
 
         brand.setBrandName(updatedBrand.getBrandName());
 
-        return modelMapper.map(carBrandDao.save(brand), CarBrandDto.class);
+        return modelMapper.map(brandDao.save(brand), CarBrandDto.class);
     }
 
     @Transactional
     @Secured("ROLE_MANAGER")
     public void deleteBrand(Long id) {
-        CarBrand brand = carBrandDao.findById(id)
+        CarBrand brand = brandDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
 
-        carBrandDao.delete(brand);
+        brandDao.delete(brand);
     }
 }

@@ -20,7 +20,7 @@ public class CarRestController {
 
     @GetMapping
     public ResponseEntity<List<CarDto>> getCars(@RequestParam("page") int page,
-                                @RequestParam("size") int size) {
+                                                @RequestParam("size") int size) {
         List<CarDto> cars = carService.getAllCarsPageable(page, size);
         if (cars.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

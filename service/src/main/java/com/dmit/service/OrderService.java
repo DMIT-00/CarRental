@@ -9,6 +9,7 @@ import com.dmit.entity.car.Car;
 import com.dmit.entity.order.Order;
 import com.dmit.entity.order.OrderStatus;
 import com.dmit.entity.user.User;
+import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.InvalidOperation;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -72,7 +73,11 @@ public class OrderService {
 
         Order order = modelMapper.map(orderRequestDto, Order.class);
 
-        order.setId(null);
+        // Check for duplicate Id
+        if (order.getId() != null && orderDao.findById(order.getId()).isPresent()) {
+            throw new AlreadyExistsException("Order already exists! Id: " + order.getId());
+        }
+
         order.setOrderStatus(OrderStatus.PAYMENT);
 
         order.setCar(car);
