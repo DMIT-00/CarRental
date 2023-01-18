@@ -26,6 +26,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.math.BigDecimal;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -72,16 +73,23 @@ public class OrderService {
         Order order = modelMapper.map(orderRequestDto, Order.class);
 
         // Check for duplicate Id
-        if (order.getId() != null && orderDao.findById(order.getId()).isPresent()) {
+        if (order.getId() != null && orderDao.findById(order.getId()).isPresent())
             throw new AlreadyExistsException("Order already exists! Id: " + order.getId());
-        }
 
         order.setOrderStatus(OrderStatus.PAYMENT);
 
         order.addCar(car);
         order.addUser(user);
 
-        order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(order.getNumberOfHours())));
+        order.setStartDate(order.getStartDate().truncatedTo(ChronoUnit.MINUTES));
+        order.setEndDate(order.getEndDate().truncatedTo(ChronoUnit.MINUTES));
+
+        long minutes = ChronoUnit.MINUTES.between(order.getStartDate(), order.getEndDate());
+
+        if (minutes < 10)
+            throw new InvalidOperation("Duration can't be less than 10!");
+
+        order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(minutes)));
 
         orderDao.save(order);
     }

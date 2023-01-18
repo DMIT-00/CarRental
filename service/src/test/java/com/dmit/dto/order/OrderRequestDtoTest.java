@@ -1,11 +1,10 @@
 package com.dmit.dto.order;
 
 import com.dmit.dto.BaseDtoTest;
-import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.order.Order;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class OrderRequestDtoTest extends BaseDtoTest {
     OrderRequestDto targetObject;
@@ -32,7 +31,7 @@ public class OrderRequestDtoTest extends BaseDtoTest {
 
         assertEquals(targetObject.getCarId(), null);
         assertEquals(targetObject.getStartDate(), order.getStartDate());
-        assertEquals(targetObject.getNumberOfHours(), order.getNumberOfHours());
+        assertEquals(targetObject.getEndDate(), order.getEndDate());
     }
 
     @Test
@@ -48,6 +47,6 @@ public class OrderRequestDtoTest extends BaseDtoTest {
         assertEquals(targetObject.getClass().getDeclaredFields().length, TARGET_CLASS_NUMBER_OF_FIELDS);
 
         assertEquals(orderResult.getStartDate(), order.getStartDate());
-        assertEquals(orderResult.getNumberOfHours(), order.getNumberOfHours());
+        assertEquals(orderResult.getEndDate(), order.getEndDate());
     }
 }

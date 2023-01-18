@@ -1,8 +1,6 @@
 package com.dmit.dto.order;
 
 import com.dmit.dto.BaseDtoTest;
-import com.dmit.dto.car.CarBrandDto;
-import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.order.Order;
 import org.junit.Test;
 
@@ -34,8 +32,8 @@ public class OrderDtoTest extends BaseDtoTest {
 
         assertEquals(targetObject.getId(), order.getId());
         assertEquals(targetObject.getOrderStatus(), order.getOrderStatus());
-        assertEquals(targetObject.getNumberOfHours(), order.getNumberOfHours());
         assertEquals(targetObject.getStartDate(), order.getStartDate());
+        assertEquals(targetObject.getEndDate(), order.getEndDate());
         assertEquals(targetObject.getTotalPrice(), order.getTotalPrice());
         assertEquals(targetObject.getUser().getId(), order.getUser().getId());
         assertEquals(targetObject.getCar().getId(), order.getCar().getId());
@@ -55,8 +53,8 @@ public class OrderDtoTest extends BaseDtoTest {
 
         assertEquals(orderResult.getId(), order.getId());
         assertEquals(orderResult.getOrderStatus(), order.getOrderStatus());
-        assertEquals(orderResult.getNumberOfHours(), order.getNumberOfHours());
         assertEquals(orderResult.getStartDate(), order.getStartDate());
+        assertEquals(orderResult.getEndDate(), order.getEndDate());
         assertEquals(orderResult.getTotalPrice(), order.getTotalPrice());
         assertEquals(orderResult.getUser().getId(), order.getUser().getId());
         assertEquals(orderResult.getCar().getId(), order.getCar().getId());

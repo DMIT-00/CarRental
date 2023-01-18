@@ -69,15 +69,17 @@
         <div class="row">
             <div class="col-sm">
                 <form:label path="startDate" class="form-label"><fmt:message key="order.date"/></form:label>
-                <form:input path="startDate" type="timestamp"
+                <form:input path="startDate" type="datetime-local"
                             value=''
                             class="form-control"/>
                 <form:errors path="startDate" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
-                <form:label path="numberOfHours" class="form-label"><fmt:message key="order.hours"/></form:label>
-                <form:input path="numberOfHours" type="number" value="1" class="form-control"/>
-                <form:errors path="numberOfHours" cssClass="text-danger"/>
+                <form:label path="endDate" class="form-label"><fmt:message key="order.end_date"/></form:label>
+                <form:input path="endDate" type="datetime-local"
+                            value=''
+                            class="form-control"/>
+                <form:errors path="endDate" cssClass="text-danger"/>
             </div>
         </div>
     </div>
@@ -85,7 +87,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function formatDate() {
+        function formatDate(time) {
              var d = new Date(),
                  month = '' + (d.getMonth() + 1),
                  day = '' + (d.getDate() + 1),
@@ -94,11 +96,15 @@
              if (month.length < 2) month = '0' + month;
              if (day.length < 2) day = '0' + day;
 
-             return [year, month, day].join('-') + " 10:00:00";
+             return [year, month, day].join('-') + " " + time;
          }
 
         $( document ).ready(function() {
-           $("#startDate").attr("value", formatDate());
+           $("#startDate").attr("value", formatDate("10:00:00"));
+        });
+
+        $( document ).ready(function() {
+           $("#endDate").attr("value", formatDate("14:00:00"));
         });
     </script>
 

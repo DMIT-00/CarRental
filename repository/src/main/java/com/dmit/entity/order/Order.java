@@ -11,7 +11,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -32,10 +32,10 @@ public class Order {
     private OrderStatus orderStatus;
 
     @Column(name = "order_start_date", nullable = false)
-    private Timestamp startDate;
+    private LocalDateTime startDate;
 
-    @Column(name = "order_hours", nullable = false)
-    private Long numberOfHours;
+    @Column(name = "order_end_date", nullable = false)
+    private LocalDateTime endDate;
 
     @Column(name = "order_total_price", nullable = false)
     private BigDecimal totalPrice;

@@ -11,7 +11,7 @@ import org.modelmapper.convention.MatchingStrategies;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
@@ -90,8 +90,8 @@ public class BaseDtoTest {
         order = new Order(
                 UUID.randomUUID(),
                 OrderStatus.CLOSED,
-                Timestamp.valueOf("2022-02-12 10:02:24"),
-                24L,
+                LocalDateTime.of(2024, 2, 3, 10, 0),
+                LocalDateTime.of(2024, 2, 3, 12, 0),
                 BigDecimal.valueOf(20.5),
                 user,
                 car

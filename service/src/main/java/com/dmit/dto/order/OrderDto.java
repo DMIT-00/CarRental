@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -25,9 +25,10 @@ public class OrderDto {
     private OrderStatus orderStatus;
     @Future
     @NotNull
-    private Timestamp startDate;
+    private LocalDateTime startDate;
+    @Future
     @NotNull
-    private Long numberOfHours;
+    private LocalDateTime endDate;
     @NotNull
     private BigDecimal totalPrice;
 

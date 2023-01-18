@@ -6,7 +6,7 @@
     <tr>
         <th><fmt:message key="order.status"/></th>
         <th><fmt:message key="order.date"/></th>
-        <th><fmt:message key="order.hours"/></th>
+        <th><fmt:message key="order.end_date"/></th>
         <th><fmt:message key="order.total_price"/></th>
         <th><fmt:message key="order.user_id"/></th>
         <th><fmt:message key="user.username"/></th>
@@ -19,7 +19,7 @@
         <tr class='table-row'>
             <td><c:out value="${order.orderStatus}"/></td>
             <td><c:out value="${order.startDate}"/></td>
-            <td><c:out value="${order.numberOfHours}"/></td>
+            <td><c:out value="${order.endDate}"/></td>
             <td><c:out value="${order.totalPrice}"/></td>
             <td><a href="${pageContext.request.contextPath}/user-show/${order.user.id}">${order.user.id}</a></td>
             <td><c:out value="${order.user.username}"/></td>
