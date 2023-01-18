@@ -44,7 +44,7 @@ public class ModelService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public CarModelDto addNewModel(CarModelDto newModel) {
+    public CarModelDto addModel(CarModelDto newModel) {
         Set<ConstraintViolation<CarModelDto>> violations = validator.validate(newModel);
 
         if (!violations.isEmpty()) {
@@ -69,15 +69,6 @@ public class ModelService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public CarModelDto findModelById(Long id) {
-        CarModel model = modelDao.findById(id)
-                .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
-
-        return modelMapper.map(model, CarModelDto.class);
-    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
     public CarModelDto updateModel(CarModelDto updatedModel) {
         CarModel model = modelDao.findById(updatedModel.getId())
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + updatedModel.getId()));
@@ -95,5 +86,14 @@ public class ModelService {
             throw new NotFoundException("Model not found! Id: " + id);
 
         modelDao.deleteById(id);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public CarModelDto findModelById(Long id) {
+        CarModel model = modelDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
+
+        return modelMapper.map(model, CarModelDto.class);
     }
 }

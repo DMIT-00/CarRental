@@ -47,7 +47,7 @@ public class OrderService {
 
     @Transactional
     @Secured("ROLE_USER")
-    public void createNewOrder(OrderRequestDto orderRequestDto) {
+    public void addOrder(OrderRequestDto orderRequestDto) {
         Set<ConstraintViolation<OrderRequestDto>> violations = validator.validate(orderRequestDto);
 
         if (!violations.isEmpty()) {

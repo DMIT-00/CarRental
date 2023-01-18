@@ -1,6 +1,5 @@
 package com.dmit.rest.car;
 
-import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarDto;
 import com.dmit.exception.NotFoundException;
 import com.dmit.service.CarService;
@@ -25,7 +24,7 @@ public class CarRestController {
     public ResponseEntity<List<CarDto>> getCars(@RequestParam(value = "page", defaultValue = "0") int page,
                                                 @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
                                                 int size) {
-        List<CarDto> cars = carService.getAllCarsPageable(page, size);
+        List<CarDto> cars = carService.findAllCarsPageable(page, size);
         if (cars.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -47,7 +46,7 @@ public class CarRestController {
     @PostMapping
     @Secured("ROLE_MANAGER")
     public ResponseEntity<CarDto> addCar(@RequestBody CarDto car) {
-        CarDto addedCar = carService.addNewCar(car);
+        CarDto addedCar = carService.addCar(car);
         return new ResponseEntity<>(addedCar, HttpStatus.CREATED);
     }
 

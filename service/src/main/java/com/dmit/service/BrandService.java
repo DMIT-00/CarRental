@@ -37,7 +37,7 @@ public class BrandService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public CarBrandDto addNewBrand(CarBrandDto newBrand) {
+    public CarBrandDto addBrand(CarBrandDto newBrand) {
         Set<ConstraintViolation<CarBrandDto>> violations = validator.validate(newBrand);
 
         if (!violations.isEmpty()) {
@@ -56,15 +56,6 @@ public class BrandService {
         }
 
         brandDao.save(brand);
-
-        return modelMapper.map(brand, CarBrandDto.class);
-    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public CarBrandDto findBrandById(Long id) {
-        CarBrand brand = brandDao.findById(id)
-                .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
 
         return modelMapper.map(brand, CarBrandDto.class);
     }
@@ -97,5 +88,14 @@ public class BrandService {
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
 
         brandDao.delete(brand);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public CarBrandDto findBrandById(Long id) {
+        CarBrand brand = brandDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
+
+        return modelMapper.map(brand, CarBrandDto.class);
     }
 }

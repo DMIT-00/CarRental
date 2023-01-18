@@ -44,7 +44,7 @@ public class AddModelController {
             return "car/add_model";
         }
 
-        modelService.addNewModel(carModelDto);
+        modelService.addModel(carModelDto);
 
         model.addAttribute("messageBox",
                 new MessageBox("add_model.success", "add_model.success_full", MessageBox.MessageBoxType.SUCCESS));

@@ -1,11 +1,8 @@
 package com.dmit.service;
 
 import com.dmit.dao.CarDao;
-import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarDto;
-import com.dmit.dto.user.UserRequestDto;
 import com.dmit.entity.car.Car;
-import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.Image;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
@@ -34,32 +31,14 @@ public class CarService {
     CarDao carDao;
 
     @Transactional
-    public List<CarDto> getAllCars() {
-        return carDao.findAll().stream()
-                .map(car -> modelMapper.map(car, CarDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<CarDto> getAllCarsPageable(int page, int size) {
-        return carDao.findAll(PageRequest.of(page, size)).stream()
-                .map(car -> modelMapper.map(car, CarDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public long countCars() {
-        return carDao.count();
-    }
-
-    @Transactional
     @Secured("ROLE_MANAGER")
-    public CarDto addNewCar(CarDto newCar) {
+    public CarDto addCar(CarDto newCar) {
         Set<ConstraintViolation<CarDto>> violations = validator.validate(newCar);
 
         if (!violations.isEmpty()) {
             StringBuilder errors = new StringBuilder();
             for (ConstraintViolation<CarDto> constraintViolation : violations) {
+
                 errors.append(constraintViolation.getPropertyPath())
                         .append(" ")
                         .append(constraintViolation.getMessage())
@@ -121,7 +100,18 @@ public class CarService {
         return modelMapper.map(car, CarDto.class);
     }
 
-    // TODO: security check
+    @Transactional
+    public long countAllCars() {
+        return carDao.count();
+    }
+
+    @Transactional
+    public List<CarDto> findAllCarsPageable(int page, int size) {
+        return carDao.findAll(PageRequest.of(page, size)).stream()
+                .map(car -> modelMapper.map(car, CarDto.class))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     @Secured("ROLE_MANAGER")
     public void updateCarImages(UUID id, List<byte[]> images) {

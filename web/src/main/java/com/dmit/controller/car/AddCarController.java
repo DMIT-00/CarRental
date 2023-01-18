@@ -78,8 +78,6 @@ public class AddCarController {
                             .getCarBrand().getId()).stream()
                             .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
-            // Don't think that is needed
-            //model.addAttribute("car", carDto);
             model.addAttribute("models", models);
             model.addAttribute("brands", brandService.getAllBrands().stream()
                     .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
@@ -87,7 +85,7 @@ public class AddCarController {
             return "car/add_car";
         }
 
-        CarDto addedCar = carService.addNewCar(carDto);
+        CarDto addedCar = carService.addCar(carDto);
 
         redirectAttrs.addFlashAttribute("carId", addedCar.getId());
 

@@ -33,9 +33,7 @@ public class AddBrandController {
         if (bindingResult.hasErrors())
             return "car/add_brand";
 
-        carBrandDto.setId(null); // TODO: service level?
-
-        brandService.addNewBrand(carBrandDto);
+        brandService.addBrand(carBrandDto);
 
         model.addAttribute("messageBox",
                 new MessageBox("add_brand.success", "add_brand.success_full", MessageBox.MessageBoxType.SUCCESS));

@@ -46,7 +46,7 @@ public class BrandRestController {
     @PostMapping
     @Secured("ROLE_MANAGER")
     public ResponseEntity<CarBrandDto> addBrand(@RequestBody CarBrandDto brand) {
-        CarBrandDto addedBrand = brandService.addNewBrand(brand);
+        CarBrandDto addedBrand = brandService.addBrand(brand);
         return new ResponseEntity<>(addedBrand, HttpStatus.CREATED);
     }
 

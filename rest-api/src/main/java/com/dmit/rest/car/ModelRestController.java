@@ -1,11 +1,8 @@
 package com.dmit.rest.car;
 
-import com.dmit.dto.car.CarBrandDto;
-import com.dmit.dto.car.CarDto;
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.exception.NotFoundException;
 import com.dmit.service.ModelService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +10,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
 
@@ -61,7 +56,7 @@ public class ModelRestController {
     @PostMapping
     @Secured("ROLE_MANAGER")
     public ResponseEntity<CarModelDto> addModel(@RequestBody CarModelDto model) {
-        CarModelDto addedModel = modelService.addNewModel(model);
+        CarModelDto addedModel = modelService.addModel(model);
         return new ResponseEntity<>(addedModel, HttpStatus.CREATED);
     }
 

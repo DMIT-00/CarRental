@@ -70,7 +70,7 @@ public class BrandServiceTest {
         CarBrandDto carBrandDto = new CarBrandDto(1L, "BMW");
 
         // When
-        targetObject.addNewBrand(carBrandDto);
+        targetObject.addBrand(carBrandDto);
 
         // Then
         ArgumentCaptor<CarBrand> argument = ArgumentCaptor.forClass(CarBrand.class);
@@ -89,7 +89,7 @@ public class BrandServiceTest {
                 .thenReturn(Optional.of(new CarBrand(1L, "Ferrari", null)));
 
         // Then
-        assertThrows(AlreadyExistsException.class, () -> targetObject.addNewBrand(carBrandDto));
+        assertThrows(AlreadyExistsException.class, () -> targetObject.addBrand(carBrandDto));
     }
 
 }
