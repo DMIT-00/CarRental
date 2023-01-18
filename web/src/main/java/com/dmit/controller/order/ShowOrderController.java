@@ -1,7 +1,6 @@
 package com.dmit.controller.order;
 
 import com.dmit.dto.order.OrderDto;
-import com.dmit.dto.user.UserResponseDto;
 import com.dmit.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -19,7 +18,7 @@ public class ShowOrderController {
 
     @Secured("ROLE_MANAGER")
     @GetMapping("/order-show/{orderId}")
-    String showOrder(@PathVariable(required = true) UUID orderId, Model model) {
+    public String showOrder(@PathVariable(required = true) UUID orderId, Model model) {
         OrderDto orderDto = orderService.findOrderById(orderId);
 
         model.addAttribute("order", orderDto);

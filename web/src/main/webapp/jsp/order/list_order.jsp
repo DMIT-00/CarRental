@@ -6,22 +6,22 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/order-list">All</a>
+        <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/order-list"><fmt:message key="order.filter.all"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link ${param.filter == 'payment' ? 'active' : ''}" href="?filter=payment">Payment</a>
+        <a class="nav-link ${param.filter == 'payment' ? 'active' : ''}" href="?filter=payment"><fmt:message key="order.filter.payment"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link ${param.filter == 'paid' ? 'active' : ''}" href="?filter=paid">Paid</a>
+        <a class="nav-link ${param.filter == 'paid' ? 'active' : ''}" href="?filter=paid"><fmt:message key="order.filter.paid"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link ${param.filter == 'car_in_use' ? 'active' : ''}" href="?filter=car_in_use">Car in use</a>
+        <a class="nav-link ${param.filter == 'car_in_use' ? 'active' : ''}" href="?filter=car_in_use"><fmt:message key="order.filter.car_in_use"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link ${param.filter == 'car_returned' ? 'active' : ''}" href="?filter=car_returned">Car returned</a>
+        <a class="nav-link ${param.filter == 'car_returned' ? 'active' : ''}" href="?filter=car_returned"><fmt:message key="order.filter.car_returned"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link ${param.filter == 'closed' ? 'active' : ''}" href="?filter=closed">Closed</a>
+        <a class="nav-link ${param.filter == 'closed' ? 'active' : ''}" href="?filter=closed"><fmt:message key="order.filter.closed"/></a>
     </li>
 </ul>
 
@@ -40,7 +40,7 @@
 
     <tbody class="clickable">
     <c:forEach items="${orders}" var="order">
-        <tr class='table-row' data-href='order-show/${order.id}'>
+        <tr class='table-row' data-href='order-edit/${order.id}'>
             <td><c:out value="${order.orderStatus}"/></td>
             <td><c:out value="${order.startDate}"/></td>
             <td><c:out value="${order.endDate}"/></td>

@@ -6,28 +6,28 @@
 
 <ul class="nav nav-tabs">
   <li class="nav-item">
-      <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/user-list">All</a>
+      <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/user-list"><fmt:message key="user.filter.all"/></a>
   </li>
   <li class="nav-item">
-      <a class="nav-link ${param.filter == 'active' ? 'active' : ''}" href="?filter=active">Active</a>
+      <a class="nav-link ${param.filter == 'active' ? 'active' : ''}" href="?filter=active"><fmt:message key="user.filter.active"/></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link ${param.filter == 'blocked' ? 'active' : ''}" href="?filter=blocked">Blocked</a>
+    <a class="nav-link ${param.filter == 'blocked' ? 'active' : ''}" href="?filter=blocked"><fmt:message key="user.filter.blocked"/></a>
   </li>
   <li class="nav-item">
-      <a class="nav-link ${param.filter == 'payment' ? 'active' : ''}" href="?filter=payment">With active order</a>
+      <a class="nav-link ${param.filter == 'payment' ? 'active' : ''}" href="?filter=payment"><fmt:message key="user.filter.payment"/></a>
   </li>
   <li class="nav-item">
-      <a class="nav-link ${param.filter == 'paid' ? 'active' : ''}" href="?filter=paid">Without active order</a>
+      <a class="nav-link ${param.filter == 'paid' ? 'active' : ''}" href="?filter=paid"><fmt:message key="user.filter.paid"/></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link ${param.filter == 'car_in_use' ? 'active' : ''}" href="?filter=car_in_use">Without active order</a>
+    <a class="nav-link ${param.filter == 'car_in_use' ? 'active' : ''}" href="?filter=car_in_use"><fmt:message key="user.filter.car_in_use"/></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link ${param.filter == 'car_returned' ? 'active' : ''}" href="?filter=car_returned">Without active order</a>
+    <a class="nav-link ${param.filter == 'car_returned' ? 'active' : ''}" href="?filter=car_returned"><fmt:message key="user.filter.car_returned"/></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link ${param.filter == 'closed' ? 'active' : ''}" href="?filter=closed">Without active order</a>
+    <a class="nav-link ${param.filter == 'closed' ? 'active' : ''}" href="?filter=closed"><fmt:message key="user.filter.closed"/></a>
   </li>
 </ul>
 
