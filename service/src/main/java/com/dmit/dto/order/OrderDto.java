@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -29,13 +28,8 @@ public class OrderDto {
     @Future
     @NotNull
     private LocalDateTime endDate;
-    @NotNull
     private BigDecimal totalPrice;
 
-    @Valid
-    @NotNull
-    UserResponseDto user;
-    @Valid
-    @NotNull
-    CarDto car;
+    private UserResponseDto user;
+    private CarDto car;
 }

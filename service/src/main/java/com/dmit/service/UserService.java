@@ -107,7 +107,7 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public long countUsers() {
+    public long countAllUsers() {
         return userDao.count();
     }
 
@@ -121,13 +121,13 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public long countUsersByLocked(boolean locked) {
+    public long countAllUsersByLocked(boolean locked) {
         return userDao.countByLocked(locked);
     }
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public List<UserResponseDto> findUsersByLocked(boolean locked, int page, int size) {
+    public List<UserResponseDto> findAllUsersByLockedPageable(boolean locked, int page, int size) {
         return userDao.findAllByLocked(locked, PageRequest.of(page, size)).stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());
@@ -135,13 +135,13 @@ public class UserService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public long countUsersByOrder(OrderStatus orderStatus) {
+    public long countAllUsersByOrder(OrderStatus orderStatus) {
         return userDao.countByOrdersOrderStatus(orderStatus);
     }
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public List<UserResponseDto> findUsersByOrder(OrderStatus orderStatus, int page, int size) {
+    public List<UserResponseDto> findAllUsersByOrderPageable(OrderStatus orderStatus, int page, int size) {
         Page<User> users = userDao.findAllByOrders_OrderStatus(orderStatus, PageRequest.of(page, size));
         return users.stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
@@ -160,7 +160,7 @@ public class UserService {
 
     @Transactional
     @Secured({"ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"})
-    public UserResponseDto getCurrentUser() {
+    public UserResponseDto findCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDao.findByUsername(auth.getName());
         if (user == null)

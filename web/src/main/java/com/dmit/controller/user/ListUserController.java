@@ -55,13 +55,13 @@ public class ListUserController {
         }
 
         if (locked != null) {
-            numberOfPages = (userService.countUsersByLocked(locked) - 1) / 10 + 1;
-            users = userService.findUsersByLocked(locked, page - 1, 10);
+            numberOfPages = (userService.countAllUsersByLocked(locked) - 1) / 10 + 1;
+            users = userService.findAllUsersByLockedPageable(locked, page - 1, 10);
         } else if (orderStatus != null) {
-            numberOfPages = (userService.countUsersByOrder(orderStatus) - 1) / 10 + 1;
-            users = userService.findUsersByOrder(orderStatus, page - 1, 10);
+            numberOfPages = (userService.countAllUsersByOrder(orderStatus) - 1) / 10 + 1;
+            users = userService.findAllUsersByOrderPageable(orderStatus, page - 1, 10);
         } else {
-            numberOfPages = (userService.countUsers() - 1) / 10 + 1;
+            numberOfPages = (userService.countAllUsers() - 1) / 10 + 1;
             users = userService.getAllUsersPageable(page - 1, 10);
         }
 

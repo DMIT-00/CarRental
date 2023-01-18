@@ -16,7 +16,7 @@ public class UserProfileController {
 
     @GetMapping("user-profile")
     public String userProfile(Model model) {
-        UserResponseDto userResponseDto = userService.getCurrentUser();
+        UserResponseDto userResponseDto = userService.findCurrentUser();
 
         model.addAttribute("user", userResponseDto);
         return "user/user_profile";

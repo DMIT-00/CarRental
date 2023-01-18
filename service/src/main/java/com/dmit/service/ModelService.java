@@ -8,6 +8,7 @@ import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
@@ -28,19 +29,19 @@ public class ModelService {
     @Autowired
     CarModelDao modelDao;
 
-    @Transactional
-    public List<CarModelDto> getAllBrandModels(long brandId) {
-        return modelDao.findAllByBrand(brandId).stream()
-                .map(model -> modelMapper.map(model, CarModelDto.class))
-                .collect(Collectors.toList());
-    }
+//    @Transactional
+//    public List<CarModelDto> getAllBrandModels(long brandId) {
+//        return modelDao.findAllByBrand(brandId).stream()
+//                .map(model -> modelMapper.map(model, CarModelDto.class))
+//                .collect(Collectors.toList());
+//    }
 
-    @Transactional
-    public List<CarModelDto> getAllModels() {
-        return modelDao.findAll().stream()
-                .map(model -> modelMapper.map(model, CarModelDto.class))
-                .collect(Collectors.toList());
-    }
+//    @Transactional
+//    public List<CarModelDto> getAllModels() {
+//        return modelDao.findAll().stream()
+//                .map(model -> modelMapper.map(model, CarModelDto.class))
+//                .collect(Collectors.toList());
+//    }
 
     @Transactional
     @Secured("ROLE_MANAGER")
@@ -95,5 +96,29 @@ public class ModelService {
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
 
         return modelMapper.map(model, CarModelDto.class);
+    }
+
+    @Transactional
+    public long countAllModels() {
+        return modelDao.count();
+    }
+
+    @Transactional
+    public List<CarModelDto> findAllModelsPageable(int page, int size) {
+        return modelDao.findAll(PageRequest.of(page, size)).stream()
+                .map(model -> modelMapper.map(model, CarModelDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public long countAllModelsByBrand(long brandId) {
+        return modelDao.countByCarBrand_Id(brandId);
+    }
+
+    @Transactional
+    public List<CarModelDto> findAllModelsPageableByBrand(long brandId, int page, int size) {
+        return modelDao.findAllByBrand(brandId, PageRequest.of(page, size)).stream()
+                .map(model -> modelMapper.map(model, CarModelDto.class))
+                .collect(Collectors.toList());
     }
 }

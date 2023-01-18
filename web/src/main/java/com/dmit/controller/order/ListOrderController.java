@@ -46,11 +46,11 @@ public class ListOrderController {
         }
 
         if (orderStatus != null) {
-            numberOfPages = (orderService.countOrdersByStatus(orderStatus) - 1) / 10 + 1;
-            orders = orderService.getAllOrdersPageableByStatus(orderStatus, page - 1, 10);
+            numberOfPages = (orderService.countAllOrdersByStatus(orderStatus) - 1) / 10 + 1;
+            orders = orderService.findAllOrdersByStatusPageable(orderStatus, page - 1, 10);
         } else {
-            numberOfPages = (orderService.countOrders() - 1) / 10 + 1;
-            orders = orderService.getAllOrdersPageable(page - 1, 10);
+            numberOfPages = (orderService.countAllOrders() - 1) / 10 + 1;
+            orders = orderService.findAllOrdersPageable(page - 1, 10);
         }
 
         model.addAttribute("page", page);

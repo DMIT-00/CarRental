@@ -23,8 +23,7 @@ public class ModelRestController {
     public ResponseEntity<List<CarModelDto>> getModels(@RequestParam(value = "page", defaultValue = "0") int page,
                                                        @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
                                                        int size) {
-        // TODO: Pagination?
-        List<CarModelDto> models = modelService.getAllModels();
+        List<CarModelDto> models = modelService.findAllModelsPageable(page, size);
         if (models.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -32,9 +31,11 @@ public class ModelRestController {
     }
 
     @GetMapping("/{brandId}")
-    public ResponseEntity<List<CarModelDto>> getModels(@PathVariable("brandId") long brandId) {
-        // TODO: Pagination?
-        List<CarModelDto> models = modelService.getAllBrandModels(brandId);
+    public ResponseEntity<List<CarModelDto>> getModels(@PathVariable("brandId") long brandId,
+                                                       @RequestParam(value = "page", defaultValue = "0") int page,
+                                                       @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
+                                                           int size) {
+        List<CarModelDto> models = modelService.findAllModelsPageableByBrand(brandId, page, size);
         if (models.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

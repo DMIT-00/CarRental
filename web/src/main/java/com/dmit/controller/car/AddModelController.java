@@ -28,7 +28,7 @@ public class AddModelController {
     @GetMapping("model-add")
     public String addModelForm(Model model) {
         model.addAttribute("model", new CarModelDto());
-        model.addAttribute("brands", brandService.getAllBrands().stream()
+        model.addAttribute("brands", brandService.findAllBrandsPageable(0, 100).stream()
                 .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
 
         return "car/add_model";
@@ -38,7 +38,7 @@ public class AddModelController {
     public String addModel(@Valid @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult,
                            Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("brands", brandService.getAllBrands().stream()
+            model.addAttribute("brands", brandService.findAllBrandsPageable(0, 100).stream()
                     .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
 
             return "car/add_model";

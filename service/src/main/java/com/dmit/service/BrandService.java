@@ -7,6 +7,7 @@ import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,6 @@ public class BrandService {
     private ModelMapper modelMapper;
     @Autowired
     private CarBrandDao brandDao;
-
-
-    @Transactional
-    public List<CarBrandDto> getAllBrands() {
-        return brandDao.findAll().stream()
-                .map(brand -> modelMapper.map(brand, CarBrandDto.class))
-                .collect(Collectors.toList());
-    }
 
     @Transactional
     @Secured("ROLE_MANAGER")
@@ -97,5 +90,17 @@ public class BrandService {
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
 
         return modelMapper.map(brand, CarBrandDto.class);
+    }
+
+    @Transactional
+    public long countAllBrands() {
+        return brandDao.count();
+    }
+
+    @Transactional
+    public List<CarBrandDto> findAllBrandsPageable(int page, int size) {
+        return brandDao.findAll(PageRequest.of(page, size)).stream()
+                .map(brand -> modelMapper.map(brand, CarBrandDto.class))
+                .collect(Collectors.toList());
     }
 }

@@ -26,7 +26,7 @@ public class ListModelController {
 
     @GetMapping("model-list")
     public String modelListForm(Model model) {
-        Map<Long, String> brands = brandService.getAllBrands().stream()
+        Map<Long, String> brands = brandService.findAllBrandsPageable(0, 100).stream()
                 .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName));
 
         CarBrandDto currentBrand = new CarBrandDto();
@@ -38,7 +38,7 @@ public class ListModelController {
             currentBrand.setId(firstBrand.getKey());
             currentBrand.setBrandName(firstBrand.getValue());
 
-            modelsDto = modelService.getAllBrandModels(currentBrand.getId());
+            modelsDto = modelService.findAllModelsPageableByBrand(currentBrand.getId(), 0, 100);
         } else {
             modelsDto = new ArrayList<>();
         }
@@ -55,13 +55,13 @@ public class ListModelController {
 //        if (currentBrand == null || bindingResult.hasErrors())
 //            return "list/model_list";
 
-        Map<Long, String> brands = brandService.getAllBrands().stream()
+        Map<Long, String> brands = brandService.findAllBrandsPageable(0, 100).stream()
                 .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName));
 
         List<CarModelDto> modelsDto;
 
         if (brands.size() > 0) {
-            modelsDto = modelService.getAllBrandModels(currentBrand.getId());
+            modelsDto = modelService.findAllModelsPageableByBrand(currentBrand.getId(), 0, 100);
         } else {
             modelsDto = new ArrayList<>();
         }

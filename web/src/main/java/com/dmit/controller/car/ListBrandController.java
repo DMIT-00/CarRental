@@ -15,6 +15,7 @@ public class ListBrandController {
 
     @GetMapping("brand-list")
     public ModelAndView brandList() {
-        return new ModelAndView("car/list_brand", Map.of("brands", brandService.getAllBrands()));
+        return new ModelAndView("car/list_brand",
+                Map.of("brands", brandService.findAllBrandsPageable(0, 100)));
     }
 }

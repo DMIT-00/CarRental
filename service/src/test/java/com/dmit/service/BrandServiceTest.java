@@ -13,6 +13,8 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import javax.validation.Validator;
 import java.util.ArrayList;
@@ -40,20 +42,20 @@ public class BrandServiceTest {
     }
 
     @Test
-    public void getAllBrandsShouldReturnList() {
+    public void findAllBrandsPageableShouldReturnList() {
         // Given
         List<CarBrandDto> expectedList = List.of(
                 new CarBrandDto(1L, "BMW"),
                 new CarBrandDto(2L, "SUZUKI")
         );
 
-        when(brandDao.findAll()).thenReturn(List.of(
+        when(brandDao.findAll(PageRequest.of(0, 20))).thenReturn(new PageImpl<>(List.of(
                 new CarBrand(1L, "BMW", new ArrayList<>()),
-                new CarBrand(2L, "SUZUKI", new ArrayList<>())
+                new CarBrand(2L, "SUZUKI", new ArrayList<>()))
         ));
 
         // When
-        List<CarBrandDto> resultList = targetObject.getAllBrands();
+        List<CarBrandDto> resultList = targetObject.findAllBrandsPageable(0, 20);
 
         // Then
         assertEquals(resultList.size(), 2);

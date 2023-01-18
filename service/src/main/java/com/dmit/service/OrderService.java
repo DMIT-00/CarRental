@@ -47,7 +47,7 @@ public class OrderService {
 
     @Transactional
     @Secured("ROLE_USER")
-    public void addOrder(OrderRequestDto orderRequestDto) {
+    public OrderDto addOrder(OrderRequestDto orderRequestDto) {
         Set<ConstraintViolation<OrderRequestDto>> violations = validator.validate(orderRequestDto);
 
         if (!violations.isEmpty()) {
@@ -91,7 +91,36 @@ public class OrderService {
 
         order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(minutes)));
 
-        orderDao.save(order);
+        return modelMapper.map(orderDao.save(order), OrderDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public OrderDto updateOrder(OrderDto updatedOrder) {
+        Order order = orderDao.findById(updatedOrder.getId())
+                .orElseThrow(() -> new NotFoundException("Order not found! Id: " + updatedOrder.getId()));
+
+        order.setOrderStatus(updatedOrder.getOrderStatus());
+        order.setStartDate(updatedOrder.getStartDate());
+        order.setEndDate(updatedOrder.getEndDate());
+
+        long minutes = ChronoUnit.MINUTES.between(order.getStartDate(), order.getEndDate());
+
+        if (minutes < 10)
+            throw new InvalidOperation("Duration can't be less than 10!");
+
+        order.setTotalPrice(order.getCar().getPrice().multiply(BigDecimal.valueOf(minutes)));
+
+        return modelMapper.map(orderDao.save(order), OrderDto.class);
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public void deleteOrder(UUID id) {
+        if (!orderDao.existsById(id))
+            throw new NotFoundException("Order not found! Id: " + id);
+
+        orderDao.deleteById(id);
     }
 
     @Transactional
@@ -105,19 +134,13 @@ public class OrderService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public long countOrders() {
-        return orderDao.count();
-    }
-
-    @Transactional
-    @Secured("ROLE_MANAGER")
-    public long countOrdersByStatus(OrderStatus orderStatus) {
+    public long countAllOrdersByStatus(OrderStatus orderStatus) {
         return orderDao.countByOrderStatus(orderStatus);
     }
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public List<OrderDto> getAllOrdersPageableByStatus(OrderStatus orderStatus, int page, int size) {
+    public List<OrderDto> findAllOrdersByStatusPageable(OrderStatus orderStatus, int page, int size) {
         return orderDao.findAllByOrderStatus(orderStatus, PageRequest.of(page, size)).stream()
                 .map(order -> modelMapper.map(order, OrderDto.class))
                 .collect(Collectors.toList());
@@ -125,9 +148,16 @@ public class OrderService {
 
     @Transactional
     @Secured("ROLE_MANAGER")
-    public List<OrderDto> getAllOrdersPageable(int page, int size) {
+    public long countAllOrders() {
+        return orderDao.count();
+    }
+
+    @Transactional
+    @Secured("ROLE_MANAGER")
+    public List<OrderDto> findAllOrdersPageable(int page, int size) {
         return orderDao.findAll(PageRequest.of(page, size)).stream()
                 .map(order -> modelMapper.map(order, OrderDto.class))
                 .collect(Collectors.toList());
     }
+
 }

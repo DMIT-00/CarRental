@@ -37,7 +37,7 @@ public class AddCarController {
         CarDto carDto = new CarDto();
         Map<Long, String> modelsMap;
 
-        Map<Long, String> brandsMap = brandService.getAllBrands().stream()
+        Map<Long, String> brandsMap = brandService.findAllBrandsPageable(0, 100).stream()
                 .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName));
 
         // Set the first brand as current, if exists
@@ -46,7 +46,7 @@ public class AddCarController {
             Map.Entry<Long, String> firstBrand = brandsMap.entrySet().iterator().next();
             CarBrandDto carBrandDto = new CarBrandDto(firstBrand.getKey(), firstBrand.getValue());
 
-            modelsMap = modelService.getAllBrandModels(carBrandDto.getId()).stream()
+            modelsMap = modelService.findAllModelsPageableByBrand(carBrandDto.getId(), 0, 100).stream()
                     .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
             // Set the first model as current, if exists
@@ -74,12 +74,12 @@ public class AddCarController {
         // Binding has errors, or page refreshed on select change,
         // just update the page with errors and CarModel and CarBrand from database
         if (bindingResult.hasErrors() || action == null) {
-            Map<Long, String> models = modelService.getAllBrandModels(carDto.getCarModel()
-                            .getCarBrand().getId()).stream()
+            Map<Long, String> models = modelService.findAllModelsPageableByBrand(carDto.getCarModel()
+                            .getCarBrand().getId(), 0, 100).stream()
                             .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
             model.addAttribute("models", models);
-            model.addAttribute("brands", brandService.getAllBrands().stream()
+            model.addAttribute("brands", brandService.findAllBrandsPageable(0, 100).stream()
                     .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName)));
 
             return "car/add_car";
