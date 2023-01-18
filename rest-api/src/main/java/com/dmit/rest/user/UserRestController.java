@@ -26,7 +26,7 @@ public class UserRestController {
     public ResponseEntity<List<UserResponseDto>> getUsers(@RequestParam(value = "page", defaultValue = "0") int page,
                                                           @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
                                                           int size) {
-        List<UserResponseDto> users = userService.getAllUsersPageable(page, size);
+        List<UserResponseDto> users = userService.findAllUsersPageable(page, size);
         if (users.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -49,7 +49,7 @@ public class UserRestController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> addUser(@RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto userResponseDto = userService.addNewUser(userRequestDto);
+        UserResponseDto userResponseDto = userService.addUser(userRequestDto);
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 
@@ -71,6 +71,7 @@ public class UserRestController {
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<?> deleteUser(@PathVariable("id") UUID id) {
+        // TODO: Implement
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 }

@@ -58,11 +58,11 @@ public class ListUserController {
             numberOfPages = (userService.countAllUsersByLocked(locked) - 1) / 10 + 1;
             users = userService.findAllUsersByLockedPageable(locked, page - 1, 10);
         } else if (orderStatus != null) {
-            numberOfPages = (userService.countAllUsersByOrder(orderStatus) - 1) / 10 + 1;
-            users = userService.findAllUsersByOrderPageable(orderStatus, page - 1, 10);
+            numberOfPages = (userService.countAllUsersByOrderStatus(orderStatus) - 1) / 10 + 1;
+            users = userService.findAllUsersByOrderStatusPageable(orderStatus, page - 1, 10);
         } else {
             numberOfPages = (userService.countAllUsers() - 1) / 10 + 1;
-            users = userService.getAllUsersPageable(page - 1, 10);
+            users = userService.findAllUsersPageable(page - 1, 10);
         }
 
         model.addAttribute("users", users);

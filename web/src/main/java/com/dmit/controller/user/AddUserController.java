@@ -32,7 +32,7 @@ public class AddUserController {
         if (bindingResult.hasErrors())
             return "user/add_user";
 
-        userService.addNewUser(userRequestDto);
+        userService.addUser(userRequestDto);
 
         model.addAttribute("messageBox",
                 new MessageBox("user.success", "user.success_full", MessageBox.MessageBoxType.SUCCESS));

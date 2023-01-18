@@ -21,12 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BrandServiceTest {
+public class BrandServiceImplTest {
 
     @Spy
     ModelMapper modelMapper = new ModelMapper();
@@ -35,9 +36,9 @@ public class BrandServiceTest {
     @Mock
     CarBrandDao brandDao;
     @InjectMocks
-    BrandService targetObject;
+    BrandServiceImpl targetObject;
 
-    public BrandServiceTest() {
+    public BrandServiceImplTest() {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
