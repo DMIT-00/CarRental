@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public List<UserResponseDto> findAllUsersByOrderStatusPageable(OrderStatus orderStatus, int page, int size) {
-        Page<User> users = userDao.findAllByOrders_OrderStatus(orderStatus, PageRequest.of(page, size));
+        Page<User> users = userDao.findDistinctByOrders_OrderStatus(orderStatus, PageRequest.of(page, size));
         return users.stream()
                 .map(user -> modelMapper.map(user, UserResponseDto.class))
                 .collect(Collectors.toList());

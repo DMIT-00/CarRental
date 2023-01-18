@@ -18,5 +18,5 @@ public interface UserDao extends JpaRepository<User, UUID> {
     long countByLocked(boolean locked);
     Page<User> findAllByLocked(boolean locked, Pageable pageable);
     long countByOrdersOrderStatus(OrderStatus orderStatus);
-    Page<User> findAllByOrders_OrderStatus(OrderStatus orderStatus, Pageable pageable);
+    Page<User> findDistinctByOrders_OrderStatus(OrderStatus orderStatus, Pageable pageable);
 }
