@@ -36,8 +36,31 @@ public class EditOrderController {
     public String editOrder(@PathVariable(required = true) UUID orderId,
                             @Valid @ModelAttribute("order") OrderDto updatedOrder,
                             BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors())
-            return "car/edit_order";
+        OrderDto order = orderService.findOrderById(orderId);
+
+        boolean isUserBusy = orderService.isUserBusyForOrderExceptOrder(
+                order.getId(),
+                order.getUser().getId(),
+                updatedOrder.getStartDate(),
+                updatedOrder.getEndDate()
+        );
+        if (isUserBusy)
+            model.addAttribute("userBusyError", true);
+
+        boolean isCarBusy = orderService.isCarBusyForOrderExceptOrder(
+                order.getId(),
+                order.getCar().getId(),
+                updatedOrder.getStartDate(),
+                updatedOrder.getEndDate()
+        );
+        if (isCarBusy)
+            model.addAttribute("carBusyError", true);
+
+        if (bindingResult.hasErrors() || isUserBusy || isCarBusy) {
+            model.addAttribute("order", order);
+
+            return "order/edit_order";
+        }
 
         updatedOrder.setId(orderId);
         orderService.updateOrder(updatedOrder);

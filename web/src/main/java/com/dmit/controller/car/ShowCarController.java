@@ -3,9 +3,11 @@ package com.dmit.controller.car;
 import com.dmit.dto.MessageBox;
 import com.dmit.dto.car.CarDto;
 import com.dmit.dto.order.OrderRequestDto;
+import com.dmit.dto.user.UserResponseDto;
 import com.dmit.service.CarImageService;
 import com.dmit.service.CarService;
 import com.dmit.service.OrderService;
+import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class ShowCarController {
     CarImageService carImageService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/car-show/{carId}")
     String showCar(@PathVariable(required = true) UUID carId, Model model) {
@@ -43,8 +47,19 @@ public class ShowCarController {
 
     @PostMapping("/car-show/{carId}")
     String orderForm(@PathVariable(required = true) UUID carId, Model model,
-                     @Valid @ModelAttribute("order") OrderRequestDto orderRequestDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+                     @Valid @ModelAttribute("order") OrderRequestDto orderRequest, BindingResult bindingResult) {
+        UserResponseDto user = userService.findCurrentUser();
+        boolean isUserBusy = orderService.isUserBusyForOrder(user.getId(),
+                orderRequest.getStartDate(), orderRequest.getEndDate());
+        if (isUserBusy)
+            model.addAttribute("userBusyError", true);
+
+        boolean isCarBusy = orderService.isCarBusyForOrder(carId,
+                orderRequest.getStartDate(), orderRequest.getEndDate());
+        if (isCarBusy)
+            model.addAttribute("carBusyError", true);
+
+        if (bindingResult.hasErrors() || isUserBusy || isCarBusy) {
             CarDto carDto = carService.findCarById(carId);
             List<UUID> images = carImageService.getImageIdsByCarId(carId);
 
@@ -54,7 +69,7 @@ public class ShowCarController {
             return "car/show_car";
         }
 
-        orderService.addOrder(orderRequestDto);
+        orderService.addOrder(orderRequest);
 
         model.addAttribute("messageBox",
                 new MessageBox("order.success", "order.success_full", MessageBox.MessageBoxType.SUCCESS));

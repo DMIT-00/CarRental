@@ -108,6 +108,17 @@
         });
     </script>
 
+    <c:if test="${userBusyError != null}">
+        <div id="userError" class="text-danger" align="center">
+            <fmt:message key="user.busy"/>
+        </div>
+    </c:if>
+    <c:if test="${carBusyError != null}">
+        <div id="carError" class="text-danger" align="center">
+            <fmt:message key="car.busy"/>
+        </div>
+    </c:if>
+
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col text-center">

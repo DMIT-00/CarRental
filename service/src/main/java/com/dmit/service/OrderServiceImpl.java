@@ -26,6 +26,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
@@ -69,8 +70,6 @@ public class OrderServiceImpl implements OrderService {
         Car car = carDao.findById(orderRequestDto.getCarId())
                 .orElseThrow(() -> new NotFoundException("Car not found! Id: " + orderRequestDto.getCarId()));
 
-        // TODO: check if car is busy
-
         Order order = modelMapper.map(orderRequestDto, Order.class);
 
         // Check for duplicate Id
@@ -85,14 +84,44 @@ public class OrderServiceImpl implements OrderService {
         order.setStartDate(order.getStartDate().truncatedTo(ChronoUnit.MINUTES));
         order.setEndDate(order.getEndDate().truncatedTo(ChronoUnit.MINUTES));
 
+        if (isUserBusyForOrder(order.getUser().getId(), order.getStartDate(), order.getEndDate()))
+            throw new InvalidOperation("The user is busy in this time interval!");
+
+        if (isCarBusyForOrder(order.getCar().getId(), order.getStartDate(), order.getEndDate()))
+            throw new InvalidOperation("The car is busy in this time interval!");
+
         long minutes = ChronoUnit.MINUTES.between(order.getStartDate(), order.getEndDate());
 
         if (minutes < 10)
-            throw new InvalidOperation("Duration can't be less than 10!");
+            throw new InvalidOperation("The duration of order can't be less than 10!");
 
         order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(minutes)));
 
         return modelMapper.map(orderDao.save(order), OrderDto.class);
+    }
+
+    @Override
+    @Transactional
+    public boolean isUserBusyForOrder(UUID userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByUserInDateInterval(userId, startDate, endDate) != 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isCarBusyForOrder(UUID carId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByCarInDateInterval(carId, startDate, endDate) != 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isUserBusyForOrderExceptOrder(UUID orderId, UUID userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByUserInDateIntervalExceptOrderWithId(orderId, userId, startDate, endDate) != 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isCarBusyForOrderExceptOrder(UUID orderId, UUID carId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByCarInDateIntervalExceptOrderWithId(orderId, carId, startDate, endDate) != 0;
     }
 
     @Override
@@ -110,6 +139,12 @@ public class OrderServiceImpl implements OrderService {
 
         if (minutes < 10)
             throw new InvalidOperation("Duration can't be less than 10!");
+
+        if (isUserBusyForOrderExceptOrder(order.getId(), order.getUser().getId(), order.getStartDate(), order.getEndDate()))
+            throw new InvalidOperation("The user is busy in this time interval!");
+
+        if (isCarBusyForOrderExceptOrder(order.getId(), order.getCar().getId(), order.getStartDate(), order.getEndDate()))
+            throw new InvalidOperation("The car is busy in this time interval!");
 
         order.setTotalPrice(order.getCar().getPrice().multiply(BigDecimal.valueOf(minutes)));
 
