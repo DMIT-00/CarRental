@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.5">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="CarRental Rest API Test" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Add Cars" enabled="true">
+        <stringProp name="TestPlan.comments">Adds cars through REST API</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">100</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <AuthManager guiclass="AuthPanel" testclass="AuthManager" testname="HTTP Authorization Manager" enabled="true">
+          <collectionProp name="AuthManager.auth_list">
+            <elementProp name="" elementType="Authorization">
+              <stringProp name="Authorization.url">http://localhost:8080/CarRentalRest/api/v1/cars</stringProp>
+              <stringProp name="Authorization.username">manager</stringProp>
+              <stringProp name="Authorization.password">manager</stringProp>
+              <stringProp name="Authorization.domain"></stringProp>
+              <stringProp name="Authorization.realm"></stringProp>
+            </elementProp>
+          </collectionProp>
+          <boolProp name="AuthManager.controlledByThreadGroup">false</boolProp>
+        </AuthManager>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+	&quot;year&quot;: ${__Random(2000,2022)},&#xd;
+	&quot;color&quot;: &quot;${__V(color_${__Random(1,8,)})}&quot;,&#xd;
+	&quot;enginePower&quot;: ${__Random(2,12)}.${__Random(0,9)},&#xd;
+	&quot;fuelType&quot;: &quot;${__V(fuel_${__Random(1,3,)})}&quot;,&#xd;
+	&quot;fuelConsumption&quot;: ${__Random(4,12)}.${__Random(0,9)},&#xd;
+	&quot;transmission&quot;: &quot;${__V(transmission_${__Random(1,3,)})}&quot;,&#xd;
+	&quot;numberOfSeats&quot;: ${__Random(2,8)},&#xd;
+	&quot;abs&quot;: ${__V(boolean_${__Random(1,2,)})},&#xd;
+	&quot;cruiseControl&quot;: ${__V(boolean_${__Random(1,2,)})},&#xd;
+	&quot;heatedSeats&quot;: ${__V(boolean_${__Random(1,2,)})},&#xd;
+	&quot;climateControl&quot;: ${__V(boolean_${__Random(1,2,)})},&#xd;
+	&quot;airBags&quot;: ${__V(boolean_${__Random(1,2,)})},&#xd;
+	&quot;price&quot;: ${__Random(8,28)}.${__Random(0,9)},&#xd;
+	&quot;bodyType&quot;: &quot;${__V(body_${__Random(1,8,)})}&quot;,&#xd;
+	&quot;carModel&quot;: {&#xd;
+		&quot;id&quot;: ${__Random(1,9)}&#xd;
+	}&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/CarRentalRest/api/v1/cars</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Content-Type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+            <collectionProp name="UserParameters.names">
+              <stringProp name="949546581">color_1</stringProp>
+              <stringProp name="949546582">color_2</stringProp>
+              <stringProp name="949546583">color_3</stringProp>
+              <stringProp name="949546584">color_4</stringProp>
+              <stringProp name="949546585">color_5</stringProp>
+              <stringProp name="949546586">color_6</stringProp>
+              <stringProp name="949546587">color_7</stringProp>
+              <stringProp name="949546588">color_8</stringProp>
+              <stringProp name="2058423770">boolean_1</stringProp>
+              <stringProp name="2058423771">boolean_2</stringProp>
+              <stringProp name="-1263626264">fuel_1</stringProp>
+              <stringProp name="-1263626263">fuel_2</stringProp>
+              <stringProp name="-1263626262">fuel_3</stringProp>
+              <stringProp name="2056184982">transmission_1</stringProp>
+              <stringProp name="2056184983">transmission_2</stringProp>
+              <stringProp name="2056184984">transmission_3</stringProp>
+              <stringProp name="-1383701292">body_1</stringProp>
+              <stringProp name="-1383701291">body_2</stringProp>
+              <stringProp name="-1383701290">body_3</stringProp>
+              <stringProp name="-1383701289">body_4</stringProp>
+              <stringProp name="-1383701288">body_5</stringProp>
+              <stringProp name="-1383701287">body_6</stringProp>
+              <stringProp name="-1383701286">body_7</stringProp>
+              <stringProp name="-1383701285">body_8</stringProp>
+            </collectionProp>
+            <collectionProp name="UserParameters.thread_values">
+              <collectionProp name="-492076740">
+                <stringProp name="81009">RED</stringProp>
+                <stringProp name="63281119">BLACK</stringProp>
+                <stringProp name="82564105">WHITE</stringProp>
+                <stringProp name="2196067">GRAY</stringProp>
+                <stringProp name="68081379">GREEN</stringProp>
+                <stringProp name="2041946">BLUE</stringProp>
+                <stringProp name="-1680910220">YELLOW</stringProp>
+                <stringProp name="63473942">BROWN</stringProp>
+                <stringProp name="3569038">true</stringProp>
+                <stringProp name="97196323">false</stringProp>
+                <stringProp name="-1938328496">PETROL</stringProp>
+                <stringProp name="2016336858">DIESEL</stringProp>
+                <stringProp name="765502749">ELECTRIC</stringProp>
+                <stringProp name="165298699">AUTOMATIC</stringProp>
+                <stringProp name="-84274566">SEMI_AUTOMATIC</stringProp>
+                <stringProp name="-2028086330">MANUAL</stringProp>
+                <stringProp name="-446605049">HATCHBACK</stringProp>
+                <stringProp name="78775263">SEDAN</stringProp>
+                <stringProp name="82484">SUV</stringProp>
+                <stringProp name="64313630">COUPE</stringProp>
+                <stringProp name="1069602917">CONVERTIBLE</stringProp>
+                <stringProp name="82353500">WAGON</stringProp>
+                <stringProp name="84739">VAN</stringProp>
+                <stringProp name="2273062">JEEP</stringProp>
+              </collectionProp>
+            </collectionProp>
+            <boolProp name="UserParameters.per_iteration">false</boolProp>
+          </UserParameters>
+          <hashTree/>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
