@@ -10,6 +10,11 @@ import java.util.UUID;
 
 public interface UserService {
     UserResponseDto addUser(UserRequestDto userRequestDto);
+    @Secured("ROLE_ADMIN")
+    UserResponseDto updateUser(UserRequestDto updatedUser);
+    @Secured("ROLE_ADMIN")
+    void deleteUser(UUID id);
+
     @Secured("ROLE_MANAGER")
     long countAllUsers();
     @Secured("ROLE_MANAGER")

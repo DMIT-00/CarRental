@@ -5,6 +5,9 @@
 
 <table style="width:100%" class="table" id="cartable">
   <tr>
+    <sec:authorize access="hasRole('ROLE_MANAGER')">
+        <th style="width: 40px;"></th>
+    </sec:authorize>
     <th><fmt:message key="car.brand_name"/></th>
     <th><fmt:message key="car.model_name"/></th>
     <th><fmt:message key="car.transmission"/></th>
@@ -28,7 +31,9 @@
 
   <tbody class="clickable">
     <c:forEach items="${cars}" var="car">
-      <tr class='table-row' data-href='car-show/${car.id}'>
+        <sec:authorize access="hasRole('ROLE_MANAGER')">
+            <td><a style="text-decoration: none" href="${pageContext.request.contextPath}/car-edit/${car.id}">&#128393;</a></td>
+        </sec:authorize>
         <td><c:out value="${car.carModel.carBrand.brandName}"/></td>
         <td><c:out value="${car.carModel.modelName}"/></td>
         <td><c:out value="${car.transmission}"/></td>

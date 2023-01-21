@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form method="POST" action="${pageContext.request.contextPath}/user-add" modelAttribute="user">
+<form:form method="POST" action="${pageContext.request.contextPath}/user-edit/${user.id}" modelAttribute="user">
     <div class="container mt-2 col-md-12">
         <div class="row">
             <div class="col-sm">
@@ -76,7 +76,7 @@
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col text-center">
-                <button type="submit" style="width:100%;" name="submit-user" class="btn btn-primary btn-lg btn-block"><fmt:message key="user.submit"/></button>
+                <button type="submit" style="width:100%;" name="submit-user" class="btn btn-primary btn-lg btn-block"><fmt:message key="button.edit"/></button>
             </div>
         </div>
     </div>

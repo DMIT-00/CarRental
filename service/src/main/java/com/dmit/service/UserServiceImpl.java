@@ -24,7 +24,9 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,18 +84,45 @@ public class UserServiceImpl implements UserService {
         user.getUserDetail().setUser(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // TODO: shouldn't do that
-        Optional<Role> role = roleDao.findByRoleName(DEFAULT_ROLE);
-        if (role.isEmpty()) {
-            roleDao.save(new Role(null, DEFAULT_ROLE, new HashSet<>()));
-            role = roleDao.findByRoleName(DEFAULT_ROLE);
-        }
+        Role role = roleDao.findByRoleName(DEFAULT_ROLE)
+                .orElseThrow(() -> new NotFoundException("Role not found! Name: " + DEFAULT_ROLE));
 
-        user.addRole(role.orElseThrow(() -> new NotFoundException("Role not found! Name: " + DEFAULT_ROLE)));
+        user.addRole(role);
 
         userDao.save(user);
         
         return modelMapper.map(user, UserResponseDto.class);
+    }
+
+    @Override
+    @Secured("ROLE_ADMIN")
+    public UserResponseDto updateUser(UserRequestDto updatedUser) {
+        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(updatedUser);
+
+        if (!violations.isEmpty()) {
+            StringBuilder errors = new StringBuilder();
+            for (ConstraintViolation<UserRequestDto> constraintViolation : violations) {
+                errors.append(constraintViolation.getPropertyPath())
+                        .append(" ")
+                        .append(constraintViolation.getMessage())
+                        .append("; ");
+            }
+            throw new ConstraintViolationException("Validation errors: " + errors, violations);
+        }
+
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    @Secured("ROLE_ADMIN")
+    public void deleteUser(UUID id) {
+        if (!userDao.existsById(id))
+            throw new NotFoundException("User not found! Id: " + id);
+
+        // TODO: check for order
+
+        userDao.deleteById(id);
     }
 
     @Override

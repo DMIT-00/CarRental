@@ -33,6 +33,9 @@
 
 <table style="width:100%" class="table" id="usertable">
   <tr>
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+      <th style="width: 40px;"></th>
+    </sec:authorize>
     <th><fmt:message key="user.username"/></th>
     <th><fmt:message key="user.email"/></th>
     <th><fmt:message key="user.first_name"/></th>
@@ -48,6 +51,9 @@
   <tbody class="clickable">
     <c:forEach items="${users}" var="user">
       <tr class='table-row' data-href='user-show/${user.id}'>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+          <td><a style="text-decoration: none" href="${pageContext.request.contextPath}/user-edit/${user.id}">&#128393;</a></td>
+        </sec:authorize>
         <td><c:out value="${user.username}"/></td>
         <td><c:out value="${user.email}"/></td>
         <td><c:out value="${user.userDetail.firstName}"/></td>
