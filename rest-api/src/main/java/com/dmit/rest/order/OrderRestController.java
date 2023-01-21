@@ -25,7 +25,7 @@ public class OrderRestController {
     @GetMapping
     public ResponseEntity<List<OrderDto>> getOrders(@RequestParam(value = "page", defaultValue = "0") int page,
                                                     @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
-                                                       int size) {
+                                                    int size) {
         List<OrderDto> orders = orderService.findAllOrdersPageable(page, size);
         if (orders.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -55,7 +55,7 @@ public class OrderRestController {
     @PutMapping("/{id}")
     @Secured("ROLE_MANAGER")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable("id") UUID id,
-                                            @RequestBody OrderDto updatedOrder) {
+                                                @RequestBody OrderDto updatedOrder) {
         OrderDto resultOrder;
 
         updatedOrder.setId(id);

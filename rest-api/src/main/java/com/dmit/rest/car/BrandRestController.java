@@ -31,7 +31,7 @@ public class BrandRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarBrandDto> getBrand(@PathVariable("id") Long id) {
+    public ResponseEntity<CarBrandDto> getBrand(@PathVariable("id") long id) {
         CarBrandDto brand;
 
         try {
@@ -51,7 +51,7 @@ public class BrandRestController {
 
     @PutMapping("/{id}")
     @Secured("ROLE_MANAGER")
-    public ResponseEntity<CarBrandDto> updateBrand(@PathVariable("id") Long id,
+    public ResponseEntity<CarBrandDto> updateBrand(@PathVariable("id") long id,
                                                    @RequestBody CarBrandDto updatedBrand) {
         CarBrandDto resultBrand;
 
@@ -68,7 +68,7 @@ public class BrandRestController {
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_MANAGER")
-    public ResponseEntity<?> deleteBrand(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteBrand(@PathVariable("id") long id) {
         try {
             brandService.deleteBrand(id);
         } catch (NotFoundException e) {

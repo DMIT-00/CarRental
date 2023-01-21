@@ -43,7 +43,6 @@ public class UserRestController {
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -56,22 +55,28 @@ public class UserRestController {
     @PutMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") UUID id,
-                                                      @RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto user;
+                                                      @RequestBody UserRequestDto updatedUser) {
+        UserResponseDto resultUser;
+
+        updatedUser.setId(id);
 
         try {
-            user = userService.findUserById(id);
+            resultUser = userService.updateUser(updatedUser);
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        // TODO: Implement
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+        return new ResponseEntity<>(resultUser, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<?> deleteUser(@PathVariable("id") UUID id) {
-        // TODO: Implement
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        try {
+            userService.deleteUser(id);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

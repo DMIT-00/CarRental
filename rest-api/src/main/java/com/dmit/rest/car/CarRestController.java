@@ -30,7 +30,7 @@ public class CarRestController {
 
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<CarDto> getCar(@PathVariable("id") UUID id) {
         CarDto car;

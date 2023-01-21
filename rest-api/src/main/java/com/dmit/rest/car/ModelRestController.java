@@ -22,20 +22,15 @@ public class ModelRestController {
     @GetMapping
     public ResponseEntity<List<CarModelDto>> getModels(@RequestParam(value = "page", defaultValue = "0") int page,
                                                        @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
-                                                       int size) {
-        List<CarModelDto> models = modelService.findAllModelsPageable(page, size);
-        if (models.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                                                       int size,
+                                                       @RequestParam(value = "brand", required = false) Long brandId) {
+        List<CarModelDto> models;
 
-        return new ResponseEntity<>(models, HttpStatus.OK);
-    }
-
-    @GetMapping("/{brandId}")
-    public ResponseEntity<List<CarModelDto>> getModels(@PathVariable("brandId") long brandId,
-                                                       @RequestParam(value = "page", defaultValue = "0") int page,
-                                                       @RequestParam(value = "size", defaultValue = DEFAULT_PAGE_SIZE)
-                                                           int size) {
-        List<CarModelDto> models = modelService.findAllModelsPageableByBrand(brandId, page, size);
+        if (brandId == null) {
+            models = modelService.findAllModelsPageable(page, size);
+        } else {
+            models = modelService.findAllModelsPageableByBrand(brandId, page, size);
+        }
         if (models.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
@@ -43,7 +38,7 @@ public class ModelRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarModelDto> getModel(@PathVariable("id") Long id) {
+    public ResponseEntity<CarModelDto> getModel(@PathVariable("id") long id) {
         CarModelDto model;
 
         try {
@@ -83,7 +78,7 @@ public class ModelRestController {
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_MANAGER")
-    public ResponseEntity<?> deleteModel(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteModel(@PathVariable("id") long id) {
         try {
             modelService.deleteModel(id);
         } catch (NotFoundException e) {
