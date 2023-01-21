@@ -3,6 +3,7 @@ package com.dmit.dto.order;
 import com.dmit.dto.car.CarDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.order.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +26,12 @@ public class OrderDto {
     private OrderStatus orderStatus;
     @Future
     @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDate;
     @Future
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endDate;
     private BigDecimal totalPrice;
 

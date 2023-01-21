@@ -1,6 +1,7 @@
 package com.dmit.dto.user;
 
 import com.dmit.dto.order.OrderDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class UserResponseDto {
     @NotNull
     private UserDetailDto userDetail;
     @Valid
+    @JsonIgnoreProperties({"user", "car"})
     private List<OrderDto> orders;
     @Valid
     @NotNull

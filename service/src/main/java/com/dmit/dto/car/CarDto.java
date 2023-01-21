@@ -4,6 +4,7 @@ import com.dmit.dto.order.OrderDto;
 import com.dmit.entity.car.BodyType;
 import com.dmit.entity.car.FuelType;
 import com.dmit.entity.car.TransmissionType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,5 +61,6 @@ public class CarDto {
     @NotNull
     private CarModelDto carModel;
     @Valid
+    @JsonIgnoreProperties({"user", "car"})
     private List<OrderDto> orders;
 }
