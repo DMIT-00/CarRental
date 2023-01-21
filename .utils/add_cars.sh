@@ -88,7 +88,7 @@ curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRe
 	"price": 80.00,
 	"bodyType": "SUV",
 	"carModel": {
-		"id": 1,
+		"id": 4,
 		"carBrand": {
 			"id": 2
 		}
@@ -112,7 +112,7 @@ curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRe
 	"price": 60.00,
 	"bodyType": "SUV",
 	"carModel": {
-		"id": 2,
+		"id": 5,
 		"carBrand": {
 			"id": 2
 		}
@@ -136,7 +136,7 @@ curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRe
 	"price": 60.00,
 	"bodyType": "SUV",
 	"carModel": {
-		"id": 3,
+		"id": 6,
 		"carBrand": {
 			"id": 2
 		}
@@ -160,7 +160,7 @@ curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRe
 	"price": 80.00,
 	"bodyType": "SUV",
 	"carModel": {
-		"id": 1,
+		"id": 7,
 		"carBrand": {
 			"id": 3
 		}
@@ -184,7 +184,7 @@ curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRe
 	"price": 60.00,
 	"bodyType": "SUV",
 	"carModel": {
-		"id": 2,
+		"id": 8,
 		"carBrand": {
 			"id": 3
 		}
@@ -208,7 +208,7 @@ curl --request POST -u "manager:manager" --url http://localhost:8080/CarRentalRe
 	"price": 60.00,
 	"bodyType": "SUV",
 	"carModel": {
-		"id": 3,
+		"id": 9,
 		"carBrand": {
 			"id": 3
 		}

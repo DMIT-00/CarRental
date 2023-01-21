@@ -7,8 +7,8 @@ curl --request POST --url http://localhost:8080/CarRentalRest/api/v1/users --hea
 	"userDetail": {
 		"firstName": "User",
 		"lastName": "The User",
-		"phoneNumber": "+880000002",
-		"creditCard": "0000000000000002",
+		"phoneNumber": "+884020002",
+		"creditCard": "0000020030000002",
 		"birthDate": -61895934000000
 	}
 }'
