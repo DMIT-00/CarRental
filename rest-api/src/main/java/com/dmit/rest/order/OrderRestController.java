@@ -2,7 +2,6 @@ package com.dmit.rest.order;
 
 import com.dmit.dto.order.OrderDto;
 import com.dmit.dto.order.OrderRequestDto;
-import com.dmit.exception.NotFoundException;
 import com.dmit.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,13 +34,8 @@ public class OrderRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getOrder(@PathVariable("id") UUID id) {
-        OrderDto order;
+        OrderDto order = orderService.findOrderById(id);
 
-        try {
-            order = orderService.findOrderById(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
@@ -49,6 +43,7 @@ public class OrderRestController {
     @Secured("ROLE_MANAGER")
     public ResponseEntity<OrderDto> addOrder(@RequestBody OrderRequestDto order) {
         OrderDto addedOrder = orderService.addOrder(order);
+
         return new ResponseEntity<>(addedOrder, HttpStatus.CREATED);
     }
 
@@ -56,15 +51,9 @@ public class OrderRestController {
     @Secured("ROLE_MANAGER")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable("id") UUID id,
                                                 @RequestBody OrderDto updatedOrder) {
-        OrderDto resultOrder;
-
         updatedOrder.setId(id);
 
-        try {
-            resultOrder = orderService.updateOrder(updatedOrder);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        OrderDto resultOrder = orderService.updateOrder(updatedOrder);
 
         return new ResponseEntity<>(resultOrder, HttpStatus.OK);
     }
@@ -72,11 +61,8 @@ public class OrderRestController {
     @DeleteMapping("/{id}")
     @Secured("ROLE_MANAGER")
     public ResponseEntity<?> deleteOrder(@PathVariable("id") UUID id) {
-        try {
-            orderService.deleteOrder(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        orderService.deleteOrder(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

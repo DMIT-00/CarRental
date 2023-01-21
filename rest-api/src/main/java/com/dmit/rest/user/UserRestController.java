@@ -2,7 +2,6 @@ package com.dmit.rest.user;
 
 import com.dmit.dto.user.UserRequestDto;
 import com.dmit.dto.user.UserResponseDto;
-import com.dmit.exception.NotFoundException;
 import com.dmit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,19 +35,15 @@ public class UserRestController {
     @GetMapping("/{id}")
     @Secured("ROLE_MANAGER")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable("id") UUID id) {
-        UserResponseDto user;
+        UserResponseDto user = userService.findUserById(id);
 
-        try {
-            user = userService.findUserById(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<UserResponseDto> addUser(@RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userService.addUser(userRequestDto);
+
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
 
@@ -56,15 +51,9 @@ public class UserRestController {
     @Secured("ROLE_ADMIN")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") UUID id,
                                                       @RequestBody UserRequestDto updatedUser) {
-        UserResponseDto resultUser;
-
         updatedUser.setId(id);
 
-        try {
-            resultUser = userService.updateUser(updatedUser);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        UserResponseDto resultUser = userService.updateUser(updatedUser);
 
         return new ResponseEntity<>(resultUser, HttpStatus.OK);
     }
@@ -72,11 +61,8 @@ public class UserRestController {
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<?> deleteUser(@PathVariable("id") UUID id) {
-        try {
-            userService.deleteUser(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        userService.deleteUser(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

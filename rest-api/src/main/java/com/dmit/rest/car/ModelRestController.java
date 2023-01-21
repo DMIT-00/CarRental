@@ -1,7 +1,6 @@
 package com.dmit.rest.car;
 
 import com.dmit.dto.car.CarModelDto;
-import com.dmit.exception.NotFoundException;
 import com.dmit.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,13 +38,8 @@ public class ModelRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CarModelDto> getModel(@PathVariable("id") long id) {
-        CarModelDto model;
+        CarModelDto model = modelService.findModelById(id);
 
-        try {
-            model = modelService.findModelById(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(model, HttpStatus.OK);
     }
 
@@ -53,6 +47,7 @@ public class ModelRestController {
     @Secured("ROLE_MANAGER")
     public ResponseEntity<CarModelDto> addModel(@RequestBody CarModelDto model) {
         CarModelDto addedModel = modelService.addModel(model);
+
         return new ResponseEntity<>(addedModel, HttpStatus.CREATED);
     }
 
@@ -60,13 +55,7 @@ public class ModelRestController {
     @Secured("ROLE_MANAGER")
     public ResponseEntity<CarModelDto> updateModel(@PathVariable("id") Long id,
                                                    @RequestBody CarModelDto newModel) {
-        CarModelDto model;
-
-        try {
-            model = modelService.findModelById(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        CarModelDto model = modelService.findModelById(id);
 
         model.setModelName(newModel.getModelName());
         model.setCarBrand(newModel.getCarBrand());
@@ -79,11 +68,8 @@ public class ModelRestController {
     @DeleteMapping("/{id}")
     @Secured("ROLE_MANAGER")
     public ResponseEntity<?> deleteModel(@PathVariable("id") long id) {
-        try {
-            modelService.deleteModel(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        modelService.deleteModel(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

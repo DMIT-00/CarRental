@@ -1,7 +1,6 @@
 package com.dmit.rest.car;
 
 import com.dmit.dto.car.CarBrandDto;
-import com.dmit.exception.NotFoundException;
 import com.dmit.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,13 +31,8 @@ public class BrandRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CarBrandDto> getBrand(@PathVariable("id") long id) {
-        CarBrandDto brand;
+        CarBrandDto brand = brandService.findBrandById(id);
 
-        try {
-            brand = brandService.findBrandById(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(brand, HttpStatus.OK);
     }
 
@@ -53,15 +47,9 @@ public class BrandRestController {
     @Secured("ROLE_MANAGER")
     public ResponseEntity<CarBrandDto> updateBrand(@PathVariable("id") long id,
                                                    @RequestBody CarBrandDto updatedBrand) {
-        CarBrandDto resultBrand;
-
         updatedBrand.setId(id);
 
-        try {
-            resultBrand = brandService.updateBrand(updatedBrand);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        CarBrandDto resultBrand = brandService.updateBrand(updatedBrand);
 
         return new ResponseEntity<>(resultBrand, HttpStatus.OK);
     }
@@ -69,11 +57,8 @@ public class BrandRestController {
     @DeleteMapping("/{id}")
     @Secured("ROLE_MANAGER")
     public ResponseEntity<?> deleteBrand(@PathVariable("id") long id) {
-        try {
-            brandService.deleteBrand(id);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        brandService.deleteBrand(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
