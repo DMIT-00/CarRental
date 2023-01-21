@@ -28,7 +28,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BrandServiceImplTest {
-
     @Spy
     ModelMapper modelMapper = new ModelMapper();
     @Mock
@@ -95,4 +94,5 @@ public class BrandServiceImplTest {
         assertThrows(AlreadyExistsException.class, () -> targetObject.addBrand(carBrandDto));
     }
 
+    // TODO: more tests
 }

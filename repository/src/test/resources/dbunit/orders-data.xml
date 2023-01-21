@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <t_user user_id="00000000-1001-0000-0000-000000000000" user_email="user1@user1.com" user_locked="0"
+            user_password="password" user_username="user1"/>
+    <t_user_detail user_detail_id="00000000-1001-0000-0000-000000000000" user_birth_date="0008-08-08"
+                   user_credit_card="0000000000001001" user_first_name="User" user_last_name="The User"
+                   user_phoneNumber="+880001001"/>
+    <t_user_role user_id="00000000-1001-0000-0000-000000000000" role_id="3"/>
+    
+    <t_user user_id="00000000-1002-0000-0000-000000000000" user_email="user2@user2.com" user_locked="0"
+            user_password="password" user_username="user2"/>
+    <t_user_detail user_detail_id="00000000-1002-0000-0000-000000000000" user_birth_date="0008-08-08"
+                   user_credit_card="0000000000001002" user_first_name="User" user_last_name="The User"
+                   user_phoneNumber="+880001002"/>
+    <t_user_role user_id="00000000-1002-0000-0000-000000000000" role_id="3"/>
+
+    <t_brand brand_id="1" brand_name="BMW"/>
+    <t_brand brand_id="2" brand_name="KIA"/>
+    <t_brand brand_id="3" brand_name="Honda"/>
+    <t_brand brand_id="4" brand_name="Ferrari"/>
+
+    <t_model model_id="1" model_name="X1" brand_id="1"/>
+    <t_model model_id="2" model_name="X3" brand_id="1"/>
+    <t_model model_id="3" model_name="X5" brand_id="1"/>
+
+    <t_model model_id="4" model_name="Sportage" brand_id="2"/>
+    <t_model model_id="5" model_name="Sorento" brand_id="2"/>
+    <t_model model_id="6" model_name="Rio" brand_id="2"/>
+
+    <t_model model_id="7" model_name="Accord" brand_id="3"/>
+    <t_model model_id="8" model_name="Civic" brand_id="3"/>
+    <t_model model_id="9" model_name="CR-V" brand_id="3"/>
+
+    <t_model model_id="10" model_name="F40" brand_id="4"/>
+    <t_model model_id="11" model_name="458" brand_id="4"/>
+    <t_model model_id="12" model_name="488" brand_id="4"/>
+
+    <t_car car_id="00000000-0000-1001-0000-000000000000" abs="true" air_bags="true" climate_control="true"
+           cruise_control="true" heated_seats="true" body_type="0" color="BLACK" engine_power="10.1"
+           fuel_consumption="8.2" fuel_type="0" number_of_seats="5" price="10.1" transmission="0"
+           year="2020" model_id="1"/>
+    <t_car car_id="00000000-0000-1002-0000-000000000000" abs="true" air_bags="true" climate_control="true"
+           cruise_control="true" heated_seats="true" body_type="0" color="BLACK" engine_power="10.1"
+           fuel_consumption="8.2" fuel_type="0" number_of_seats="5" price="10.1" transmission="0"
+           year="2020" model_id="1"/>
+    <t_car car_id="00000000-0000-1003-0000-000000000000" abs="true" air_bags="true" climate_control="true"
+           cruise_control="true" heated_seats="true" body_type="0" color="BLACK" engine_power="10.1"
+           fuel_consumption="8.2" fuel_type="0" number_of_seats="5" price="10.1" transmission="0"
+           year="2020" model_id="1"/>
+    <t_car car_id="00000000-0000-1004-0000-000000000000" abs="true" air_bags="true" climate_control="true"
+           cruise_control="true" heated_seats="true" body_type="0" color="BLACK" engine_power="10.1"
+           fuel_consumption="8.2" fuel_type="0" number_of_seats="5" price="10.1" transmission="0"
+           year="2020" model_id="1"/>
+
+    <t_order order_id="00000000-0000-0000-1001-000000000000" order_status="1" order_total_price="24000.00"
+             order_start_date="2023-01-22 07:00:00.000000" order_end_date="2023-01-22 11:00:00.000000"
+             car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
+    
+    <t_order order_id="00000000-0000-0000-1002-000000000000" order_status="2" order_total_price="24000.00"
+             order_start_date="2023-01-22 12:00:00.000000" order_end_date="2023-01-22 13:00:00.000000"
+             car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
+    <t_order order_id="00000000-0000-0000-1003-000000000000" order_status="2" order_total_price="24000.00"
+             order_start_date="2023-01-22 12:00:00.000000" order_end_date="2023-01-22 13:00:00.000000"
+             car_id="00000000-0000-1002-0000-000000000000" user_id="00000000-1002-0000-0000-000000000000"/>
+
+    <t_order order_id="00000000-0000-0000-1004-000000000000" order_status="3" order_total_price="24000.00"
+             order_start_date="2023-01-23 12:00:00.000000" order_end_date="2023-01-23 13:00:00.000000"
+             car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
+    <t_order order_id="00000000-0000-0000-1005-000000000000" order_status="3" order_total_price="24000.00"
+             order_start_date="2023-01-23 12:00:00.000000" order_end_date="2023-01-23 13:00:00.000000"
+             car_id="00000000-0000-1002-0000-000000000000" user_id="00000000-1002-0000-0000-000000000000"/>
+    <t_order order_id="00000000-0000-0000-1006-000000000000" order_status="3" order_total_price="24000.00"
+             order_start_date="2023-01-24 12:00:00.000000" order_end_date="2023-01-24 13:00:00.000000"
+             car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
+
+    <t_order order_id="00000000-0000-0000-1007-000000000000" order_status="4" order_total_price="24000.00"
+             order_start_date="2023-01-24 12:00:00.000000" order_end_date="2023-01-24 13:00:00.000000"
+             car_id="00000000-0000-1002-0000-000000000000" user_id="00000000-1002-0000-0000-000000000000"/>
+    <t_order order_id="00000000-0000-0000-1008-000000000000" order_status="4" order_total_price="24000.00"
+             order_start_date="2023-01-25 12:00:00.000000" order_end_date="2023-01-25 13:00:00.000000"
+             car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
+    <t_order order_id="00000000-0000-0000-1009-000000000000" order_status="4" order_total_price="24000.00"
+             order_start_date="2023-01-25 12:00:00.000000" order_end_date="2023-01-25 13:00:00.000000"
+             car_id="00000000-0000-1002-0000-000000000000" user_id="00000000-1002-0000-0000-000000000000"/>
+    <t_order order_id="00000000-0000-0000-1010-000000000000" order_status="4" order_total_price="24000.00"
+             order_start_date="2023-01-25 15:00:00.000000" order_end_date="2023-01-25 16:00:00.000000"
+             car_id="00000000-0000-1002-0000-000000000000" user_id="00000000-1002-0000-0000-000000000000"/>
+    
+</dataset>

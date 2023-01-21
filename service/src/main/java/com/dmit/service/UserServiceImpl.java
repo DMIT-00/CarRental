@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(userRequestDto, User.class);
 
         // Check for duplicate Id
-        if (user.getId() != null && userDao.findById(user.getId()).isPresent()) {
+        if (user.getId() != null && userDao.existsById(user.getId())) {
             throw new AlreadyExistsException("User already exists! Id: " + user.getId());
         }
 

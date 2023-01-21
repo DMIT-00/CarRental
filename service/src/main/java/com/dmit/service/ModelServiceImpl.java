@@ -29,20 +29,6 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     CarModelDao modelDao;
 
-//    @Transactional
-//    public List<CarModelDto> getAllBrandModels(long brandId) {
-//        return modelDao.findAllByBrand(brandId).stream()
-//                .map(model -> modelMapper.map(model, CarModelDto.class))
-//                .collect(Collectors.toList());
-//    }
-
-//    @Transactional
-//    public List<CarModelDto> getAllModels() {
-//        return modelDao.findAll().stream()
-//                .map(model -> modelMapper.map(model, CarModelDto.class))
-//                .collect(Collectors.toList());
-//    }
-
     @Override
     @Transactional
     @Secured("ROLE_MANAGER")
