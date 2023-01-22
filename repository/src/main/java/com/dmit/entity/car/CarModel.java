@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -31,14 +33,16 @@ public class CarModel {
     @JoinColumn(name = "brand_id", nullable = false)
     private CarBrand carBrand;
 
-//    @Override
-//    public String toString() {
-//        final StringBuffer sb = new StringBuffer("CarModel{");
-//        sb.append("id=").append(id);
-//        sb.append(", name='").append(name).append('\'');
-//        sb.append(", brand=").append(brand);
-//        sb.append(", cars=").append(cars);
-//        sb.append('}');
-//        return sb.toString();
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        CarModel carModel = (CarModel) o;
+        return id != null && Objects.equals(id, carModel.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
