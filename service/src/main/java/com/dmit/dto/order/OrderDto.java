@@ -32,6 +32,7 @@ public class OrderDto {
     @Future
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDate;
     private BigDecimal totalPrice;
 
