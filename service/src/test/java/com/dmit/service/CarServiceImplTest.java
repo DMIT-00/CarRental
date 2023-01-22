@@ -2,7 +2,6 @@ package com.dmit.service;
 
 import com.dmit.dao.CarDao;
 import com.dmit.dto.car.CarDto;
-import com.dmit.entity.car.Car;
 import com.dmit.exception.AlreadyExistsException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import javax.validation.Validator;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.Assert.assertThrows;
@@ -42,8 +40,8 @@ public class CarServiceImplTest {
         carDto.setId(UUID.randomUUID());
 
         // When
-        when(carDao.findById(carDto.getId()))
-                .thenReturn(Optional.of(new Car()));
+        when(carDao.existsById(carDto.getId()))
+                .thenReturn(true);
 
         // Then
         assertThrows(AlreadyExistsException.class, () -> targetObject.addCar(carDto));

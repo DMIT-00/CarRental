@@ -51,7 +51,7 @@ public class CarServiceImpl implements CarService {
         Car car = modelMapper.map(newCar, Car.class);
 
         // Check for duplicate Id
-        if (car.getId() != null && carDao.findById(car.getId()).isPresent()) {
+        if (car.getId() != null && carDao.existsById(car.getId())) {
             throw new AlreadyExistsException("Car already exists! Id: " + car.getId());
         }
 

@@ -45,7 +45,7 @@ public class BrandServiceImpl implements BrandService {
         CarBrand brand = modelMapper.map(newBrand, CarBrand.class);
 
         // Check for duplicate Id
-        if (brand.getId() != null && brandDao.findById(brand.getId()).isPresent()) {
+        if (brand.getId() != null && brandDao.existsById(brand.getId())) {
             throw new AlreadyExistsException("Brand already exists! Id: " + brand.getId());
         }
 

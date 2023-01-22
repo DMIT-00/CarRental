@@ -19,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -87,8 +86,8 @@ public class BrandServiceImplTest {
         CarBrandDto carBrandDto = new CarBrandDto(1L, "BMW");
 
         // When
-        when(brandDao.findById(carBrandDto.getId()))
-                .thenReturn(Optional.of(new CarBrand(1L, "Ferrari", null)));
+        when(brandDao.existsById(carBrandDto.getId()))
+                .thenReturn(true);
 
         // Then
         assertThrows(AlreadyExistsException.class, () -> targetObject.addBrand(carBrandDto));
