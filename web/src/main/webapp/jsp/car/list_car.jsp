@@ -31,6 +31,7 @@
 
   <tbody class="clickable">
     <c:forEach items="${cars}" var="car">
+        <tr class='table-row' data-href='car-show/${car.id}'>
         <sec:authorize access="hasRole('ROLE_MANAGER')">
             <td><a style="text-decoration: none" href="${pageContext.request.contextPath}/car-edit/${car.id}">&#128393;</a></td>
         </sec:authorize>
