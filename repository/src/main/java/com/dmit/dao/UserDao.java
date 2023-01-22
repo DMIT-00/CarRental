@@ -11,10 +11,11 @@ import java.util.UUID;
 
 @Repository
 public interface UserDao extends JpaRepository<User, UUID> {
-    User findByEmail(String email);
     User findByUsername(String username);
-    User findByUserDetail_CreditCard(String creditCard);
-    User findByUserDetail_PhoneNumber(String phoneNumber);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+    boolean existsByUserDetail_PhoneNumber(String phoneNumber);
+    boolean existsByUserDetail_CreditCard(String creditCard);
     long countByLocked(boolean locked);
     Page<User> findAllByLocked(boolean locked, Pageable pageable);
     long countByOrdersOrderStatus(OrderStatus orderStatus);

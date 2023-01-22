@@ -60,17 +60,17 @@ public class UserServiceImpl implements UserService {
             throw new ConstraintViolationException("Validation errors: " + errors, violations);
         }
 
-        if (userDao.findByUsername(userRequestDto.getUsername()) != null)
-            throw new IllegalArgumentException("Username is already used to register");
+        if (userDao.existsByUsername(userRequestDto.getUsername()))
+            throw new AlreadyExistsException("Username is already used to register");
 
-        if (userDao.findByEmail(userRequestDto.getEmail()) != null)
-            throw new IllegalArgumentException("Email is already used to register");
+        if (userDao.existsByEmail(userRequestDto.getEmail()))
+            throw new AlreadyExistsException("Email is already used to register");
 
-        if (userDao.findByUserDetail_PhoneNumber(userRequestDto.getUserDetail().getPhoneNumber()) != null)
-            throw new IllegalArgumentException("Phone number is already used to register");
+        if (userDao.existsByUserDetail_PhoneNumber(userRequestDto.getUserDetail().getPhoneNumber()))
+            throw new AlreadyExistsException("Phone number is already used to register");
 
-        if (userDao.findByUserDetail_CreditCard(userRequestDto.getUserDetail().getCreditCard()) != null)
-            throw new IllegalArgumentException("Credit card is already used to register");
+        if (userDao.existsByUserDetail_CreditCard(userRequestDto.getUserDetail().getCreditCard()))
+            throw new AlreadyExistsException("Credit card is already used to register");
 
         User user = modelMapper.map(userRequestDto, User.class);
 
