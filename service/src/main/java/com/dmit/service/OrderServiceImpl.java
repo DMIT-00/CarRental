@@ -16,8 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     ModelMapper modelMapper;
     @Autowired
+    UserService userService;
+    @Autowired
     OrderDao orderDao;
     @Autowired
     UserDao userDao;
@@ -61,10 +61,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // Get current user for the order
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userDao.findByUsername(auth.getName());
+        String username = userService.findCurrentUser().getUsername();
+        User user = userDao.findByUsername(username);
         if (user == null)
-            throw new UsernameNotFoundException("User not found! Username: " + auth.getName());
+            throw new UsernameNotFoundException("User not found! Username: " + username);
 
         // Get car for the order
         Car car = carDao.findById(orderRequestDto.getCarId())
@@ -97,7 +97,9 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(minutes)));
 
-        return modelMapper.map(orderDao.save(order), OrderDto.class);
+        orderDao.save(order);
+
+        return modelMapper.map(order, OrderDto.class);
     }
 
     @Override
