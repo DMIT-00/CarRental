@@ -88,10 +88,8 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("Role not found! Name: " + DEFAULT_ROLE));
 
         user.addRole(role);
-
-        userDao.save(user);
         
-        return modelMapper.map(user, UserResponseDto.class);
+        return modelMapper.map(userDao.save(user), UserResponseDto.class);
     }
 
     @Override

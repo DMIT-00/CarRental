@@ -97,33 +97,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(minutes)));
 
-        orderDao.save(order);
-
-        return modelMapper.map(order, OrderDto.class);
-    }
-
-    @Override
-    @Transactional
-    public boolean isUserBusyForOrder(UUID userId, LocalDateTime startDate, LocalDateTime endDate) {
-        return orderDao.countActiveOrdersByUserInDateInterval(userId, startDate, endDate) != 0;
-    }
-
-    @Override
-    @Transactional
-    public boolean isCarBusyForOrder(UUID carId, LocalDateTime startDate, LocalDateTime endDate) {
-        return orderDao.countActiveOrdersByCarInDateInterval(carId, startDate, endDate) != 0;
-    }
-
-    @Override
-    @Transactional
-    public boolean isUserBusyForOrderExceptOrder(UUID orderId, UUID userId, LocalDateTime startDate, LocalDateTime endDate) {
-        return orderDao.countActiveOrdersByUserInDateIntervalExceptOrderWithId(orderId, userId, startDate, endDate) != 0;
-    }
-
-    @Override
-    @Transactional
-    public boolean isCarBusyForOrderExceptOrder(UUID orderId, UUID carId, LocalDateTime startDate, LocalDateTime endDate) {
-        return orderDao.countActiveOrdersByCarInDateIntervalExceptOrderWithId(orderId, carId, startDate, endDate) != 0;
+        return modelMapper.map(orderDao.save(order), OrderDto.class);
     }
 
     @Override
@@ -151,6 +125,30 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalPrice(order.getCar().getPrice().multiply(BigDecimal.valueOf(minutes)));
 
         return modelMapper.map(orderDao.save(order), OrderDto.class);
+    }
+
+    @Override
+    @Transactional
+    public boolean isUserBusyForOrder(UUID userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByUserInDateInterval(userId, startDate, endDate) != 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isCarBusyForOrder(UUID carId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByCarInDateInterval(carId, startDate, endDate) != 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isUserBusyForOrderExceptOrder(UUID orderId, UUID userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByUserInDateIntervalExceptOrderWithId(orderId, userId, startDate, endDate) != 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isCarBusyForOrderExceptOrder(UUID orderId, UUID carId, LocalDateTime startDate, LocalDateTime endDate) {
+        return orderDao.countActiveOrdersByCarInDateIntervalExceptOrderWithId(orderId, carId, startDate, endDate) != 0;
     }
 
     @Override

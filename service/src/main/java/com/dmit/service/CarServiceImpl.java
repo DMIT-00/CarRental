@@ -55,9 +55,7 @@ public class CarServiceImpl implements CarService {
             throw new AlreadyExistsException("Car already exists! Id: " + car.getId());
         }
 
-        carDao.save(car);
-
-        return modelMapper.map(car, CarDto.class);
+        return modelMapper.map(carDao.save(car), CarDto.class);
     }
 
     @Override

@@ -50,9 +50,7 @@ public class ModelServiceImpl implements ModelService {
             throw new AlreadyExistsException("Model already exists! Id: " + model.getId());
         }
 
-        modelDao.save(model);
-
-        return modelMapper.map(model, CarModelDto.class);
+        return modelMapper.map(modelDao.save(model), CarModelDto.class);
     }
 
     @Override

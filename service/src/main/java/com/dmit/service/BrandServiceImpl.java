@@ -49,9 +49,7 @@ public class BrandServiceImpl implements BrandService {
             throw new AlreadyExistsException("Brand already exists! Id: " + brand.getId());
         }
 
-        brandDao.save(brand);
-
-        return modelMapper.map(brand, CarBrandDto.class);
+        return modelMapper.map(brandDao.save(brand), CarBrandDto.class);
     }
 
     @Override
