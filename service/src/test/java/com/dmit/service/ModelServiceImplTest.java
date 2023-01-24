@@ -17,7 +17,9 @@ import org.modelmapper.convention.MatchingStrategies;
 import javax.validation.Validator;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ModelServiceImplTest {
@@ -40,6 +42,7 @@ public class ModelServiceImplTest {
         CarModelDto carModelDto = new CarModelDto(1L, "X1", new CarBrandDto(1L, "BMW"));
 
         // When
+        when(modelDao.save(any())).thenReturn(new CarModel());
         targetObject.addModel(carModelDto);
 
         // Then

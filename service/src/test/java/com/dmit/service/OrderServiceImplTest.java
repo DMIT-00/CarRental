@@ -207,6 +207,7 @@ public class OrderServiceImplTest {
         car.setId(orderDto.getCarId());
         car.setPrice(BigDecimal.valueOf(10));
         when(carDao.findById(any())).thenReturn(Optional.of(car));
+        when(orderDao.save(any())).thenReturn(new Order());
 
         targetObject.addOrder(orderDto);
 

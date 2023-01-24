@@ -151,6 +151,7 @@ public class UserServiceImplTest {
 
         // When
         when(roleDao.findByRoleName(any())).thenReturn(Optional.of(new Role(1L, "USER", new HashSet<>())));
+        when(userDao.save(any())).thenReturn(new User());
         targetObject.addUser(userDto);
 
         // Then

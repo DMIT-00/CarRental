@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -71,6 +72,7 @@ public class BrandServiceImplTest {
         CarBrandDto carBrandDto = new CarBrandDto(1L, "BMW");
 
         // When
+        when(brandDao.save(any())).thenReturn(new CarBrand());
         targetObject.addBrand(carBrandDto);
 
         // Then
