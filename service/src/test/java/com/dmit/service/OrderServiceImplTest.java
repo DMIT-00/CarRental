@@ -1,20 +1,36 @@
 package com.dmit.service;
 
+import com.dmit.dao.CarDao;
 import com.dmit.dao.OrderDao;
+import com.dmit.dao.UserDao;
+import com.dmit.dto.order.OrderRequestDto;
+import com.dmit.dto.user.UserResponseDto;
+import com.dmit.entity.car.Car;
+import com.dmit.entity.order.Order;
+import com.dmit.entity.user.User;
+import com.dmit.exception.InvalidOperation;
 import com.dmit.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.validation.Validator;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,7 +40,13 @@ public class OrderServiceImplTest {
     @Mock
     Validator validator;
     @Mock
+    UserService userService;
+    @Mock
     OrderDao orderDao;
+    @Mock
+    UserDao userDao;
+    @Mock
+    CarDao carDao;
     @InjectMocks
     OrderServiceImpl targetObject;
 
@@ -43,6 +65,155 @@ public class OrderServiceImplTest {
 
         // Then
         assertThrows(NotFoundException.class, () -> targetObject.deleteOrder(id));
+    }
+
+    @Test
+    public void deleteOrderShouldCallDao() {
+        // Given
+        UUID id = UUID.randomUUID();
+
+        // When
+        when(orderDao.existsById(id))
+                .thenReturn(true);
+        targetObject.deleteOrder(id);
+
+        // Then
+        verify(orderDao).deleteById(id);
+    }
+
+    @Test
+    public void countAllOrdersShouldCallDao() {
+        // Given
+        // When
+        targetObject.countAllOrders();
+
+        // Then
+        verify(orderDao).count();
+    }
+
+    @Test
+    public void addOrderShouldThrowOnInvalidUser() {
+        // Given
+        OrderRequestDto orderDto = new OrderRequestDto();
+        orderDto.setCarId(UUID.randomUUID());
+
+        // When
+        UserResponseDto user = new UserResponseDto();
+        user.setUsername("User");
+        when(userService.findCurrentUser()).thenReturn(user);
+        when(userDao.findByUsername(any())).thenReturn(null);
+
+        // Then
+        assertThrows(UsernameNotFoundException.class, () -> targetObject.addOrder(orderDto));
+    }
+
+    @Test
+    public void addOrderShouldThrowOnInvalidCardId() {
+        // Given
+        OrderRequestDto orderDto = new OrderRequestDto();
+        orderDto.setCarId(UUID.randomUUID());
+
+        // When
+        UserResponseDto user = new UserResponseDto();
+        user.setUsername("User");
+        when(userService.findCurrentUser()).thenReturn(user);
+        when(userDao.findByUsername(any())).thenReturn(new User());
+
+        // Then
+        Exception exception = assertThrows(NotFoundException.class, () -> targetObject.addOrder(orderDto));
+        assertEquals(exception.getMessage(), "Car not found! Id: " + orderDto.getCarId());
+    }
+
+    @Test
+    public void addOrderShouldThrowOnUserBusy() {
+        // Given
+        OrderRequestDto orderDto = new OrderRequestDto();
+        orderDto.setStartDate(LocalDateTime.now());
+        orderDto.setEndDate(LocalDateTime.now());
+
+        orderDto.setCarId(UUID.randomUUID());
+
+        // When
+        UserResponseDto user = new UserResponseDto();
+        user.setUsername("User");
+        when(userService.findCurrentUser()).thenReturn(user);
+        when(userDao.findByUsername(any())).thenReturn(new User());
+        when(carDao.findById(any())).thenReturn(Optional.of(new Car()));
+        when(orderDao.countActiveOrdersByUserInDateInterval(any(), any(), any())).thenReturn(1L);
+
+        // Then
+        Exception exception = assertThrows(InvalidOperation.class, () -> targetObject.addOrder(orderDto));
+        assertEquals(exception.getMessage(), "The user is busy in this time interval!");
+    }
+
+    @Test
+    public void addOrderShouldThrowOnCarBusy() {
+        // Given
+        OrderRequestDto orderDto = new OrderRequestDto();
+        orderDto.setStartDate(LocalDateTime.now());
+        orderDto.setEndDate(LocalDateTime.now());
+
+        orderDto.setCarId(UUID.randomUUID());
+
+        // When
+        UserResponseDto user = new UserResponseDto();
+        user.setUsername("User");
+        when(userService.findCurrentUser()).thenReturn(user);
+        when(userDao.findByUsername(any())).thenReturn(new User());
+        when(carDao.findById(any())).thenReturn(Optional.of(new Car()));
+        when(orderDao.countActiveOrdersByCarInDateInterval(any(), any(), any())).thenReturn(1L);
+
+        // Then
+        Exception exception = assertThrows(InvalidOperation.class, () -> targetObject.addOrder(orderDto));
+        assertEquals(exception.getMessage(), "The car is busy in this time interval!");
+    }
+
+    @Test
+    public void addOrderShouldThrowOnIntervalLessThan10() {
+        // Given
+        OrderRequestDto orderDto = new OrderRequestDto();
+        orderDto.setStartDate(LocalDateTime.now());
+        orderDto.setEndDate(LocalDateTime.now().plusMinutes(9));
+
+        orderDto.setCarId(UUID.randomUUID());
+
+        // When
+        UserResponseDto user = new UserResponseDto();
+        user.setUsername("User");
+        when(userService.findCurrentUser()).thenReturn(user);
+        when(userDao.findByUsername(any())).thenReturn(new User());
+        when(carDao.findById(any())).thenReturn(Optional.of(new Car()));
+
+        // Then
+        Exception exception = assertThrows(InvalidOperation.class, () -> targetObject.addOrder(orderDto));
+        assertEquals(exception.getMessage(), "The duration of order can't be less than 10!");
+    }
+
+    @Test
+    public void addOrderShouldCallDao() {
+        // Given
+        OrderRequestDto orderDto = new OrderRequestDto();
+        orderDto.setStartDate(LocalDateTime.now());
+        orderDto.setEndDate(LocalDateTime.now().plusMinutes(11));
+
+        orderDto.setCarId(UUID.randomUUID());
+
+        // When
+        UserResponseDto user = new UserResponseDto();
+        user.setUsername("User");
+        when(userService.findCurrentUser()).thenReturn(user);
+        when(userDao.findByUsername(any())).thenReturn(new User());
+        Car car = new Car();
+        car.setId(orderDto.getCarId());
+        car.setPrice(BigDecimal.valueOf(10));
+        when(carDao.findById(any())).thenReturn(Optional.of(car));
+
+        targetObject.addOrder(orderDto);
+
+        // Then
+        ArgumentCaptor<Order> argument = ArgumentCaptor.forClass(Order.class);
+        verify(orderDao).save(argument.capture());
+        assertEquals(orderDto.getCarId(), argument.getValue().getCar().getId());
     }
 
     // TODO: more tests
