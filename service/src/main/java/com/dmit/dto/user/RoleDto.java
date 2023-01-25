@@ -1,5 +1,6 @@
 package com.dmit.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class RoleDto implements GrantedAuthority {
     @Size(min = 4, max = 20)
     private String roleName;
 
+    @JsonIgnore
     @Override
     public String getAuthority() {
         return "ROLE_" + roleName;
