@@ -5,9 +5,9 @@
 
 <table style="width:100%" class="table" id="cartable">
   <tr>
-    <sec:authorize access="hasRole('ROLE_MANAGER')">
+    <security:authorize access="hasRole('ROLE_MANAGER')">
         <th style="width: 40px;"></th>
-    </sec:authorize>
+    </security:authorize>
     <th><fmt:message key="car.brand_name"/></th>
     <th><fmt:message key="car.model_name"/></th>
     <th><fmt:message key="car.transmission"/></th>
@@ -24,17 +24,17 @@
     <th><fmt:message key="car.air_bags"/></th>
     <th><fmt:message key="car.body_type"/></th>
     <th><fmt:message key="car.price"/></th>
-    <sec:authorize access="hasRole('ROLE_MANAGER')">
+    <security:authorize access="hasRole('ROLE_MANAGER')">
       <th><fmt:message key="order.orders"/></th>
-    </sec:authorize>
+    </security:authorize>
   </tr>
 
   <tbody class="clickable">
     <c:forEach items="${cars}" var="car">
         <tr class='table-row' data-href='car-show/${car.id}'>
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
+        <security:authorize access="hasRole('ROLE_MANAGER')">
             <td><a style="text-decoration: none" href="${pageContext.request.contextPath}/car-edit/${car.id}">&#128393;</a></td>
-        </sec:authorize>
+        </security:authorize>
         <td><c:out value="${car.carModel.carBrand.brandName}"/></td>
         <td><c:out value="${car.carModel.modelName}"/></td>
         <td><c:out value="${car.transmission}"/></td>
@@ -51,9 +51,9 @@
         <td><c:out value="${car.airBags}"/></td>
         <td><c:out value="${car.bodyType}"/></td>
         <td><c:out value="${car.price}"/></td>
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
+        <security:authorize access="hasRole('ROLE_MANAGER')">
           <td><a href="${pageContext.request.contextPath}/order-list?car=${car.id}">${car.orders.size()}</a></td>
-        </sec:authorize>
+        </security:authorize>
       </tr>
     </c:forEach>
   </tbody>

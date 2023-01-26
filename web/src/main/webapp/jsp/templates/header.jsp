@@ -28,6 +28,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/car-list"><fmt:message key="navbar.our_cars"/></a>
                 </li>
 
+                <security:authorize access="hasRole('ROLE_MANAGER')">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
@@ -39,6 +40,7 @@
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/car-add"><fmt:message key="navbar.add_car"/></a></li>
                     </ul>
                 </li>
+                </security:authorize>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -46,13 +48,17 @@
                         <fmt:message key="navbar.list"/>
                     </a>
                     <ul class="dropdown-menu">
+                        <security:authorize access="isAuthenticated()">
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/brand-list"><fmt:message key="navbar.list_brands"/></a></li>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/model-list"><fmt:message key="navbar.list_models"/></a></li>
+                        </security:authorize>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/car-list"><fmt:message key="navbar.list_cars"/></a></li>
+                        <security:authorize access="hasRole('ROLE_MANAGER')">
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/user-list"><fmt:message key="navbar.list_user"/></a></li>
                         <div class="dropdown-divider"></div>
                         <li><a class="dropdown-item" href="${pageContext.request.contextPath}/order-list"><fmt:message key="navbar.list_order"/></a></li>
+                        </security:authorize>
                     </ul>
                 </li>
 

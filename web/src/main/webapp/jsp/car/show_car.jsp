@@ -22,9 +22,9 @@
         <th><fmt:message key="car.air_bags"/></th>
         <th><fmt:message key="car.body_type"/></th>
         <th><fmt:message key="car.price"/></th>
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
+        <security:authorize access="hasRole('ROLE_MANAGER')">
             <th><fmt:message key="order.orders"/></th>
-        </sec:authorize>
+        </security:authorize>
     </tr>
 
     <tbody>
@@ -45,9 +45,9 @@
             <td><c:out value="${car.airBags}"/></td>
             <td><c:out value="${car.bodyType}"/></td>
             <td><c:out value="${car.price}"/></td>
-            <sec:authorize access="hasRole('ROLE_MANAGER')">
+            <security:authorize access="hasRole('ROLE_MANAGER')">
                 <td><a href="${pageContext.request.contextPath}/order-list?car=${car.id}">${car.orders.size()}</a></td>
-            </sec:authorize>
+            </security:authorize>
         </tr>
     </tbody>
 
