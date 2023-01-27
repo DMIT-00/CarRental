@@ -27,9 +27,9 @@
 
 <table style="width:100%" class="table" id="usertable">
     <tr>
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
+        <security:authorize access="hasRole('ROLE_MANAGER')">
             <th style="width: 40px;"></th>
-        </sec:authorize>
+        </security:authorize>
         <th><fmt:message key="order.status"/></th>
         <th><fmt:message key="order.date"/></th>
         <th><fmt:message key="order.end_date"/></th>
@@ -41,9 +41,9 @@
     <tbody class="clickable">
     <c:forEach items="${orders}" var="order">
         <tr class='table-row' data-href='order-show/${order.id}'>
-            <sec:authorize access="hasRole('ROLE_MANAGER')">
+            <security:authorize access="hasRole('ROLE_MANAGER')">
                 <td><a style="text-decoration: none" href="${pageContext.request.contextPath}/order-edit/${order.id}">&#128393;</a></td>
-            </sec:authorize>
+            </security:authorize>
             <td><c:out value="${order.orderStatus}"/></td>
             <td><c:out value="${order.startDate}"/></td>
             <td><c:out value="${order.endDate}"/></td>
