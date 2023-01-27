@@ -181,7 +181,7 @@ public class OrderServiceImpl implements OrderService {
     @Secured("ROLE_MANAGER")
     public List<OrderDto> findAllOrdersByStatusPageable(OrderStatus orderStatus, int page, int size) {
         return orderDao.findAllByOrderStatus(orderStatus, PageRequest.of(page, size)).stream()
-                .map(order -> orderDtoMapper.toDto(order))
+                .map(orderDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -197,7 +197,7 @@ public class OrderServiceImpl implements OrderService {
     @Secured("ROLE_MANAGER")
     public List<OrderDto> findAllOrdersPageable(int page, int size) {
         return orderDao.findAll(PageRequest.of(page, size)).stream()
-                .map(order -> orderDtoMapper.toDto(order))
+                .map(orderDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 

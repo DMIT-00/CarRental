@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
     @Secured("ROLE_MANAGER")
     public List<UserResponseDto> findAllUsersPageable(int page, int size) {
         return userDao.findAll(PageRequest.of(page, size)).stream()
-                .map(user -> userResponseDtoMapper.toDto(user))
+                .map(userResponseDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
     @Secured("ROLE_MANAGER")
     public List<UserResponseDto> findAllUsersByLockedPageable(boolean locked, int page, int size) {
         return userDao.findAllByLocked(locked, PageRequest.of(page, size)).stream()
-                .map(user -> userResponseDtoMapper.toDto(user))
+                .map(userResponseDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDto> findAllUsersByOrderStatusPageable(OrderStatus orderStatus, int page, int size) {
         Page<User> users = userDao.findDistinctByOrders_OrderStatus(orderStatus, PageRequest.of(page, size));
         return users.stream()
-                .map(user -> userResponseDtoMapper.toDto(user))
+                .map(userResponseDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 

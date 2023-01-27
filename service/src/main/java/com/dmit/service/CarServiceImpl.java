@@ -111,7 +111,7 @@ public class CarServiceImpl implements CarService {
     @Transactional
     public List<CarDto> findAllCarsPageable(int page, int size) {
         return carDao.findAll(PageRequest.of(page, size)).stream()
-                .map(car -> carDtoMapper.toDto(car))
+                .map(carDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 

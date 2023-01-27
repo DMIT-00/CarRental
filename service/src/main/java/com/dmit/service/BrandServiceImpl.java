@@ -103,7 +103,7 @@ public class BrandServiceImpl implements BrandService {
     @Transactional
     public List<CarBrandDto> findAllBrandsPageable(int page, int size) {
         return brandDao.findAll(PageRequest.of(page, size)).stream()
-                .map(brand -> carBrandDtoMapper.toDto(brand))
+                .map(carBrandDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 }

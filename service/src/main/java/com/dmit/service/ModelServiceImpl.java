@@ -96,7 +96,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional
     public List<CarModelDto> findAllModelsPageable(int page, int size) {
         return modelDao.findAll(PageRequest.of(page, size)).stream()
-                .map(model -> carModelDtoMapper.toDto(model))
+                .map(carModelDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -110,7 +110,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional
     public List<CarModelDto> findAllModelsPageableByBrand(long brandId, int page, int size) {
         return modelDao.findAllByBrand(brandId, PageRequest.of(page, size)).stream()
-                .map(model -> carModelDtoMapper.toDto(model))
+                .map(carModelDtoMapper::toDto)
                 .collect(Collectors.toList());
     }
 }
