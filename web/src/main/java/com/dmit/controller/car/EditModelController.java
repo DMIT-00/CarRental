@@ -5,6 +5,7 @@ import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.service.BrandService;
 import com.dmit.service.ModelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,10 @@ import java.util.stream.Collectors;
 
 @Controller
 @Secured("ROLE_MANAGER")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EditModelController {
-    @Autowired
-    ModelService modelService;
-    @Autowired
-    BrandService brandService;
+    private final ModelService modelService;
+    private final BrandService brandService;
 
     @GetMapping("/model-edit/{modelId}")
     public String editModelForm(@PathVariable(required = true) Long modelId, Model model) {

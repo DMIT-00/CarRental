@@ -4,6 +4,7 @@ import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.service.BrandService;
 import com.dmit.service.ModelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +19,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ListModelController {
-    @Autowired
-    ModelService modelService;
-    @Autowired
-    BrandService brandService;
+    private final ModelService modelService;
+    private final BrandService brandService;
 
     @GetMapping("model-list")
     public String modelListForm(Model model) {

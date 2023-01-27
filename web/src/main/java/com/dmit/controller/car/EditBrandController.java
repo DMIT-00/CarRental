@@ -3,6 +3,7 @@ package com.dmit.controller.car;
 import com.dmit.dto.MessageBox;
 import com.dmit.dto.car.CarBrandDto;
 import com.dmit.service.BrandService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,9 @@ import javax.validation.Valid;
 
 @Controller
 @Secured("ROLE_MANAGER")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EditBrandController {
-    @Autowired
-    BrandService brandService;
+    private final BrandService brandService;
 
     @GetMapping("/brand-edit/{brandId}")
     public String editBrandForm(@PathVariable(required = true) Long brandId, Model model) {

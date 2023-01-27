@@ -5,6 +5,7 @@ import com.dmit.dto.UserRequestFormDto;
 import com.dmit.dto.mapper.UserRequestDtoMapper;
 import com.dmit.dto.mapper.UserResponseDtoMapper;
 import com.dmit.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -20,13 +21,11 @@ import java.util.UUID;
 
 @Controller
 @Secured("ROLE_ADMIN")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EditUserController {
-    @Autowired
-    UserResponseDtoMapper userResponseDtoMapper;
-    @Autowired
-    UserRequestDtoMapper userRequestDtoMapper;
-    @Autowired
-    UserService userService;
+    private final UserResponseDtoMapper userResponseDtoMapper;
+    private final UserRequestDtoMapper userRequestDtoMapper;
+    private final UserService userService;
 
     @GetMapping("/user-edit/{userId}")
     public String editUserForm(@PathVariable(required = true) UUID userId, Model model) {

@@ -3,6 +3,7 @@ package com.dmit.controller.order;
 import com.dmit.dto.order.OrderDto;
 import com.dmit.entity.order.OrderStatus;
 import com.dmit.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ListOrderController {
-    @Autowired
-    OrderService orderService;
+    private final OrderService orderService;
 
     @Secured("ROLE_MANAGER")
     @GetMapping("order-list")

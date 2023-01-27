@@ -3,6 +3,7 @@ package com.dmit.controller.order;
 import com.dmit.dto.MessageBox;
 import com.dmit.dto.order.OrderDto;
 import com.dmit.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,9 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class EditOrderController {
-    @Autowired
-    OrderService orderService;
+    private final OrderService orderService;
 
     @Secured("ROLE_MANAGER")
     @GetMapping("/order-edit/{orderId}")

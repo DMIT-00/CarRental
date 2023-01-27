@@ -5,6 +5,7 @@ import com.dmit.dto.car.CarBrandDto;
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.service.BrandService;
 import com.dmit.service.ModelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,10 @@ import java.util.stream.Collectors;
 
 @Controller
 @Secured("ROLE_MANAGER")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AddModelController {
-    @Autowired
-    BrandService brandService;
-    @Autowired
-    ModelService modelService;
+    private final BrandService brandService;
+    private final ModelService modelService;
 
     @GetMapping("model-add")
     public String addModelForm(Model model) {

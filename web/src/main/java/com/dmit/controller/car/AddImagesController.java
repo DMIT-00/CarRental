@@ -1,6 +1,7 @@
 package com.dmit.controller.car;
 
 import com.dmit.service.CarService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,9 @@ import java.util.function.Predicate;
 @Controller
 @SessionAttributes("carId")
 @Secured("ROLE_MANAGER")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AddImagesController {
-    @Autowired
-    CarService carService;
+    private final CarService carService;
 
     @GetMapping(value = "images-add")
     public String addCarImagesForm(Model model) {

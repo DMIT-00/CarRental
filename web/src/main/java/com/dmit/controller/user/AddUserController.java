@@ -4,6 +4,7 @@ import com.dmit.dto.MessageBox;
 import com.dmit.dto.UserRequestFormDto;
 import com.dmit.dto.user.UserDetailDto;
 import com.dmit.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AddUserController {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping("user-add")
     public String registerUserForm(Model model) {

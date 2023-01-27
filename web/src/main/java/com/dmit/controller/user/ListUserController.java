@@ -3,6 +3,7 @@ package com.dmit.controller.user;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.order.OrderStatus;
 import com.dmit.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,9 @@ import java.util.List;
 
 @Controller
 @Secured("ROLE_MANAGER")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ListUserController {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping("user-list")
     public String userList(Model model,

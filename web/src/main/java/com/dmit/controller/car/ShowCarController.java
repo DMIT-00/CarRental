@@ -9,6 +9,7 @@ import com.dmit.service.CarImageService;
 import com.dmit.service.CarService;
 import com.dmit.service.OrderService;
 import com.dmit.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,15 +22,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ShowCarController {
-    @Autowired
-    CarService carService;
-    @Autowired
-    CarImageService carImageService;
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    UserService userService;
+    private final CarService carService;
+    private final CarImageService carImageService;
+    private final OrderService orderService;
+    private final UserService userService;
 
     @GetMapping("/car-show/{carId}")
     String showCar(@PathVariable(required = true) UUID carId, Model model) {
