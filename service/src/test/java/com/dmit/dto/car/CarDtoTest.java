@@ -1,14 +1,15 @@
 package com.dmit.dto.car;
 
 import com.dmit.dto.BaseDtoTest;
+import com.dmit.dto.mapper.*;
 import com.dmit.entity.car.Car;
-import com.dmit.entity.car.CarBrand;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CarDtoTest extends BaseDtoTest {
     CarDto targetObject;
+    CarDtoMapper carDtoMapper = new CarDtoMapperImpl(new CarModelDtoMapperImpl(new CarBrandDtoMapperImpl()), new OrderIdDtoMapperImpl());
     final int TARGET_CLASS_NUMBER_OF_FIELDS = 17;
 
     @Test
@@ -17,16 +18,9 @@ public class CarDtoTest extends BaseDtoTest {
         // see parent class
 
         // When
-        targetObject = modelMapper.map(car, CarDto.class);
+        targetObject = carDtoMapper.toDto(car);
 
         // Then
-        try {
-            modelMapper.validate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("ModelMapper exception. Some fields were not assigned by ModelMapper!");
-        }
-
         // Will fail when the test class is changed, please add more assertions for new fields and change the number
         assertEquals(targetObject.getClass().getDeclaredFields().length, TARGET_CLASS_NUMBER_OF_FIELDS);
 
@@ -50,10 +44,10 @@ public class CarDtoTest extends BaseDtoTest {
     @Test
     public void mappingFromDto() {
         // Given
-        targetObject = modelMapper.map(car, CarDto.class);
+        targetObject = carDtoMapper.toDto(car); // TODO: don't use mapping, so we don't fail when toDto fails
 
         // When
-        Car carResult = modelMapper.map(targetObject, Car.class);
+        Car carResult = carDtoMapper.fromDto(targetObject);
 
         // Then
         assertEquals(targetObject.getClass().getDeclaredFields().length, TARGET_CLASS_NUMBER_OF_FIELDS);

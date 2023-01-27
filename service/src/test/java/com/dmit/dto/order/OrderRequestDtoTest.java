@@ -1,6 +1,8 @@
 package com.dmit.dto.order;
 
 import com.dmit.dto.BaseDtoTest;
+import com.dmit.dto.mapper.OrderRequestDtoMapper;
+import com.dmit.dto.mapper.OrderRequestDtoMapperImpl;
 import com.dmit.entity.order.Order;
 import org.junit.Test;
 
@@ -8,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class OrderRequestDtoTest extends BaseDtoTest {
     OrderRequestDto targetObject;
+    OrderRequestDtoMapper mapper = new OrderRequestDtoMapperImpl();
     final int TARGET_CLASS_NUMBER_OF_FIELDS = 3;
 
     @Test
@@ -16,7 +19,7 @@ public class OrderRequestDtoTest extends BaseDtoTest {
         // see parent class
 
         // When
-        targetObject = modelMapper.map(order, OrderRequestDto.class);
+        targetObject = mapper.toDto(order);
 
         // Then
 //        try {
@@ -29,7 +32,7 @@ public class OrderRequestDtoTest extends BaseDtoTest {
         // Will fail when the test class is changed, please add more assertions for new fields and change the number
         assertEquals(targetObject.getClass().getDeclaredFields().length, TARGET_CLASS_NUMBER_OF_FIELDS);
 
-        assertEquals(targetObject.getCarId(), null);
+        assertEquals(targetObject.getCar().getId(), null);
         assertEquals(targetObject.getStartDate(), order.getStartDate());
         assertEquals(targetObject.getEndDate(), order.getEndDate());
     }
@@ -37,10 +40,10 @@ public class OrderRequestDtoTest extends BaseDtoTest {
     @Test
     public void mappingFromDto() {
         // Given
-        targetObject = modelMapper.map(order, OrderRequestDto.class);
+        targetObject = mapper.toDto(order); // TODO: don't use mapping, so we don't fail when toDto fails
 
         // When
-        Order orderResult = modelMapper.map(targetObject, Order.class);
+        Order orderResult = mapper.fromDto(targetObject);
 
         // Then
         // Will fail when the test class is changed, please add more assertions for new fields and change the number

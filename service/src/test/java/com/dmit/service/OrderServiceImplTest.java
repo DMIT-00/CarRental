@@ -3,6 +3,8 @@ package com.dmit.service;
 import com.dmit.dao.CarDao;
 import com.dmit.dao.OrderDao;
 import com.dmit.dao.UserDao;
+import com.dmit.dto.car.CarIdDto;
+import com.dmit.dto.mapper.*;
 import com.dmit.dto.order.OrderRequestDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.car.Car;
@@ -17,8 +19,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.validation.Validator;
@@ -36,7 +36,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class OrderServiceImplTest {
     @Spy
-    ModelMapper modelMapper = new ModelMapper();
+    OrderDtoMapper orderDtoMapper = new OrderDtoMapperImpl(new CarIdDtoMapperImpl(), new UserIdDtoMapperImpl());
+    @Spy
+    OrderRequestDtoMapper orderRequestDtoMapper = new OrderRequestDtoMapperImpl();
+
     @Mock
     Validator validator;
     @Mock
@@ -49,10 +52,6 @@ public class OrderServiceImplTest {
     CarDao carDao;
     @InjectMocks
     OrderServiceImpl targetObject;
-
-    public OrderServiceImplTest() {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
 
     @Test
     public void deleteOrderShouldThrow() {
@@ -95,7 +94,7 @@ public class OrderServiceImplTest {
     public void addOrderShouldThrowOnInvalidUser() {
         // Given
         OrderRequestDto orderDto = new OrderRequestDto();
-        orderDto.setCarId(UUID.randomUUID());
+        orderDto.setCar(new CarIdDto(UUID.randomUUID()));
 
         // When
         UserResponseDto user = new UserResponseDto();
@@ -111,7 +110,7 @@ public class OrderServiceImplTest {
     public void addOrderShouldThrowOnInvalidCardId() {
         // Given
         OrderRequestDto orderDto = new OrderRequestDto();
-        orderDto.setCarId(UUID.randomUUID());
+        orderDto.setCar(new CarIdDto(UUID.randomUUID()));
 
         // When
         UserResponseDto user = new UserResponseDto();
@@ -121,7 +120,7 @@ public class OrderServiceImplTest {
 
         // Then
         Exception exception = assertThrows(NotFoundException.class, () -> targetObject.addOrder(orderDto));
-        assertEquals(exception.getMessage(), "Car not found! Id: " + orderDto.getCarId());
+        assertEquals(exception.getMessage(), "Car not found! Id: " + orderDto.getCar().getId());
     }
 
     @Test
@@ -131,7 +130,7 @@ public class OrderServiceImplTest {
         orderDto.setStartDate(LocalDateTime.now());
         orderDto.setEndDate(LocalDateTime.now());
 
-        orderDto.setCarId(UUID.randomUUID());
+        orderDto.setCar(new CarIdDto(UUID.randomUUID()));
 
         // When
         UserResponseDto user = new UserResponseDto();
@@ -153,7 +152,7 @@ public class OrderServiceImplTest {
         orderDto.setStartDate(LocalDateTime.now());
         orderDto.setEndDate(LocalDateTime.now());
 
-        orderDto.setCarId(UUID.randomUUID());
+        orderDto.setCar(new CarIdDto(UUID.randomUUID()));
 
         // When
         UserResponseDto user = new UserResponseDto();
@@ -175,7 +174,7 @@ public class OrderServiceImplTest {
         orderDto.setStartDate(LocalDateTime.now());
         orderDto.setEndDate(LocalDateTime.now().plusMinutes(9));
 
-        orderDto.setCarId(UUID.randomUUID());
+        orderDto.setCar(new CarIdDto(UUID.randomUUID()));
 
         // When
         UserResponseDto user = new UserResponseDto();
@@ -196,7 +195,7 @@ public class OrderServiceImplTest {
         orderDto.setStartDate(LocalDateTime.now());
         orderDto.setEndDate(LocalDateTime.now().plusMinutes(11));
 
-        orderDto.setCarId(UUID.randomUUID());
+        orderDto.setCar(new CarIdDto(UUID.randomUUID()));
 
         // When
         UserResponseDto user = new UserResponseDto();
@@ -204,7 +203,7 @@ public class OrderServiceImplTest {
         when(userService.findCurrentUser()).thenReturn(user);
         when(userDao.findByUsername(any())).thenReturn(new User());
         Car car = new Car();
-        car.setId(orderDto.getCarId());
+        car.setId(orderDto.getCar().getId());
         car.setPrice(BigDecimal.valueOf(10));
         when(carDao.findById(any())).thenReturn(Optional.of(car));
         when(orderDao.save(any())).thenReturn(new Order());
@@ -214,7 +213,7 @@ public class OrderServiceImplTest {
         // Then
         ArgumentCaptor<Order> argument = ArgumentCaptor.forClass(Order.class);
         verify(orderDao).save(argument.capture());
-        assertEquals(orderDto.getCarId(), argument.getValue().getCar().getId());
+        assertEquals(orderDto.getCar().getId(), argument.getValue().getCar().getId());
     }
 
     // TODO: more tests

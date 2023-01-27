@@ -1,16 +1,16 @@
 package com.dmit.dto.user;
 
 import com.dmit.dto.BaseDtoTest;
-import com.dmit.dto.car.CarBrandDto;
-import com.dmit.dto.car.CarModelDto;
-import com.dmit.entity.car.CarModel;
+import com.dmit.dto.mapper.RoleDtoMapper;
+import com.dmit.dto.mapper.RoleDtoMapperImpl;
 import com.dmit.entity.user.Role;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RoleDtoTest extends BaseDtoTest {
     RoleDto targetObject;
+    RoleDtoMapper mapper = new RoleDtoMapperImpl();
     final int TARGET_CLASS_NUMBER_OF_FIELDS = 1;
 
     @Test
@@ -19,16 +19,9 @@ public class RoleDtoTest extends BaseDtoTest {
         // see parent class
 
         // When
-        targetObject = modelMapper.map(roleUser, RoleDto.class);
+        targetObject = mapper.toDto(roleUser);
 
         // Then
-        try {
-            modelMapper.validate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("ModelMapper exception. Some fields were not assigned by ModelMapper!");
-        }
-
         // Will fail when the test class is changed, please add more assertions for new fields and change the number
         assertEquals(targetObject.getClass().getDeclaredFields().length, TARGET_CLASS_NUMBER_OF_FIELDS);
 
@@ -39,10 +32,10 @@ public class RoleDtoTest extends BaseDtoTest {
     @Test
     public void mappingFromDto() {
         // Given
-        targetObject = modelMapper.map(roleUser, RoleDto.class);
+        targetObject = mapper.toDto(roleUser); // TODO: don't use mapping, so we don't fail when toDto fails
 
         // When
-        Role roleResult = modelMapper.map(targetObject, Role.class);
+        Role roleResult = mapper.fromDto(targetObject);
 
         // Then
         // Will fail when the test class is changed, please add more assertions for new fields and change the number

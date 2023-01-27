@@ -1,0 +1,13 @@
+@startuml
+!theme crt-amber
+CarDto -- OrderIdDto
+CarDto -- CarModelDto
+
+
+CarModelDto -- CarBrandDto
+
+OrderDto -- UserIdDto
+OrderDto -- CarIdDto
+
+
+@enduml

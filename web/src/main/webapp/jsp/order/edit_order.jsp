@@ -10,10 +10,7 @@
         <th><fmt:message key="order.end_date"/></th>
         <th><fmt:message key="order.total_price"/></th>
         <th><fmt:message key="order.user_id"/></th>
-        <th><fmt:message key="user.username"/></th>
         <th><fmt:message key="order.car_id"/></th>
-        <th><fmt:message key="car.brand_name"/></th>
-        <th><fmt:message key="car.model_name"/></th>
     </tr>
 
     <tbody>
@@ -23,10 +20,7 @@
             <td><c:out value="${order.endDate}"/></td>
             <td><c:out value="${order.totalPrice}"/></td>
             <td><a href="${pageContext.request.contextPath}/user-show/${order.user.id}">${order.user.id}</a></td>
-            <td><c:out value="${order.user.username}"/></td>
             <td><a href="${pageContext.request.contextPath}/car-show/${order.car.id}">${order.car.id}</a></td>
-            <td><c:out value="${order.car.carModel.carBrand.brandName}"/></td>
-            <td><c:out value="${order.car.carModel.modelName}"/></td>
         </tr>
     </tbody>
 

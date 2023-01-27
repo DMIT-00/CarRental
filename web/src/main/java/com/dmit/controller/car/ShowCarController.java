@@ -2,6 +2,7 @@ package com.dmit.controller.car;
 
 import com.dmit.dto.MessageBox;
 import com.dmit.dto.car.CarDto;
+import com.dmit.dto.car.CarIdDto;
 import com.dmit.dto.order.OrderRequestDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.service.CarImageService;
@@ -36,7 +37,8 @@ public class ShowCarController {
         List<UUID> images = carImageService.getImageIdsByCarId(carId);
 
         OrderRequestDto orderRequestDto = new OrderRequestDto();
-        orderRequestDto.setCarId(carId);
+        // TODO: do we need it?
+        orderRequestDto.setCar(new CarIdDto(carId));
 
         model.addAttribute("car", carDto);
         model.addAttribute("images", images);
@@ -69,6 +71,7 @@ public class ShowCarController {
             return "car/show_car";
         }
 
+        orderRequest.setCar(new CarIdDto(carId));
         orderService.addOrder(orderRequest);
 
         model.addAttribute("messageBox",

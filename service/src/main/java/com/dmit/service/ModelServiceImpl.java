@@ -2,11 +2,11 @@ package com.dmit.service;
 
 import com.dmit.dao.CarModelDao;
 import com.dmit.dto.car.CarModelDto;
-import com.dmit.entity.car.CarBrand;
+import com.dmit.dto.mapper.CarBrandDtoMapper;
+import com.dmit.dto.mapper.CarModelDtoMapper;
 import com.dmit.entity.car.CarModel;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -25,7 +25,9 @@ public class ModelServiceImpl implements ModelService {
     @Autowired
     private Validator validator;
     @Autowired
-    private ModelMapper modelMapper;
+    private CarModelDtoMapper carModelDtoMapper;
+    @Autowired
+    private CarBrandDtoMapper carBrandDtoMapper;
     @Autowired
     CarModelDao modelDao;
 
@@ -43,14 +45,14 @@ public class ModelServiceImpl implements ModelService {
             throw new ConstraintViolationException("Error occurred: " + sb, violations);
         }
 
-        CarModel model = modelMapper.map(newModel, CarModel.class);
+        CarModel model = carModelDtoMapper.fromDto(newModel);
 
         // Check for duplicate Id
         if (model.getId() != null && modelDao.existsById(model.getId())) {
             throw new AlreadyExistsException("Model already exists! Id: " + model.getId());
         }
 
-        return modelMapper.map(modelDao.save(model), CarModelDto.class);
+        return carModelDtoMapper.toDto(modelDao.save(model));
     }
 
     @Override
@@ -61,9 +63,9 @@ public class ModelServiceImpl implements ModelService {
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + updatedModel.getId()));
 
         model.setModelName(updatedModel.getModelName());
-        model.setCarBrand(modelMapper.map(updatedModel.getCarBrand(), CarBrand.class));
+        model.setCarBrand(carBrandDtoMapper.fromDto(updatedModel.getCarBrand()));
 
-        return modelMapper.map(modelDao.save(model), CarModelDto.class);
+        return carModelDtoMapper.toDto(modelDao.save(model));
     }
 
     @Override
@@ -83,7 +85,7 @@ public class ModelServiceImpl implements ModelService {
         CarModel model = modelDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Model not found! Id: " + id));
 
-        return modelMapper.map(model, CarModelDto.class);
+        return carModelDtoMapper.toDto(model);
     }
 
     @Override
@@ -96,7 +98,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional
     public List<CarModelDto> findAllModelsPageable(int page, int size) {
         return modelDao.findAll(PageRequest.of(page, size)).stream()
-                .map(model -> modelMapper.map(model, CarModelDto.class))
+                .map(model -> carModelDtoMapper.toDto(model))
                 .collect(Collectors.toList());
     }
 
@@ -110,7 +112,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional
     public List<CarModelDto> findAllModelsPageableByBrand(long brandId, int page, int size) {
         return modelDao.findAllByBrand(brandId, PageRequest.of(page, size)).stream()
-                .map(model -> modelMapper.map(model, CarModelDto.class))
+                .map(model -> carModelDtoMapper.toDto(model))
                 .collect(Collectors.toList());
     }
 }

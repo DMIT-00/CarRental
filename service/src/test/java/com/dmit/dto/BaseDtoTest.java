@@ -6,8 +6,6 @@ import com.dmit.entity.order.OrderStatus;
 import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import com.dmit.entity.user.UserDetail;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -17,8 +15,6 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class BaseDtoTest {
-    protected ModelMapper modelMapper;
-
     protected User user;
     protected UserDetail userDetail;
     protected Role roleUser;
@@ -29,9 +25,6 @@ public class BaseDtoTest {
     protected Order order;
 
     public BaseDtoTest() {
-        modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
         roleUser = new Role(1000L, "USER", new HashSet<>());
         roleAdmin = new Role(2000L, "ADMIN", new HashSet<>());
 

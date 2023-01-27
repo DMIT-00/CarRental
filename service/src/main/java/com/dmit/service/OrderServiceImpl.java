@@ -3,6 +3,8 @@ package com.dmit.service;
 import com.dmit.dao.CarDao;
 import com.dmit.dao.OrderDao;
 import com.dmit.dao.UserDao;
+import com.dmit.dto.mapper.OrderDtoMapper;
+import com.dmit.dto.mapper.OrderRequestDtoMapper;
 import com.dmit.dto.order.OrderDto;
 import com.dmit.dto.order.OrderRequestDto;
 import com.dmit.entity.car.Car;
@@ -12,7 +14,6 @@ import com.dmit.entity.user.User;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.InvalidOperation;
 import com.dmit.exception.NotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -36,7 +37,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     Validator validator;
     @Autowired
-    ModelMapper modelMapper;
+    OrderDtoMapper orderDtoMapper;
+    @Autowired
+    OrderRequestDtoMapper orderRequestDtoMapper;
     @Autowired
     UserService userService;
     @Autowired
@@ -67,10 +70,10 @@ public class OrderServiceImpl implements OrderService {
             throw new UsernameNotFoundException("User not found! Username: " + username);
 
         // Get car for the order
-        Car car = carDao.findById(orderRequestDto.getCarId())
-                .orElseThrow(() -> new NotFoundException("Car not found! Id: " + orderRequestDto.getCarId()));
+        Car car = carDao.findById(orderRequestDto.getCar().getId())
+                .orElseThrow(() -> new NotFoundException("Car not found! Id: " + orderRequestDto.getCar().getId()));
 
-        Order order = modelMapper.map(orderRequestDto, Order.class);
+        Order order = orderRequestDtoMapper.fromDto(orderRequestDto);
 
         // Check for duplicate Id
         if (order.getId() != null && orderDao.findById(order.getId()).isPresent())
@@ -97,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTotalPrice(car.getPrice().multiply(BigDecimal.valueOf(minutes)));
 
-        return modelMapper.map(orderDao.save(order), OrderDto.class);
+        return orderDtoMapper.toDto(orderDao.save(order));
     }
 
     @Override
@@ -124,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setTotalPrice(order.getCar().getPrice().multiply(BigDecimal.valueOf(minutes)));
 
-        return modelMapper.map(orderDao.save(order), OrderDto.class);
+        return orderDtoMapper.toDto(orderDao.save(order));
     }
 
     @Override
@@ -168,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDao.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found! Id: " + orderId));
 
-        return modelMapper.map(order, OrderDto.class);
+        return orderDtoMapper.toDto(order);
     }
 
     @Override
@@ -183,7 +186,7 @@ public class OrderServiceImpl implements OrderService {
     @Secured("ROLE_MANAGER")
     public List<OrderDto> findAllOrdersByStatusPageable(OrderStatus orderStatus, int page, int size) {
         return orderDao.findAllByOrderStatus(orderStatus, PageRequest.of(page, size)).stream()
-                .map(order -> modelMapper.map(order, OrderDto.class))
+                .map(order -> orderDtoMapper.toDto(order))
                 .collect(Collectors.toList());
     }
 
@@ -199,7 +202,7 @@ public class OrderServiceImpl implements OrderService {
     @Secured("ROLE_MANAGER")
     public List<OrderDto> findAllOrdersPageable(int page, int size) {
         return orderDao.findAll(PageRequest.of(page, size)).stream()
-                .map(order -> modelMapper.map(order, OrderDto.class))
+                .map(order -> orderDtoMapper.toDto(order))
                 .collect(Collectors.toList());
     }
 

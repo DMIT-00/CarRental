@@ -1,10 +1,9 @@
 package com.dmit.dto.car;
 
-import com.dmit.dto.order.OrderDto;
+import com.dmit.dto.order.OrderIdDto;
 import com.dmit.entity.car.BodyType;
 import com.dmit.entity.car.FuelType;
 import com.dmit.entity.car.TransmissionType;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +22,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarDto {
-    UUID id;
+    private UUID id;
     @NotNull
     @Range(min = 1800, max = 2400)
     private int year;
@@ -61,6 +60,5 @@ public class CarDto {
     @NotNull
     private CarModelDto carModel;
     @Valid
-    @JsonIgnoreProperties({"user", "car"})
-    private List<OrderDto> orders;
+    private List<OrderIdDto> orders;
 }

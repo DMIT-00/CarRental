@@ -2,6 +2,8 @@ package com.dmit.service;
 
 import com.dmit.dao.RoleDao;
 import com.dmit.dao.UserDao;
+import com.dmit.dto.mapper.UserRequestDtoMapper;
+import com.dmit.dto.mapper.UserResponseDtoMapper;
 import com.dmit.dto.user.UserRequestDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.entity.order.OrderStatus;
@@ -9,7 +11,6 @@ import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Validator validator;
     @Autowired
-    private ModelMapper modelMapper;
+    private UserResponseDtoMapper userResponseDtoMapper;
+    @Autowired
+    private UserRequestDtoMapper userRequestDtoMapper;
     @Autowired
     UserDao userDao;
     @Autowired
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService {
         if (userDao.existsByUserDetail_CreditCard(userRequestDto.getUserDetail().getCreditCard()))
             throw new AlreadyExistsException("Credit card is already used to register");
 
-        User user = modelMapper.map(userRequestDto, User.class);
+        User user = userRequestDtoMapper.fromDto(userRequestDto);
 
         // Check for duplicate Id
         if (user.getId() != null && userDao.existsById(user.getId())) {
@@ -89,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
         user.addRole(role);
         
-        return modelMapper.map(userDao.save(user), UserResponseDto.class);
+        return userResponseDtoMapper.toDto(userDao.save(user));
     }
 
     @Override
@@ -135,7 +138,7 @@ public class UserServiceImpl implements UserService {
     @Secured("ROLE_MANAGER")
     public List<UserResponseDto> findAllUsersPageable(int page, int size) {
         return userDao.findAll(PageRequest.of(page, size)).stream()
-                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .map(user -> userResponseDtoMapper.toDto(user))
                 .collect(Collectors.toList());
     }
 
@@ -151,7 +154,7 @@ public class UserServiceImpl implements UserService {
     @Secured("ROLE_MANAGER")
     public List<UserResponseDto> findAllUsersByLockedPageable(boolean locked, int page, int size) {
         return userDao.findAllByLocked(locked, PageRequest.of(page, size)).stream()
-                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .map(user -> userResponseDtoMapper.toDto(user))
                 .collect(Collectors.toList());
     }
 
@@ -168,7 +171,7 @@ public class UserServiceImpl implements UserService {
     public List<UserResponseDto> findAllUsersByOrderStatusPageable(OrderStatus orderStatus, int page, int size) {
         Page<User> users = userDao.findDistinctByOrders_OrderStatus(orderStatus, PageRequest.of(page, size));
         return users.stream()
-                .map(user -> modelMapper.map(user, UserResponseDto.class))
+                .map(user -> userResponseDtoMapper.toDto(user))
                 .collect(Collectors.toList());
     }
 
@@ -180,7 +183,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found! Id: " + userId));
 
-        return modelMapper.map(user, UserResponseDto.class);
+        return userResponseDtoMapper.toDto(user);
     }
 
     @Override
@@ -192,6 +195,6 @@ public class UserServiceImpl implements UserService {
         if (user == null)
             throw new UsernameNotFoundException("User not found! Username: " + auth.getName());
 
-        return modelMapper.map(user, UserResponseDto.class);
+        return userResponseDtoMapper.toDto(user);
     }
 }

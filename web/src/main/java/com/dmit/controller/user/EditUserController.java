@@ -2,8 +2,9 @@ package com.dmit.controller.user;
 
 import com.dmit.dto.MessageBox;
 import com.dmit.dto.UserRequestFormDto;
+import com.dmit.dto.mapper.UserRequestDtoMapper;
+import com.dmit.dto.mapper.UserResponseDtoMapper;
 import com.dmit.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -21,15 +22,19 @@ import java.util.UUID;
 @Secured("ROLE_ADMIN")
 public class EditUserController {
     @Autowired
-    ModelMapper modelMapper;
+    UserResponseDtoMapper userResponseDtoMapper;
+    @Autowired
+    UserRequestDtoMapper userRequestDtoMapper;
     @Autowired
     UserService userService;
 
     @GetMapping("/user-edit/{userId}")
     public String editUserForm(@PathVariable(required = true) UUID userId, Model model) {
-        UserRequestFormDto user = modelMapper.map(userService.findUserById(userId), UserRequestFormDto.class);
+        //User userEntity = userResponseDtoMapper.fromDto(userService.findUserById(userId));
+        //UserRequestFormDto user = userRequestDtoMapper.toDto(userEntity);
+        //FIXME: !!!!!!!!!!!!!!!!!!!!!!!!
 
-        model.addAttribute("user", user);
+        //model.addAttribute("user", user);
 
         return "user/edit_user";
     }

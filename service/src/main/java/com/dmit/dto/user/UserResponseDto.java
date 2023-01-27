@@ -1,7 +1,6 @@
 package com.dmit.dto.user;
 
-import com.dmit.dto.order.OrderDto;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.dmit.dto.order.OrderIdDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,8 +34,7 @@ public class UserResponseDto {
     @NotNull
     private UserDetailDto userDetail;
     @Valid
-    @JsonIgnoreProperties({"user", "car"})
-    private List<OrderDto> orders;
+    private List<OrderIdDto> orders;
     @Valid
     @NotNull
     private Set<RoleDto> roles = new HashSet<>();

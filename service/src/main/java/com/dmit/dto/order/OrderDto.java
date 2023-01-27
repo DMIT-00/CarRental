@@ -1,7 +1,7 @@
 package com.dmit.dto.order;
 
-import com.dmit.dto.car.CarDto;
-import com.dmit.dto.user.UserResponseDto;
+import com.dmit.dto.car.CarIdDto;
+import com.dmit.dto.user.UserIdDto;
 import com.dmit.entity.order.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -36,6 +36,6 @@ public class OrderDto {
     private LocalDateTime endDate;
     private BigDecimal totalPrice;
 
-    private UserResponseDto user;
-    private CarDto car;
+    private UserIdDto user;
+    private CarIdDto car;
 }

@@ -2,11 +2,11 @@ package com.dmit.service;
 
 import com.dmit.dao.CarDao;
 import com.dmit.dto.car.CarDto;
+import com.dmit.dto.mapper.CarDtoMapper;
 import com.dmit.entity.car.Car;
 import com.dmit.entity.car.Image;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -26,7 +26,7 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private Validator validator;
     @Autowired
-    private ModelMapper modelMapper;
+    private CarDtoMapper carDtoMapper;
     @Autowired
     CarDao carDao;
 
@@ -48,14 +48,14 @@ public class CarServiceImpl implements CarService {
             throw new ConstraintViolationException("Validation errors: " + errors, violations);
         }
 
-        Car car = modelMapper.map(newCar, Car.class);
+        Car car = carDtoMapper.fromDto(newCar);
 
         // Check for duplicate Id
         if (car.getId() != null && carDao.existsById(car.getId())) {
             throw new AlreadyExistsException("Car already exists! Id: " + car.getId());
         }
 
-        return modelMapper.map(carDao.save(car), CarDto.class);
+        return carDtoMapper.toDto(carDao.save(car));
     }
 
     @Override
@@ -78,9 +78,9 @@ public class CarServiceImpl implements CarService {
         if (!carDao.existsById(updatedCar.getId()))
             throw new NotFoundException("Car not found! Id: " + updatedCar.getId());
 
-        Car car = modelMapper.map(updatedCar, Car.class);
+        Car car = carDtoMapper.fromDto(updatedCar);
 
-        return modelMapper.map(carDao.save(car), CarDto.class);
+        return carDtoMapper.toDto(carDao.save(car));
     }
 
     @Override
@@ -99,7 +99,7 @@ public class CarServiceImpl implements CarService {
         Car car = carDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Car not found! Id: " + id));
 
-        return modelMapper.map(car, CarDto.class);
+        return carDtoMapper.toDto(car);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class CarServiceImpl implements CarService {
     @Transactional
     public List<CarDto> findAllCarsPageable(int page, int size) {
         return carDao.findAll(PageRequest.of(page, size)).stream()
-                .map(car -> modelMapper.map(car, CarDto.class))
+                .map(car -> carDtoMapper.toDto(car))
                 .collect(Collectors.toList());
     }
 

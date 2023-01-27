@@ -2,6 +2,8 @@ package com.dmit.service;
 
 import com.dmit.dao.CarBrandDao;
 import com.dmit.dto.car.CarBrandDto;
+import com.dmit.dto.mapper.CarBrandDtoMapper;
+import com.dmit.dto.mapper.CarBrandDtoMapperImpl;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.exception.AlreadyExistsException;
 import org.junit.Test;
@@ -11,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
@@ -29,17 +29,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BrandServiceImplTest {
     @Spy
-    ModelMapper modelMapper = new ModelMapper();
+    private CarBrandDtoMapper carBrandDtoMapper = new CarBrandDtoMapperImpl();
     @Mock
     Validator validator;
     @Mock
     CarBrandDao brandDao;
     @InjectMocks
     BrandServiceImpl targetObject;
-
-    public BrandServiceImplTest() {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
 
     @Test
     public void findAllBrandsPageableShouldReturnList() {

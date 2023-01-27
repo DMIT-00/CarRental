@@ -1,6 +1,10 @@
 package com.dmit.service;
 
 import com.dmit.dao.UserDao;
+import com.dmit.dto.mapper.RoleDtoMapperImpl;
+import com.dmit.dto.mapper.UserAuthenticationDtoMapper;
+import com.dmit.dto.mapper.UserAuthenticationDtoMapperImpl;
+import com.dmit.dto.mapper.UserDetailDtoMapperImpl;
 import com.dmit.dto.user.UserAuthenticationDto;
 import com.dmit.entity.user.User;
 import com.dmit.exception.NotFoundException;
@@ -10,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 
 import javax.validation.Validator;
 import java.util.UUID;
@@ -23,7 +25,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserAuthenticationServiceImplTest {
     @Spy
-    ModelMapper modelMapper = new ModelMapper();
+    private UserAuthenticationDtoMapper userAuthenticationDtoMapper = new UserAuthenticationDtoMapperImpl(new RoleDtoMapperImpl(), new UserDetailDtoMapperImpl());
     @Mock
     Validator validator;
     @Mock
@@ -31,9 +33,6 @@ public class UserAuthenticationServiceImplTest {
     @InjectMocks
     UserAuthenticationServiceImpl targetObject;
 
-    public UserAuthenticationServiceImplTest() {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
 
     @Test
     public void findUserByUsernameShouldReturnUser() {

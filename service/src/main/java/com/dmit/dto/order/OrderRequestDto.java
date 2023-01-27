@@ -1,5 +1,6 @@
 package com.dmit.dto.order;
 
+import com.dmit.dto.car.CarIdDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -24,6 +24,5 @@ public class OrderRequestDto {
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDate;
-    @NotNull
-    private UUID carId;
+    private CarIdDto car;
 }

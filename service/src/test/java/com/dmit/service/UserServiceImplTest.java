@@ -2,6 +2,7 @@ package com.dmit.service;
 
 import com.dmit.dao.RoleDao;
 import com.dmit.dao.UserDao;
+import com.dmit.dto.mapper.*;
 import com.dmit.dto.user.UserDetailDto;
 import com.dmit.dto.user.UserRequestDto;
 import com.dmit.entity.user.Role;
@@ -15,8 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.Validator;
@@ -33,7 +32,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
     @Spy
-    ModelMapper modelMapper = new ModelMapper();
+    private UserResponseDtoMapper userResponseDtoMapper = new UserResponseDtoMapperImpl(
+            new RoleDtoMapperImpl(), new UserDetailDtoMapperImpl());
+    @Spy
+    private UserRequestDtoMapper userRequestDtoMapper = new UserRequestDtoMapperImpl(new UserDetailDtoMapperImpl());
     @Mock
     Validator validator;
     @Mock
@@ -45,9 +47,6 @@ public class UserServiceImplTest {
     @InjectMocks
     UserServiceImpl targetObject;
 
-    public UserServiceImplTest() {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
 
     @Test
     public void addNewUserShouldThrowOnDuplicateId() {

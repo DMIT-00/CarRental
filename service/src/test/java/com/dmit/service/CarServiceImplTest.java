@@ -2,6 +2,7 @@ package com.dmit.service;
 
 import com.dmit.dao.CarDao;
 import com.dmit.dto.car.CarDto;
+import com.dmit.dto.mapper.*;
 import com.dmit.entity.car.Car;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
@@ -12,8 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 
 import javax.validation.Validator;
 import java.util.UUID;
@@ -27,17 +26,14 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CarServiceImplTest {
     @Spy
-    ModelMapper modelMapper = new ModelMapper();
+    private CarDtoMapper carDtoMapper = new CarDtoMapperImpl(new CarModelDtoMapperImpl(new CarBrandDtoMapperImpl()),
+            new OrderIdDtoMapperImpl());
     @Mock
     Validator validator;
     @Mock
     CarDao carDao;
     @InjectMocks
     CarServiceImpl targetObject;
-    
-    public CarServiceImplTest() {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
 
     @Test
     public void addCarShouldThrowOnDuplicateId() {
