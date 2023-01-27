@@ -47,17 +47,17 @@
         <div class="row">
             <div class="col-sm">
                 <form:label path="color" class="form-label"><fmt:message key="car.color"/></form:label>
-                <form:input path="color" value="BLACK" class="form-control"/>
+                <form:input path="color" class="form-control"/>
                 <form:errors path="color" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
                 <form:label path="year" class="form-label"><fmt:message key="car.year"/></form:label>
-                <form:input path="year" type="number" min="1800" max="2800" value="2000" class="form-control"/>
+                <form:input path="year" type="number" min="1800" max="2800" class="form-control"/>
                 <form:errors path="year" cssClass="text-danger"/>
             </div>
             <div class="col-sm">
                 <form:label path="numberOfSeats" class="form-label"><fmt:message key="car.number_of_seats"/></form:label>
-                <form:input path="numberOfSeats" type="number" min="0" max="400" value="5" class="form-control"/>
+                <form:input path="numberOfSeats" type="number" min="0" max="400" class="form-control"/>
                 <form:errors path="numberOfSeats" cssClass="text-danger"/>
             </div>
         </div>
@@ -77,7 +77,7 @@
             </div>
             <div class="col-sm">
                 <form:label path="price" class="form-label"><fmt:message key="car.price"/></form:label>
-                <form:input path="price" type="number" step="any" value="100" class="form-control"/>
+                <form:input path="price" type="number" step="any" class="form-control"/>
                 <form:errors path="price" cssClass="text-danger"/>
             </div>
         </div>
