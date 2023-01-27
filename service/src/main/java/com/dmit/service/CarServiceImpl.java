@@ -7,6 +7,7 @@ import com.dmit.entity.car.Car;
 import com.dmit.entity.car.Image;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -22,13 +23,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CarServiceImpl implements CarService {
-    @Autowired
-    private Validator validator;
-    @Autowired
-    private CarDtoMapper carDtoMapper;
-    @Autowired
-    CarDao carDao;
+    private final Validator validator;
+    private final CarDtoMapper carDtoMapper;
+    private final CarDao carDao;
 
     @Override
     @Transactional

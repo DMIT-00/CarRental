@@ -14,6 +14,7 @@ import com.dmit.entity.user.User;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.InvalidOperation;
 import com.dmit.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -33,21 +34,15 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    Validator validator;
-    @Autowired
-    OrderDtoMapper orderDtoMapper;
-    @Autowired
-    OrderRequestDtoMapper orderRequestDtoMapper;
-    @Autowired
-    UserService userService;
-    @Autowired
-    OrderDao orderDao;
-    @Autowired
-    UserDao userDao;
-    @Autowired
-    CarDao carDao;
+    private final Validator validator;
+    private final OrderDtoMapper orderDtoMapper;
+    private final OrderRequestDtoMapper orderRequestDtoMapper;
+    private final UserService userService;
+    private final OrderDao orderDao;
+    private final UserDao userDao;
+    private final CarDao carDao;
 
     @Override
     @Transactional

@@ -6,6 +6,7 @@ import com.dmit.dto.mapper.CarBrandDtoMapper;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -20,13 +21,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BrandServiceImpl implements BrandService {
-    @Autowired
-    private Validator validator;
-    @Autowired
-    private CarBrandDtoMapper carBrandDtoMapper;
-    @Autowired
-    private CarBrandDao brandDao;
+    private final Validator validator;
+    private final CarBrandDtoMapper carBrandDtoMapper;
+    private final CarBrandDao brandDao;
 
     @Override
     @Transactional

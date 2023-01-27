@@ -7,6 +7,7 @@ import com.dmit.dto.mapper.CarModelDtoMapper;
 import com.dmit.entity.car.CarModel;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
@@ -21,15 +22,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ModelServiceImpl implements ModelService {
-    @Autowired
-    private Validator validator;
-    @Autowired
-    private CarModelDtoMapper carModelDtoMapper;
-    @Autowired
-    private CarBrandDtoMapper carBrandDtoMapper;
-    @Autowired
-    CarModelDao modelDao;
+    private final Validator validator;
+    private final CarModelDtoMapper carModelDtoMapper;
+    private final CarBrandDtoMapper carBrandDtoMapper;
+    private final CarModelDao modelDao;
 
     @Override
     @Transactional

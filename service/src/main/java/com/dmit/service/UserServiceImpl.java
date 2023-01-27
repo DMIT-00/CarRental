@@ -11,6 +11,7 @@ import com.dmit.entity.user.Role;
 import com.dmit.entity.user.User;
 import com.dmit.exception.AlreadyExistsException;
 import com.dmit.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,19 +32,14 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private Validator validator;
-    @Autowired
-    private UserResponseDtoMapper userResponseDtoMapper;
-    @Autowired
-    private UserRequestDtoMapper userRequestDtoMapper;
-    @Autowired
-    UserDao userDao;
-    @Autowired
-    RoleDao roleDao;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final Validator validator;
+    private final UserResponseDtoMapper userResponseDtoMapper;
+    private final UserRequestDtoMapper userRequestDtoMapper;
+    private final UserDao userDao;
+    private final RoleDao roleDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
