@@ -1,8 +1,12 @@
 ## CarRental
 
+- [About](#about)
 - [Technology stack](#technology-stack)
 - [How to build](#how-to-build)
 - [Project architecture](#project-architecture)
+
+## About
+CarRental is a simple car rental webapp.
 
 ## Technology stack
 **Build:** Maven
