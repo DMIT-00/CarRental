@@ -1,0 +1,75 @@
+@startuml
+!theme crt-amber
+
+class Car {
+    UUID id
+    int year
+    String color
+    float enginePower
+    FuelType fuelType
+    float fuelConsumption
+    TransmissionType transmission
+    int numberOfSeats
+    boolean abs
+    boolean cruiseControl
+    boolean heatedSeats
+    boolean climateControl
+    boolean airBags
+    BigDecimal price
+    BodyType bodyType
+    CarModel carModel
+}
+
+class CarBrand {
+    Long id
+    String brandName
+}
+
+class CarModel {
+    Long id
+    String modelName
+}
+
+class Order {
+}
+
+class User {
+}
+
+class UserRole {
+}
+
+
+enum TransmissionType {
+    AUTOMATIC
+    SEMI_AUTOMATIC
+    MANUAL
+}
+
+enum BodyType {
+    HATCHBACK
+    SEDAN
+    SUV
+    COUPE
+    CONVERTIBLE
+    WAGON
+    VAN
+    JEEP
+}
+
+enum FuelType {
+    PETROL
+    DIESEL
+    ELECTRIC
+}
+
+Car --{ Order
+Order -- User
+User --{ UserRole
+CarBrand -- Car
+CarModel }-- CarBrand
+Car::BodyType .. BodyType
+Car::TransmissionType .. TransmissionType
+Car::FuelType .. FuelType
+
+@enduml
