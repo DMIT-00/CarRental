@@ -27,9 +27,9 @@
             </div>
 
             <div class="col-sm">
-                <form:label path="passwordRepeat" class="form-label"><fmt:message key="user.password_repeat"/></form:label>
-                <form:input path="passwordRepeat" type="password" class="form-control"/>
-                <form:errors path="passwordRepeat" cssClass="text-danger"/>
+                <label class="form-label"><fmt:message key="user.password_repeat"/></label>
+                <input id="passwordRepeat" type="password" class="form-control"/>
+                <span id="passwordRepeatError" class="text-danger" hidden><fmt:message key="user.password_should_match"/></span>
             </div>
         </div>
     </div>
@@ -76,10 +76,37 @@
     <div class="container mt-4 col-md-12">
         <div class="row">
             <div class="col text-center">
-                <button type="submit" style="width:100%;" name="submit-user" class="btn btn-primary btn-lg btn-block"><fmt:message key="user.submit"/></button>
+                <button id="submit-user" type="submit" style="width:100%;" name="submit-user" class="btn btn-primary btn-lg btn-block" disabled>
+                    <fmt:message key="user.submit"/>
+                </button>
             </div>
         </div>
     </div>
 </form:form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+   $("#submit-user").prop('disabled', true);
+
+    var checkPasswords = function() {
+        var password = $("#password").val();
+        var confirmPassword = $("#passwordRepeat").val();
+
+        if (password != confirmPassword) {
+            $("#submit-user").prop('disabled', true);
+            $("#passwordRepeatError").prop('hidden', false);
+        }
+        else
+        {
+            $("#submit-user").prop('disabled', false);
+            $("#passwordRepeatError").prop('hidden', true);
+        }
+    }
+
+   $("#password").on('keyup', checkPasswords);
+   $("#passwordRepeat").on('keyup', checkPasswords);
+});
+</script>
 
 <%@ include file="../templates/footer.jsp" %>
