@@ -1,7 +1,7 @@
 <%@ include file="../templates/header.jsp" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <table style="width:100%" class="table" id="cartable">
   <tr>
@@ -44,11 +44,16 @@
         <td><c:out value="${car.enginePower}"/></td>
         <td><c:out value="${car.color}"/></td>
         <td><c:out value="${car.year}"/></td>
-        <td><c:out value="${car.abs}"/></td>
-        <td><c:out value="${car.cruiseControl}"/></td>
-        <td><c:out value="${car.heatedSeats}"/></td>
-        <td><c:out value="${car.climateControl}"/></td>
-        <td><c:out value="${car.airBags}"/></td>
+        <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onclick="return false;"
+                   ${car.abs ? 'checked' : ''}></td>
+        <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onclick="return false;"
+                   ${car.cruiseControl ? 'checked' : ''}></td>
+        <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onclick="return false;"
+                   ${car.heatedSeats ? 'checked' : ''}></td>
+        <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onclick="return false;"
+                   ${car.climateControl ? 'checked' : ''}></td>
+        <td style="text-align: center;"><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." onclick="return false;"
+                   ${car.airBags ? 'checked' : ''}></td>
         <td><c:out value="${car.bodyType}"/></td>
         <td><c:out value="${car.price}"/></td>
         <security:authorize access="hasRole('ROLE_MANAGER')">
