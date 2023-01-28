@@ -1,5 +1,55 @@
 @startuml
 !theme crt-amber
+skinparam linetype ortho
+
+class CarDto {
+    UUID id
+    int year
+    String color
+    float enginePower
+    FuelType fuelType
+    float fuelConsumption
+    TransmissionType transmission
+    int numberOfSeats
+    boolean abs
+    boolean cruiseControl
+    boolean heatedSeats
+    boolean climateControl
+    boolean airBags
+    BigDecimal price
+    BodyType bodyType
+}
+
+class OrderDto {
+    UUID id
+    OrderStatus orderStatus
+    LocalDateTime startDate
+    LocalDateTime endDate
+    BigDecimal totalPrice
+}
+
+class CarBrandDto {
+    Long id
+    String brandName
+}
+
+class CarModelDto {
+    Long id
+    String modelName
+}
+
+class OrderIdDto {
+    UUID id
+}
+
+class UserIdDto {
+    UUID id
+}
+
+class CarIdDto {
+    UUID id
+}
+
 
 CarDto -- OrderIdDto
 CarDto -- CarModelDto

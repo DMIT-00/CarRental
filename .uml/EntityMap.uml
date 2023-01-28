@@ -1,5 +1,6 @@
 @startuml
 !theme crt-amber
+skinparam linetype ortho
 
 class Car {
     UUID id
@@ -68,8 +69,8 @@ Order -- User
 User --{ UserRole
 CarBrand -- Car
 CarModel }-- CarBrand
-Car::BodyType .. BodyType
-Car::TransmissionType .. TransmissionType
-Car::FuelType .. FuelType
+Car .right. BodyType
+Car .left. TransmissionType
+Car .left. FuelType
 
 @enduml
