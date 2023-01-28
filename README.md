@@ -1,10 +1,28 @@
 ## CarRental
 
-В директории **.utils** содержатся вспомогательные скрипты для автоматической генерации сущностей через REST API проекта:
-- **add_users.sh** - создает несколько дополнительных пользователей.
-- **add_models.sh** - создает небольшое количество брэндов и моделей в проекте.
-- **add_cars.sh** - создает небольшое количество машин в проекте (перед запуском нужно запустить **add_models.sh**).
-- **jMeter/CarRental.jmx** - профиль для jMeter который генерирует заданное количество рандомных машин (перед запуском нужно запустить **add_models.sh**).
+- [Technology stack](#technology-stack)
+- [How to build](#how-to-build)
+- [Project architecture](#project-architecture)
 
-## Архитектура проекта:
+## Technology stack
+**Build:** Maven
+
+**Core:** Spring MVC, Spring Security, Spring Data JPA, Hibernate
+
+**Additional:** Hibernate Validator, MapStruct
+
+## How to build
+Required: Tomcat, Mysql
+
+```sh
+mvn clean install
+```
+
+Directory **.utils** has additional shell scripts:
+- **add_users.sh** - creates additional users using REST API.
+- **add_models.sh** - creates some car models and brands using REST API.
+- **add_cars.sh** - creates some cars using REST API (requires **add_models.sh** to be run beforhand).
+- **jMeter/CarRental.jmx** - jMeter profile to generate random cars (requires **add_models.sh** to be run beforhand).
+
+## Project architecture
 ![layers](https://user-images.githubusercontent.com/114758136/211890854-582977c3-3732-41bb-8376-8e868b0f9ab7.jpg)
