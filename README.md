@@ -9,6 +9,8 @@
 CarRental is a simple car rental webapp.
 
 ## Technology stack
+**Java: 11**
+
 **Build:** Maven
 
 **Core:** Spring MVC, Spring Security, Spring Data JPA, Hibernate
