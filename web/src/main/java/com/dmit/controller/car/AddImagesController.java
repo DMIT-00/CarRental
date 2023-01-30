@@ -2,6 +2,7 @@ package com.dmit.controller.car;
 
 import com.dmit.service.CarService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -12,12 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 @Controller
 @SessionAttributes("carId")
@@ -31,20 +29,16 @@ public class AddImagesController {
         return "car/add_images";
     }
 
+    @SneakyThrows
     @PostMapping(value = "images-add")
     public String addCarImages(@ModelAttribute("images") MultipartFile[] files, Model model) {
 
         List<byte[]> images = new ArrayList<>();
 
-        Arrays.stream(files)
-                .filter(Predicate.not(MultipartFile::isEmpty))
-                .forEach(f -> {
-                    try {
-                        images.add(f.getBytes());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        for (MultipartFile file : files) {
+            if (!file.isEmpty())
+                images.add(file.getBytes());
+        }
 
         carService.updateCarImages((UUID) model.getAttribute("carId"), images);
 

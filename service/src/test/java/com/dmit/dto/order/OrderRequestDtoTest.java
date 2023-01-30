@@ -32,7 +32,7 @@ public class OrderRequestDtoTest extends BaseDtoTest {
         // Will fail when the test class is changed, please add more assertions for new fields and change the number
         assertEquals(targetObject.getClass().getDeclaredFields().length, TARGET_CLASS_NUMBER_OF_FIELDS);
 
-        assertEquals(targetObject.getCar().getId(), null);
+        assertEquals(targetObject.getCar().getId(), order.getCar().getId());
         assertEquals(targetObject.getStartDate(), order.getStartDate());
         assertEquals(targetObject.getEndDate(), order.getEndDate());
     }
