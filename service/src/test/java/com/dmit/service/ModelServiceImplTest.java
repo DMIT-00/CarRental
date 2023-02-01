@@ -18,14 +18,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -208,5 +213,37 @@ public class ModelServiceImplTest {
         verify(modelDao).countByCarBrand_Id(1L);
     }
 
-    // TODO: more tests
+    @Test
+    public void findAllModelsPageableShouldReturnList() {
+        // Given
+        CarBrand brand = new CarBrand(1L, "BMW", null);
+        final Page<CarModel> page = new PageImpl<>(List.of(
+                new CarModel(1L, "X1", brand),
+                new CarModel(2L, "X2", brand)
+        ));
+
+        // When
+        when(modelDao.findAll(any(PageRequest.class))).thenReturn(page);
+        List<CarModelDto> result = targetObject.findAllModelsPageable(0, 10);
+
+        // Then
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    public void findAllModelsPageableByBrandShouldReturnList() {
+        // Given
+        CarBrand brand = new CarBrand(1L, "BMW", null);
+        final Page<CarModel> page = new PageImpl<>(List.of(
+                new CarModel(1L, "X1", brand),
+                new CarModel(2L, "X2", brand)
+        ));
+
+        // When
+        when(modelDao.findAllByBrand(anyLong(), any(PageRequest.class))).thenReturn(page);
+        List<CarModelDto> result = targetObject.findAllModelsPageableByBrand(brand.getId(), 0, 10);
+
+        // Then
+        assertEquals(2, result.size());
+    }
 }
