@@ -32,3 +32,12 @@ Directory **.utils** has additional shell scripts:
 
 ## Project architecture
 ![layers](https://user-images.githubusercontent.com/114758136/211890854-582977c3-3732-41bb-8376-8e868b0f9ab7.jpg)
+
+
+## Screenshots
+<details>
+  <summary>Show</summary>
+  <img src="https://user-images.githubusercontent.com/114758136/215787284-a56cfdbf-fc9f-430d-9360-b66d7e71885d.jpg">
+  <img src="https://user-images.githubusercontent.com/114758136/215787295-f5a93803-485b-41fa-9d0c-d1a7ba628292.jpg">
+  
+</details>
