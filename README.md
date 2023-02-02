@@ -36,7 +36,7 @@ The application has different user roles:
 - **ADMIN** - can edit user details and roles.
 - **MANAGER** - can edit and add cars, brands, models and change orders.
 - **USER** - can see available cars and make orders.
-- **GUEST** (User not logged in) - can see available cars an register a new user.
+- **GUEST** (User not logged in) - can see available cars and register a new user.
 
 One user can have multiple roles.
 
