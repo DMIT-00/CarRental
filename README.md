@@ -38,6 +38,8 @@ The application has different user roles:
 - **USER** - can see available cars and make orders.
 - **GUEST** (User not logged in) - can see available cars an register a new user.
 
+One user can have multiple roles.
+
 Application UI will reflect current role and actions available for the role.
 
 By default application will create:
