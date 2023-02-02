@@ -31,6 +31,7 @@ public class WebSecurityConfig {
                         .antMatchers("/car-show/**").permitAll()
                         .antMatchers("/css/**").permitAll()
                         .antMatchers("/img/**").permitAll()
+                        .antMatchers("/js/**").permitAll()
                         .anyRequest().authenticated()
 //                        .anyRequest().permitAll()
                 )
