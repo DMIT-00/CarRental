@@ -84,29 +84,8 @@
     </div>
 </form:form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>
-$(document).ready(function () {
-   $("#submit-user").prop('disabled', true);
+<%@ include file="../templates/import_jquery.jsp" %>
 
-    var checkPasswords = function() {
-        var password = $("#password").val();
-        var confirmPassword = $("#passwordRepeat").val();
-
-        if (password != confirmPassword) {
-            $("#submit-user").prop('disabled', true);
-            $("#passwordRepeatError").prop('hidden', false);
-        }
-        else
-        {
-            $("#submit-user").prop('disabled', false);
-            $("#passwordRepeatError").prop('hidden', true);
-        }
-    }
-
-   $("#password").on('keyup', checkPasswords);
-   $("#passwordRepeat").on('keyup', checkPasswords);
-});
-</script>
+<script src="${pageContext.request.contextPath}/js/password_repeat.js"></script>
 
 <%@ include file="../templates/footer.jsp" %>

@@ -92,6 +92,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     @Secured("ROLE_ADMIN")
     public UserResponseDto updateUser(UserRequestDto updatedUser) {
         Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(updatedUser);
@@ -107,8 +108,32 @@ public class UserServiceImpl implements UserService {
             throw new ConstraintViolationException("Validation errors: " + errors, violations);
         }
 
-        // TODO: implement
-        return null;
+        if (userDao.existsByUsernameAndIdNot(updatedUser.getUsername(), updatedUser.getId()))
+            throw new AlreadyExistsException("Username is already used to register");
+
+        if (userDao.existsByEmailAndIdNot(updatedUser.getEmail(), updatedUser.getId()))
+            throw new AlreadyExistsException("Email is already used to register");
+
+        if (userDao.existsByUserDetail_PhoneNumberAndIdNot(updatedUser.getUserDetail().getPhoneNumber(), updatedUser.getId()))
+            throw new AlreadyExistsException("Phone number is already used to register");
+
+        if (userDao.existsByUserDetail_CreditCardAndIdNot(updatedUser.getUserDetail().getCreditCard(), updatedUser.getId()))
+            throw new AlreadyExistsException("Credit card is already used to register");
+
+        User user = userDao.findById(updatedUser.getId())
+                .orElseThrow(() -> new NotFoundException("User does not exist! Id: " + updatedUser.getId()));
+
+        user.setUsername(updatedUser.getUsername());
+        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        user.setEmail(updatedUser.getEmail());
+
+        user.getUserDetail().setBirthDate(updatedUser.getUserDetail().getBirthDate());
+        user.getUserDetail().setCreditCard(updatedUser.getUserDetail().getCreditCard());
+        user.getUserDetail().setFirstName(updatedUser.getUserDetail().getFirstName());
+        user.getUserDetail().setLastName(updatedUser.getUserDetail().getLastName());
+        user.getUserDetail().setPhoneNumber(updatedUser.getUserDetail().getPhoneNumber());
+
+        return userResponseDtoMapper.toDto(userDao.save(user));
     }
 
     @Override

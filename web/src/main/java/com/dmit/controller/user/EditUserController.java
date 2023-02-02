@@ -4,6 +4,7 @@ import com.dmit.dto.MessageBox;
 import com.dmit.dto.mapper.UserRequestDtoMapper;
 import com.dmit.dto.mapper.UserResponseDtoMapper;
 import com.dmit.dto.user.UserRequestDto;
+import com.dmit.dto.user.UserResponseDto;
 import com.dmit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,15 @@ public class EditUserController {
 
     @GetMapping("/user-edit/{userId}")
     public String editUserForm(@PathVariable(required = true) UUID userId, Model model) {
-        //User userEntity = userResponseDtoMapper.fromDto(userService.findUserById(userId));
-        //UserRequestFormDto user = userRequestDtoMapper.toDto(userEntity);
-        //FIXME: !!!!!!!!!!!!!!!!!!!!!!!!
+        UserResponseDto user = userService.findUserById(userId);
 
-//        UserRequestDto user = userRequestDtoMapper.toDto(userService.findUserById(userId));
-
-//        model.addAttribute("user", user);
+        model.addAttribute("user", new UserRequestDto(
+                user.getId(),
+                user.getEmail(),
+                user.getUsername(),
+                "",
+                user.getUserDetail()
+        ));
 
         return "user/edit_user";
     }

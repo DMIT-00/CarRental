@@ -2,8 +2,6 @@
 
 <%@ include file="../templates/header.jsp" %>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="nav-link ${empty param.filter ? 'active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/order-list"><fmt:message key="order.filter.all"/></a>
@@ -89,12 +87,8 @@
     </ul>
 </nav>
 
-<script type="text/javascript">
-    $(document).ready(function($) {
-        $(".table-row").click(function() {
-            window.document.location = $(this).data("href");
-        });
-    });
-</script>
+<%@ include file="../templates/import_jquery.jsp" %>
+
+<script src="${pageContext.request.contextPath}/js/clickable_table.js"></script>
 
 <%@ include file="../templates/footer.jsp" %>

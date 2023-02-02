@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <%@ include file="../templates/import_jquery.jsp" %>
 
     <script type="text/javascript">
         function formatDate(time) {

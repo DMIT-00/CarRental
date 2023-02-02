@@ -98,14 +98,8 @@
   </ul>
 </nav>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<%@ include file="../templates/import_jquery.jsp" %>
 
-<script type="text/javascript">
-      $(document).ready(function($) {
-          $(".table-row").click(function() {
-              window.document.location = $(this).data("href");
-          });
-      });
-</script>
+<script src="${pageContext.request.contextPath}/js/clickable_table.js"></script>
 
 <%@ include file="../templates/footer.jsp" %>
