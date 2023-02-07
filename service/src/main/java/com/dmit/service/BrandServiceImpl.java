@@ -77,10 +77,10 @@ public class BrandServiceImpl implements BrandService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public void deleteBrand(Long id) {
-        CarBrand brand = brandDao.findById(id)
-                .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + id));
+        if (!brandDao.existsById(id))
+            throw new NotFoundException("Brand not found! Id: " + id);
 
-        brandDao.delete(brand);
+        brandDao.deleteById(id);
     }
 
     @Override
