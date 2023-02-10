@@ -16,7 +16,7 @@ CarRental is a simple car rental webapp.
 
 **Core:** Spring MVC, Spring Security, Spring Data JPA, Hibernate
 
-**Additional:** Hibernate Validator, MapStruct, Mockito
+**Additional:** Lombok, Hibernate Validator, MapStruct, Mockito
 
 ## How to build
 Required: Tomcat, Mysql
