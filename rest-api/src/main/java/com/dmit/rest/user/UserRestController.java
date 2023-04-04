@@ -3,6 +3,7 @@ package com.dmit.rest.user;
 import com.dmit.dto.user.UserRequestDto;
 import com.dmit.dto.user.UserResponseDto;
 import com.dmit.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,9 @@ import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserRestController {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping
     @Secured("ROLE_MANAGER")

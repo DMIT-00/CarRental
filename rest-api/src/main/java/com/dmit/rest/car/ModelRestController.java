@@ -2,6 +2,7 @@ package com.dmit.rest.car;
 
 import com.dmit.dto.car.CarModelDto;
 import com.dmit.service.ModelService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,9 @@ import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
 
 @RestController
 @RequestMapping("/api/v1/models")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ModelRestController {
-    @Autowired
-    ModelService modelService;
+    private final ModelService modelService;
 
     @GetMapping
     public ResponseEntity<List<CarModelDto>> getModels(@RequestParam(value = "page", defaultValue = "0") int page,

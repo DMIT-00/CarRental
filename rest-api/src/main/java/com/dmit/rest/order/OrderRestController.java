@@ -3,6 +3,7 @@ package com.dmit.rest.order;
 import com.dmit.dto.order.OrderDto;
 import com.dmit.dto.order.OrderRequestDto;
 import com.dmit.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ import static com.dmit.config.RestConfig.DEFAULT_PAGE_SIZE;
 @RestController
 @Secured("ROLE_MANAGER")
 @RequestMapping("/api/v1/orders")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderRestController {
-    @Autowired
-    OrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping
     public ResponseEntity<List<OrderDto>> getOrders(@RequestParam(value = "page", defaultValue = "0") int page,
