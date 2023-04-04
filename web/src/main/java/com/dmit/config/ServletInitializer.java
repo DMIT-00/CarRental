@@ -22,13 +22,4 @@ public class ServletInitializer extends AbstractAnnotationConfigDispatcherServle
     protected String[] getServletMappings() {
         return new String[] { "/" };
     }
-
-//    For PUT and other requests
-//    https://stackoverflow.com/questions/34048617/spring-boot-how-to-use-hiddenhttpmethodfilter
-
-//    @Override
-//    protected Filter[] getServletFilters() {
-//        return new Filter[] { new HiddenHttpMethodFilter() };
-//    }
-
 }
