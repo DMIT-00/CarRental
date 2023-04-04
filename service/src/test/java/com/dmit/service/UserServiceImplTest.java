@@ -192,5 +192,17 @@ public class UserServiceImplTest {
         assertEquals(argument.getValue(), id);
     }
 
+    @Test
+    public void countAllUsersShouldCallDao() {
+        // Given
+        when(userDao.count()).thenReturn(10L);
+
+        // When
+        long count = targetObject.countAllUsers();
+
+        // Then
+        assertEquals(10L, count);
+    }
+
     // TODO: more tests
 }
