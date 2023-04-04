@@ -29,11 +29,11 @@ public class CarServiceImplTest {
     private CarDtoMapper carDtoMapper = new CarDtoMapperImpl(new CarModelDtoMapperImpl(new CarBrandDtoMapperImpl()),
             new OrderIdDtoMapperImpl());
     @Mock
-    Validator validator;
+    private Validator validator;
     @Mock
-    CarDao carDao;
+    private CarDao carDao;
     @InjectMocks
-    CarServiceImpl targetObject;
+    private CarServiceImpl targetObject;
 
     @Test
     public void addCarShouldThrowOnDuplicateId() {

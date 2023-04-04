@@ -3,7 +3,6 @@ package com.dmit.dao;
 import com.dmit.config.DataConfig;
 import com.dmit.entity.car.CarBrand;
 import com.dmit.entity.car.CarModel;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +14,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DataConfig.class)
 @TestPropertySource(value = {
@@ -26,9 +24,9 @@ import static org.junit.Assert.*;
 })
 public class CarModelDaoTest {
     @Autowired
-    CarModelDao carModelDao;
+    private CarModelDao carModelDao;
     @Autowired
-    CarBrandDao carBrandDao;
+    private CarBrandDao carBrandDao;
 
     @Before
     public void setUp() {

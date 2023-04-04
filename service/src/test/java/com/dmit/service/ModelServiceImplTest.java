@@ -42,11 +42,11 @@ public class ModelServiceImplTest {
     private CarBrandDtoMapper carBrandDtoMapper = new CarBrandDtoMapperImpl();
 
     @Mock
-    Validator validator;
+    private Validator validator;
     @Mock
-    CarModelDao modelDao;
+    private CarModelDao modelDao;
     @InjectMocks
-    ModelServiceImpl targetObject;
+    private ModelServiceImpl targetObject;
 
 
     @Test

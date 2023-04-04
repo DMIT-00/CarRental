@@ -37,15 +37,15 @@ public class UserServiceImplTest {
     @Spy
     private UserRequestDtoMapper userRequestDtoMapper = new UserRequestDtoMapperImpl(new UserDetailDtoMapperImpl());
     @Mock
-    Validator validator;
+    private Validator validator;
     @Mock
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Mock
-    RoleDao roleDao;
+    private RoleDao roleDao;
     @Mock
-    UserDao userDao;
+    private UserDao userDao;
     @InjectMocks
-    UserServiceImpl targetObject;
+    private UserServiceImpl targetObject;
 
 
     @Test

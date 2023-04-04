@@ -27,11 +27,11 @@ public class UserAuthenticationServiceImplTest {
     @Spy
     private UserAuthenticationDtoMapper userAuthenticationDtoMapper = new UserAuthenticationDtoMapperImpl(new RoleDtoMapperImpl(), new UserDetailDtoMapperImpl());
     @Mock
-    Validator validator;
+    private Validator validator;
     @Mock
-    UserDao userDao;
+    private UserDao userDao;
     @InjectMocks
-    UserAuthenticationServiceImpl targetObject;
+    private UserAuthenticationServiceImpl targetObject;
 
 
     @Test

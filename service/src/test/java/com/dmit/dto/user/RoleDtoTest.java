@@ -9,9 +9,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class RoleDtoTest extends BaseDtoTest {
-    RoleDto targetObject;
-    RoleDtoMapper mapper = new RoleDtoMapperImpl();
-    final int TARGET_CLASS_NUMBER_OF_FIELDS = 1;
+    private RoleDto targetObject;
+    private RoleDtoMapper mapper = new RoleDtoMapperImpl();
+    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 1;
 
     @Test
     public void mappingToDto() {

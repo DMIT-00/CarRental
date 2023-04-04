@@ -33,11 +33,11 @@ public class BrandServiceImplTest {
     @Spy
     private CarBrandDtoMapper carBrandDtoMapper = new CarBrandDtoMapperImpl();
     @Mock
-    Validator validator;
+    private Validator validator;
     @Mock
-    CarBrandDao brandDao;
+    private CarBrandDao brandDao;
     @InjectMocks
-    BrandServiceImpl targetObject;
+    private BrandServiceImpl targetObject;
 
     @Test
     public void addNewBrandShouldCallDao() {

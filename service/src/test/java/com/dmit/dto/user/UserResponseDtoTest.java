@@ -11,9 +11,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class UserResponseDtoTest extends BaseDtoTest {
-    UserResponseDto targetObject;
-    UserResponseDtoMapper mapper = new UserResponseDtoMapperImpl(new RoleDtoMapperImpl(), new UserDetailDtoMapperImpl());
-    final int TARGET_CLASS_NUMBER_OF_FIELDS = 7;
+    private UserResponseDto targetObject;
+    private UserResponseDtoMapper mapper = new UserResponseDtoMapperImpl(new RoleDtoMapperImpl(), new UserDetailDtoMapperImpl());
+    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 7;
 
     @Test
     public void mappingToDto() {

@@ -31,11 +31,11 @@ import static org.junit.Assert.assertEquals;
 })
 public class OrderDaoTest {
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
     @Autowired
-    OrderDao orderDao;
+    private OrderDao orderDao;
 
-    IDatabaseConnection iDatabaseConnection;
+    private IDatabaseConnection iDatabaseConnection;
 
     @Before
     @SneakyThrows

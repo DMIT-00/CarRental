@@ -36,22 +36,22 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class OrderServiceImplTest {
     @Spy
-    OrderDtoMapper orderDtoMapper = new OrderDtoMapperImpl(new CarIdDtoMapperImpl(), new UserIdDtoMapperImpl());
+    private OrderDtoMapper orderDtoMapper = new OrderDtoMapperImpl(new CarIdDtoMapperImpl(), new UserIdDtoMapperImpl());
     @Spy
-    OrderRequestDtoMapper orderRequestDtoMapper = new OrderRequestDtoMapperImpl();
+    private OrderRequestDtoMapper orderRequestDtoMapper = new OrderRequestDtoMapperImpl();
 
     @Mock
-    Validator validator;
+    private Validator validator;
     @Mock
-    UserService userService;
+    private UserService userService;
     @Mock
-    OrderDao orderDao;
+    private OrderDao orderDao;
     @Mock
-    UserDao userDao;
+    private UserDao userDao;
     @Mock
-    CarDao carDao;
+    private CarDao carDao;
     @InjectMocks
-    OrderServiceImpl targetObject;
+    private OrderServiceImpl targetObject;
 
     @Test
     public void deleteOrderShouldThrow() {
