@@ -2,6 +2,7 @@ package com.dmit.security;
 
 import com.dmit.dto.user.UserAuthenticationDto;
 import com.dmit.service.UserAuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service("authService")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthenticationService implements UserDetailsService {
-    @Autowired
-    UserAuthenticationService userAuthenticationService;
+    private final UserAuthenticationService userAuthenticationService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

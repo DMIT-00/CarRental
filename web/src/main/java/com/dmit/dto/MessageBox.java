@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MessageBox {
-    String caption;
-    String body;
-    MessageBoxType type;
+    private final String caption;
+    private final String body;
+    private final MessageBoxType type;
 
     public enum MessageBoxType {
         INFO,

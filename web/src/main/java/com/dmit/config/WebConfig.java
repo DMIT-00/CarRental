@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
         "com.dmit.security"
 })
 public class WebConfig implements WebMvcConfigurer {
-    static final long MAXIMUM_FILE_SIZE = 1_000_000;
+    private static final long MAXIMUM_FILE_SIZE = 1_000_000;
 
     @Bean
     public ViewResolver internalResourceViewResolver() {
