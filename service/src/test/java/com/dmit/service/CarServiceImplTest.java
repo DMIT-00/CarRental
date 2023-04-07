@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.validation.Validator;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +28,7 @@ public class CarServiceImplTest {
     private CarDtoMapper carDtoMapper = new CarDtoMapperImpl(new CarModelDtoMapperImpl(new CarBrandDtoMapperImpl()),
             new OrderIdDtoMapperImpl());
     @Mock
-    private Validator validator;
+    private ValidationService<CarDtoMapper> validationService;
     @Mock
     private CarDao carDao;
     @InjectMocks

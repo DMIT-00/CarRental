@@ -22,21 +22,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class OrderServiceImpl implements OrderService {
-    private final Validator validator;
+    private final ValidationService<OrderRequestDto> validationService;
     private final OrderDtoMapper orderDtoMapper;
     private final OrderRequestDtoMapper orderRequestDtoMapper;
     private final UserService userService;
@@ -48,15 +44,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Secured("ROLE_USER")
     public OrderDto addOrder(OrderRequestDto orderRequestDto) {
-        Set<ConstraintViolation<OrderRequestDto>> violations = validator.validate(orderRequestDto);
-
-        if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<OrderRequestDto> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
-            }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
-        }
+        validationService.validate(orderRequestDto);
 
         // Get current user for the order
         String username = userService.findCurrentUser().getUsername();

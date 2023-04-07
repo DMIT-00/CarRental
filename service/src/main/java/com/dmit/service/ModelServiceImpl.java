@@ -14,17 +14,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ModelServiceImpl implements ModelService {
-    private final Validator validator;
+    private final ValidationService<CarModelDto> validationService;
     private final CarModelDtoMapper carModelDtoMapper;
     private final CarBrandDtoMapper carBrandDtoMapper;
     private final CarModelDao modelDao;
@@ -33,15 +29,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarModelDto addModel(CarModelDto newModel) {
-        Set<ConstraintViolation<CarModelDto>> violations = validator.validate(newModel);
-
-        if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<CarModelDto> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
-            }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
-        }
+        validationService.validate(newModel);
 
         CarModel model = carModelDtoMapper.fromDto(newModel);
 

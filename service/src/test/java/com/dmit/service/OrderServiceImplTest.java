@@ -21,7 +21,6 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.validation.Validator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -41,7 +40,7 @@ public class OrderServiceImplTest {
     private OrderRequestDtoMapper orderRequestDtoMapper = new OrderRequestDtoMapperImpl();
 
     @Mock
-    private Validator validator;
+    private ValidationService<OrderRequestDto> validationService;
     @Mock
     private UserService userService;
     @Mock

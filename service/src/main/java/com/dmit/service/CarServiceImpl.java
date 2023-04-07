@@ -14,18 +14,14 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CarServiceImpl implements CarService {
-    private final Validator validator;
+    private final ValidationService<CarDto> validationService;
     private final CarDtoMapper carDtoMapper;
     private final CarDao carDao;
 
@@ -33,19 +29,7 @@ public class CarServiceImpl implements CarService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarDto addCar(CarDto newCar) {
-        Set<ConstraintViolation<CarDto>> violations = validator.validate(newCar);
-
-        if (!violations.isEmpty()) {
-            StringBuilder errors = new StringBuilder();
-            for (ConstraintViolation<CarDto> constraintViolation : violations) {
-
-                errors.append(constraintViolation.getPropertyPath())
-                        .append(" ")
-                        .append(constraintViolation.getMessage())
-                        .append("; ");
-            }
-            throw new ConstraintViolationException("Validation errors: " + errors, violations);
-        }
+        validationService.validate(newCar);
 
         Car car = carDtoMapper.fromDto(newCar);
 
@@ -61,18 +45,7 @@ public class CarServiceImpl implements CarService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarDto updateCar(CarDto updatedCar) {
-        Set<ConstraintViolation<CarDto>> violations = validator.validate(updatedCar);
-
-        if (!violations.isEmpty()) {
-            StringBuilder errors = new StringBuilder();
-            for (ConstraintViolation<CarDto> constraintViolation : violations) {
-                errors.append(constraintViolation.getPropertyPath())
-                        .append(" ")
-                        .append(constraintViolation.getMessage())
-                        .append("; ");
-            }
-            throw new ConstraintViolationException("Validation errors: " + errors, violations);
-        }
+        validationService.validate(updatedCar);
 
         if (!carDao.existsById(updatedCar.getId()))
             throw new NotFoundException("Car not found! Id: " + updatedCar.getId());

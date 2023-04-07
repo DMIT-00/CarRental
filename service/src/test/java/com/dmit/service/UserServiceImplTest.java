@@ -18,7 +18,6 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.validation.Validator;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.UUID;
@@ -37,7 +36,7 @@ public class UserServiceImplTest {
     @Spy
     private UserRequestDtoMapper userRequestDtoMapper = new UserRequestDtoMapperImpl(new UserDetailDtoMapperImpl());
     @Mock
-    private Validator validator;
+    private ValidationService<UserRequestDto> validationService;
     @Mock
     private PasswordEncoder passwordEncoder;
     @Mock

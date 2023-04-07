@@ -17,7 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +32,7 @@ public class BrandServiceImplTest {
     @Spy
     private CarBrandDtoMapper carBrandDtoMapper = new CarBrandDtoMapperImpl();
     @Mock
-    private Validator validator;
+    private ValidationService<CarBrandDto> validationService;
     @Mock
     private CarBrandDao brandDao;
     @InjectMocks

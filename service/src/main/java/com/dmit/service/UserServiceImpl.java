@@ -23,18 +23,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
-    private final Validator validator;
+    private final ValidationService<UserRequestDto> validationService;
     private final UserResponseDtoMapper userResponseDtoMapper;
     private final UserRequestDtoMapper userRequestDtoMapper;
     private final UserDao userDao;
@@ -46,18 +42,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto addUser(UserRequestDto userRequestDto) {
         final String DEFAULT_ROLE = "USER";
 
-        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(userRequestDto);
-
-        if (!violations.isEmpty()) {
-            StringBuilder errors = new StringBuilder();
-            for (ConstraintViolation<UserRequestDto> constraintViolation : violations) {
-                errors.append(constraintViolation.getPropertyPath())
-                        .append(" ")
-                        .append(constraintViolation.getMessage())
-                        .append("; ");
-            }
-            throw new ConstraintViolationException("Validation errors: " + errors, violations);
-        }
+        validationService.validate(userRequestDto);
 
         if (userDao.existsByUsername(userRequestDto.getUsername()))
             throw new AlreadyExistsException("Username is already used to register");
@@ -95,18 +80,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Secured("ROLE_ADMIN")
     public UserResponseDto updateUser(UserRequestDto updatedUser) {
-        Set<ConstraintViolation<UserRequestDto>> violations = validator.validate(updatedUser);
-
-        if (!violations.isEmpty()) {
-            StringBuilder errors = new StringBuilder();
-            for (ConstraintViolation<UserRequestDto> constraintViolation : violations) {
-                errors.append(constraintViolation.getPropertyPath())
-                        .append(" ")
-                        .append(constraintViolation.getMessage())
-                        .append("; ");
-            }
-            throw new ConstraintViolationException("Validation errors: " + errors, violations);
-        }
+        validationService.validate(updatedUser);
 
         if (userDao.existsByUsernameAndIdNot(updatedUser.getUsername(), updatedUser.getId()))
             throw new AlreadyExistsException("Username is already used to register");

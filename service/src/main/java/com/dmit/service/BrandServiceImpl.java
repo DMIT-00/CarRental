@@ -13,17 +13,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BrandServiceImpl implements BrandService {
-    private final Validator validator;
+    private final ValidationService<CarBrandDto> validationService;
     private final CarBrandDtoMapper carBrandDtoMapper;
     private final CarBrandDao brandDao;
 
@@ -31,15 +27,7 @@ public class BrandServiceImpl implements BrandService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarBrandDto addBrand(CarBrandDto newBrand) {
-        Set<ConstraintViolation<CarBrandDto>> violations = validator.validate(newBrand);
-
-        if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<CarBrandDto> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
-            }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
-        }
+        validationService.validate(newBrand);
 
         CarBrand brand = carBrandDtoMapper.fromDto(newBrand);
 
@@ -55,15 +43,7 @@ public class BrandServiceImpl implements BrandService {
     @Transactional
     @Secured("ROLE_MANAGER")
     public CarBrandDto updateBrand(CarBrandDto updatedBrand) {
-        Set<ConstraintViolation<CarBrandDto>> violations = validator.validate(updatedBrand);
-
-        if (!violations.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<CarBrandDto> constraintViolation : violations) {
-                sb.append(constraintViolation.getMessage());
-            }
-            throw new ConstraintViolationException("Error occurred: " + sb, violations);
-        }
+        validationService.validate(updatedBrand);
 
         CarBrand brand = brandDao.findById(updatedBrand.getId())
                 .orElseThrow(() -> new NotFoundException("Brand not found! Id: " + updatedBrand.getId()));

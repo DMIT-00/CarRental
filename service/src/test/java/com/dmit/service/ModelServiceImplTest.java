@@ -22,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +41,7 @@ public class ModelServiceImplTest {
     private CarBrandDtoMapper carBrandDtoMapper = new CarBrandDtoMapperImpl();
 
     @Mock
-    private Validator validator;
+    private ValidationService<CarModelDto> validationService;
     @Mock
     private CarModelDao modelDao;
     @InjectMocks
