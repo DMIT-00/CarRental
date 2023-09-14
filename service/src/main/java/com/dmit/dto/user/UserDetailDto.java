@@ -24,11 +24,11 @@ public class UserDetailDto {
     private String lastName;
     @NotNull
     @Size(min = 10, max = 14)
-    @Pattern(regexp="\\+[1-9][0-9]{0,2}[0-9]{2,3}[0-9]{5}")
+    @Pattern(regexp = "\\+[1-9][0-9]{0,2}[0-9]{2,3}[0-9]{5}")
     private String phoneNumber;
     @NotNull
     @Size(min = 16, max = 16)
-    @Pattern(regexp="[0-9]{16}")
+    @Pattern(regexp = "[0-9]{16}")
     private String creditCard;
     @Past
     @NotNull

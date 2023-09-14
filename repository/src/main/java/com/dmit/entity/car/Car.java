@@ -77,7 +77,7 @@ public class Car {
     private CarModel carModel;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="car_id", nullable=false)
+    @JoinColumn(name = "car_id", nullable = false)
     private List<Image> images;
 
     @OneToMany(mappedBy = "car")

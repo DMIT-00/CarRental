@@ -20,6 +20,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "t_role")
 public class Role {
+    @ManyToMany(mappedBy = "roles")
+    Set<User> users = new HashSet<>();
     @Id
     @Column(name = "role_id")
     @GeneratedValue(generator = "increment")
@@ -28,13 +30,9 @@ public class Role {
             strategy = "org.hibernate.id.IncrementGenerator"
     )
     private Long id;
-
     @NaturalId
     @Column(name = "role_name")
     private String roleName;
-
-    @ManyToMany(mappedBy = "roles")
-    Set<User> users = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

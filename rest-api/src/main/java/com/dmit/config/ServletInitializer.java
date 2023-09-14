@@ -13,24 +13,24 @@ import javax.servlet.Filter;
 public class ServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { DataConfig.class, ServiceConfig.class, RestSecurityConfig.class };
+        return new Class[]{DataConfig.class, ServiceConfig.class, RestSecurityConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { RestConfig.class };
+        return new Class[]{RestConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] { "/" };
+        return new String[]{"/"};
     }
 
-//    For PUT and other requests
+    //    For PUT and other requests
 //    https://stackoverflow.com/questions/34048617/spring-boot-how-to-use-hiddenhttpmethodfilter
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[] { new HiddenHttpMethodFilter() };
+        return new Filter[]{new HiddenHttpMethodFilter()};
     }
 
 }

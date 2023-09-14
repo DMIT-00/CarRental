@@ -8,9 +8,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class CarDtoTest extends BaseDtoTest {
+    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 17;
     private CarDto targetObject;
     private CarDtoMapper carDtoMapper = new CarDtoMapperImpl(new CarModelDtoMapperImpl(new CarBrandDtoMapperImpl()), new OrderIdDtoMapperImpl());
-    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 17;
 
     @Test
     public void mappingToDto() {

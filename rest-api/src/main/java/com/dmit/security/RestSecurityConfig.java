@@ -24,7 +24,7 @@ public class RestSecurityConfig {
         http
                 .csrf().disable()
 
-                .authorizeHttpRequests((authorize ) -> authorize
+                .authorizeHttpRequests((authorize) -> authorize
                                 .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                                 .anyRequest().authenticated()
 //                              .anyRequest().permitAll()

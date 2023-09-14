@@ -13,5 +13,6 @@ import org.mapstruct.Mapper;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface CarDtoMapper {
     CarDto toDto(Car car);
+
     Car fromDto(CarDto carDto);
 }

@@ -9,9 +9,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class UserDetailDtoTest extends BaseDtoTest {
+    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 5;
     private UserDetailDto targetObject;
     private UserDetailDtoMapper mapper = new UserDetailDtoMapperImpl();
-    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 5;
 
     @Test
     public void mappingToDto() {

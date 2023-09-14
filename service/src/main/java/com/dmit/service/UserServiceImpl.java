@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("Role not found! Name: " + DEFAULT_ROLE));
 
         user.addRole(role);
-        
+
         return userResponseDtoMapper.toDto(userDao.save(user));
     }
 

@@ -10,25 +10,34 @@ import java.util.UUID;
 
 public interface UserService {
     UserResponseDto addUser(UserRequestDto userRequestDto);
+
     @Secured("ROLE_ADMIN")
     UserResponseDto updateUser(UserRequestDto updatedUser);
+
     @Secured("ROLE_ADMIN")
     void deleteUser(UUID id);
 
     @Secured("ROLE_MANAGER")
     long countAllUsers();
+
     @Secured("ROLE_MANAGER")
     List<UserResponseDto> findAllUsersPageable(int page, int size);
+
     @Secured("ROLE_MANAGER")
     long countAllUsersByLocked(boolean locked);
+
     @Secured("ROLE_MANAGER")
     List<UserResponseDto> findAllUsersByLockedPageable(boolean locked, int page, int size);
+
     @Secured("ROLE_MANAGER")
     long countAllUsersByOrderStatus(OrderStatus orderStatus);
+
     @Secured("ROLE_MANAGER")
     List<UserResponseDto> findAllUsersByOrderStatusPageable(OrderStatus orderStatus, int page, int size);
+
     @Secured("ROLE_MANAGER")
     UserResponseDto findUserById(UUID userId);
+
     @Secured({"ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN"})
     UserResponseDto findCurrentUser();
 }

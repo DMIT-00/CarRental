@@ -45,8 +45,8 @@ public class EditUserController {
 
     @PostMapping("/user-edit/{userId}")
     public String editUser(@PathVariable(required = true) UUID userId,
-                            @Valid @ModelAttribute("user") UserRequestDto updatedUser,
-                            BindingResult bindingResult, Model model) {
+                           @Valid @ModelAttribute("user") UserRequestDto updatedUser,
+                           BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors())
             return "user/edit_user";
 

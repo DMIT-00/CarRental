@@ -21,8 +21,8 @@ public class ListOrderController {
     @Secured("ROLE_MANAGER")
     @GetMapping("order-list")
     public String orderList(Model model,
-                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                           @RequestParam(value = "filter", required = false, defaultValue = "") String filter
+                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                            @RequestParam(value = "filter", required = false, defaultValue = "") String filter
     ) {
         long numberOfPages;
         List<OrderDto> orders;

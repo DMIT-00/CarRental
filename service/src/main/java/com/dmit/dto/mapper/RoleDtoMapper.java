@@ -11,8 +11,10 @@ import java.util.Set;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface RoleDtoMapper {
     RoleDto toDto(Role role);
+
     Role fromDto(RoleDto roleDto);
 
     Set<RoleDto> toDto(Set<Role> role);
+
     Set<Role> fromDto(Set<RoleDto> roleDto);
 }

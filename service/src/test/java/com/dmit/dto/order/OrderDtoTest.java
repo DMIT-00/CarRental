@@ -11,9 +11,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class OrderDtoTest extends BaseDtoTest {
+    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 7;
     private OrderDto targetObject;
     private OrderDtoMapper mapper = new OrderDtoMapperImpl(new CarIdDtoMapperImpl(), new UserIdDtoMapperImpl());
-    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 7;
 
     @Test
     public void mappingToDto() {

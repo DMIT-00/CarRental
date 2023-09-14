@@ -6,12 +6,15 @@ import com.dmit.dto.mapper.CarBrandDtoMapperImpl;
 import com.dmit.entity.car.CarBrand;
 import org.junit.Test;
 
+import java.util.Optional;
+import java.util.function.*;
+
 import static org.junit.Assert.assertEquals;
 
 public class CarBrandDtoTest extends BaseDtoTest {
+    private static final int TARGET_CLASS_NUMBER_OF_FIELDS = 2;
     private CarBrandDto targetObject;
     private CarBrandDtoMapper carBrandDtoMapper = new CarBrandDtoMapperImpl();
-    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 2;
 
     @Test
     public void mappingToDto() {
@@ -32,7 +35,8 @@ public class CarBrandDtoTest extends BaseDtoTest {
     @Test
     public void mappingFromDto() {
         // Given
-        targetObject = carBrandDtoMapper.toDto(carBrand); // TODO: don't use mapping, so we don't fail when toDto fails
+        // TODO: don't use mapping, so we don't fail when toDto fails
+        targetObject = carBrandDtoMapper.toDto(carBrand);
 
         // When
         CarBrand carBrandResult = carBrandDtoMapper.fromDto(targetObject);

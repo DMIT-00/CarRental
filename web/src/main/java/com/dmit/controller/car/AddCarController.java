@@ -75,7 +75,7 @@ public class AddCarController {
         if (bindingResult.hasErrors() || action == null) {
             Map<Long, String> models = modelService.findAllModelsPageableByBrand(carDto.getCarModel()
                             .getCarBrand().getId(), 0, 100).stream()
-                            .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
+                    .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
             model.addAttribute("models", models);
             model.addAttribute("brands", brandService.findAllBrandsPageable(0, 100).stream()

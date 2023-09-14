@@ -12,8 +12,10 @@ import java.util.List;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface OrderDtoMapper {
     OrderDto toDto(Order order);
+
     Order fromDto(OrderDto orderDto);
 
     List<OrderDto> toDto(List<Order> order);
+
     List<Order> fromDto(List<OrderDto> orderDto);
 }

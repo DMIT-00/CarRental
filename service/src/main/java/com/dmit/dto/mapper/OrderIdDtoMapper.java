@@ -9,5 +9,6 @@ import org.mapstruct.Mapper;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface OrderIdDtoMapper {
     OrderIdDto toDto(Order order);
+
     Order fromDto(OrderIdDto orderIdDto);
 }

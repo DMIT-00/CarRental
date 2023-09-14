@@ -15,7 +15,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_model", uniqueConstraints = { @UniqueConstraint(name = "unique_model_name", columnNames = { "model_name", "brand_id" }) })
+@Table(name = "t_model", uniqueConstraints = {@UniqueConstraint(name = "unique_model_name", columnNames = {"model_name", "brand_id"})})
 public class CarModel {
     @Id
     @Column(name = "model_id")

@@ -11,6 +11,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class WebExceptionHandler {
+    public static String chainedString(Throwable throwable) {
+        StringBuilder SB = new StringBuilder(throwable.toString());
+        while ((throwable = throwable.getCause()) != null)
+            SB.append("<br>caused by ").append(throwable);
+        return SB.toString();
+    }
+
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = {
             NotFoundException.class,
@@ -31,12 +38,5 @@ public class WebExceptionHandler {
         model.addAttribute("exceptionBody", chainedString(exception));
 
         return "exception_box";
-    }
-
-    public static String chainedString(Throwable throwable) {
-        StringBuilder SB = new StringBuilder(throwable.toString());
-        while((throwable = throwable.getCause()) != null)
-            SB.append("<br>caused by ").append(throwable);
-        return SB.toString();
     }
 }

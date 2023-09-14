@@ -10,5 +10,6 @@ import org.mapstruct.Mapper;
 public interface OrderRequestDtoMapper {
     // TODO: carId
     OrderRequestDto toDto(Order order);
+
     Order fromDto(OrderRequestDto orderRequestDto);
 }

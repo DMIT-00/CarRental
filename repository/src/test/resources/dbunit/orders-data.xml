@@ -6,7 +6,7 @@
                    user_credit_card="0000000000001001" user_first_name="User" user_last_name="The User"
                    user_phoneNumber="+880001001"/>
     <t_user_role user_id="00000000-1001-0000-0000-000000000000" role_id="3"/>
-    
+
     <t_user user_id="00000000-1002-0000-0000-000000000000" user_email="user2@user2.com" user_locked="0"
             user_password="password" user_username="user2"/>
     <t_user_detail user_detail_id="00000000-1002-0000-0000-000000000000" user_birth_date="0008-08-08"
@@ -55,7 +55,7 @@
     <t_order order_id="00000000-0000-0000-1001-000000000000" order_status="1" order_total_price="24000.00"
              order_start_date="2023-01-22 07:00:00.000000" order_end_date="2023-01-22 11:00:00.000000"
              car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
-    
+
     <t_order order_id="00000000-0000-0000-1002-000000000000" order_status="2" order_total_price="24000.00"
              order_start_date="2023-01-22 12:00:00.000000" order_end_date="2023-01-22 13:00:00.000000"
              car_id="00000000-0000-1001-0000-000000000000" user_id="00000000-1001-0000-0000-000000000000"/>
@@ -85,5 +85,5 @@
     <t_order order_id="00000000-0000-0000-1010-000000000000" order_status="4" order_total_price="24000.00"
              order_start_date="2023-01-25 15:00:00.000000" order_end_date="2023-01-25 16:00:00.000000"
              car_id="00000000-0000-1002-0000-000000000000" user_id="00000000-1002-0000-0000-000000000000"/>
-    
+
 </dataset>

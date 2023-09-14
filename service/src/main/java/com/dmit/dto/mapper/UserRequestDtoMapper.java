@@ -10,5 +10,6 @@ import org.mapstruct.Mapper;
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserRequestDtoMapper {
     UserRequestDto toDto(User user);
+
     User fromDto(UserRequestDto userRequestDto);
 }

@@ -11,14 +11,12 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice
 public class RestExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleException(NotFoundException exception)
-    {
+    public ResponseEntity<Object> handleException(NotFoundException exception) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> handleException(ConstraintViolationException exception)
-    {
+    public ResponseEntity<Object> handleException(ConstraintViolationException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

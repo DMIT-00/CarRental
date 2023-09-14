@@ -36,7 +36,7 @@ public class EditCarController {
                 .collect(Collectors.toMap(CarBrandDto::getId, CarBrandDto::getBrandName));
 
         Map<Long, String> modelsMap = modelService.findAllModelsPageableByBrand(
-                car.getCarModel().getCarBrand().getId(), 0, 100).stream()
+                        car.getCarModel().getCarBrand().getId(), 0, 100).stream()
                 .collect(Collectors.toMap(CarModelDto::getId, CarModelDto::getModelName));
 
         model.addAttribute("car", car);
@@ -48,9 +48,9 @@ public class EditCarController {
 
     @PostMapping("/car-edit/{carId}")
     public String editCar(@PathVariable(required = true) UUID carId,
-                            @RequestParam(value = "submit-car", required = false) String action,
-                            @Valid @ModelAttribute("car") CarDto updatedCar,
-                            BindingResult bindingResult, Model model) {
+                          @RequestParam(value = "submit-car", required = false) String action,
+                          @Valid @ModelAttribute("car") CarDto updatedCar,
+                          BindingResult bindingResult, Model model) {
         // Need to set it each time, because the value is lost during each refresh
         updatedCar.setId(carId);
 

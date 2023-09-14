@@ -22,17 +22,17 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
 
-                .authorizeHttpRequests((authorize ) -> authorize
-                        .antMatchers("/").permitAll()
-                        .antMatchers("/user-add").permitAll()
-                        .antMatchers("/user-login").permitAll()
-                        .antMatchers("/user-logout").permitAll()
-                        .antMatchers("/car-list").permitAll()
-                        .antMatchers("/car-show/**").permitAll()
-                        .antMatchers("/css/**").permitAll()
-                        .antMatchers("/img/**").permitAll()
-                        .antMatchers("/js/**").permitAll()
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests((authorize) -> authorize
+                                .antMatchers("/").permitAll()
+                                .antMatchers("/user-add").permitAll()
+                                .antMatchers("/user-login").permitAll()
+                                .antMatchers("/user-logout").permitAll()
+                                .antMatchers("/car-list").permitAll()
+                                .antMatchers("/car-show/**").permitAll()
+                                .antMatchers("/css/**").permitAll()
+                                .antMatchers("/img/**").permitAll()
+                                .antMatchers("/js/**").permitAll()
+                                .anyRequest().authenticated()
 //                        .anyRequest().permitAll()
                 )
 

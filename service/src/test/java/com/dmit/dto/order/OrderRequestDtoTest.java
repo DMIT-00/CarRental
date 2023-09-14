@@ -9,9 +9,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class OrderRequestDtoTest extends BaseDtoTest {
+    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 3;
     private OrderRequestDto targetObject;
     private OrderRequestDtoMapper mapper = new OrderRequestDtoMapperImpl();
-    private final int TARGET_CLASS_NUMBER_OF_FIELDS = 3;
 
     @Test
     public void mappingToDto() {

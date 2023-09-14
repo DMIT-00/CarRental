@@ -5,5 +5,6 @@ import java.util.UUID;
 
 public interface CarImageService {
     byte[] getImage(UUID imageId);
+
     List<UUID> getImageIdsByCarId(UUID carId);
 }
